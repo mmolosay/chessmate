@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">chessmate</string>
+    <!--~~~~~~~~~~~~~~~~~~~~ COMMON ~~~~~~~~~~~~~~~~~~~~-->
+    <string name="app_name">Chess, Mate</string>
+
+    <!--~~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~-->
+
 </resources>

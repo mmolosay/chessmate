@@ -1,0 +1,76 @@
+ext {
+
+    // Kotlin
+    kotlinVersion = '1.4.0'
+
+    // Android Core
+    compileSdk = 30
+    targetSdk = 30
+    minSdk = 21
+    buildTools = "30.0.0"
+
+    // App Versioning
+    versionCodeMajor = 1
+    versionCodeMinor = 0
+    versionCodePatch = 0
+    versionName = "$versionCodeMajor.$versionCodeMinor.$versionCodePatch"
+    versionCode = versionCodeMajor * 10000 + versionCodeMinor * 100 + versionCodePatch // 1.2.3 -> 10203
+
+    // Dependencies Version - Presentation
+    appcompatVersion = '1.2.0'
+    androidxCoreKtxVersion = '1.3.1'
+    constraintLayoutVersion = '2.0.1'
+    materialVersion = '1.2.0'
+    fragmentKtxVersion = '1.2.5'
+    koinVersion = '2.1.5'
+    lifecycleExtensionsVersion = '2.1.0'
+    recyclerviewVersion = '1.2.0-alpha05'
+    recyclerviewSelectionVersion = '1.0.0'
+
+    // Data
+    roomVersion = '2.2.5'
+
+    // Domain
+    coroutinesCoreVersion = '1.3.3'
+
+    // Testing
+    junitVersion = '4.12'
+    androidxJunitVersion = '1.1.1'
+    androidxTestCoreVersion = '1.0.0'
+
+
+    // App/Presentation Layer
+    appDependencies = [
+            appCompat             : "androidx.appcompat:appcompat:$appcompatVersion",
+            androidxKtx           : "androidx.core:core-ktx:$androidxCoreKtxVersion",
+            constraintLayout      : "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion",
+            material              : "com.google.android.material:material:$materialVersion",
+            fragmentKtx           : "androidx.fragment:fragment-ktx:$fragmentKtxVersion",
+            lifecycleExtensions   : "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion",
+            recyclerview          : "androidx.recyclerview:recyclerview:$recyclerviewVersion",
+            recyclerviewSelection : "androidx.recyclerview:recyclerview-selection:$recyclerviewSelectionVersion",
+            koinAndroid           : "org.koin:koin-android:$koinVersion",
+            koinLifeCycleScope    : "org.koin:koin-android-scope:$koinVersion",
+            koinAndroidViewModel  : "org.koin:koin-androidx-viewmodel:$koinVersion"
+    ]
+
+    dataDependencies = [
+            roomRuntime       : "androidx.room:room-runtime:$roomVersion",
+            roomCompiler      : "androidx.room:room-compiler:$roomVersion",
+            roomKtx           : "androidx.room:room-ktx:$roomVersion"
+    ]
+
+    domainDependencies = [
+            kotlin        : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            coroutinesCore: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesCoreVersion"
+    ]
+
+    testDependencies = [
+            junit                 : "junit:junit:$junitVersion",
+            androidxJunit         : "androidx.test.ext:junit:$androidxJunitVersion",
+            androidxCoreTest      : "androidx.test:core:$androidxTestCoreVersion",
+            coroutinesTest        : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesCoreVersion",
+            koinTest              : "org.koin:koin-test:$koinVersion",
+            roomTest              : "androidx.room:room-testing:$roomVersion"
+    ]
+}

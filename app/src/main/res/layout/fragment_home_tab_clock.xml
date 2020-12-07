@@ -5,13 +5,13 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tab_clock_timer"
+        android:id="@+id/tab_clock_stopwatch"
         style="@style/TextTitle.Light"
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:text="@string/tab_clock_timer_init"
+        android:text="@string/tab_clock_stopwatch_init"
         android:textColor="@android:color/black"
 
         android:textSize="@dimen/text_size_60"
@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.30" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/tab_clock_btn_turn"
+        android:id="@+id/tab_clock_btn_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -32,9 +32,9 @@
         android:elevation="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tab_clock_timer"
-        app:layout_constraintStart_toStartOf="@+id/tab_clock_timer"
-        app:layout_constraintTop_toBottomOf="@+id/tab_clock_timer"
+        app:layout_constraintEnd_toEndOf="@+id/tab_clock_stopwatch"
+        app:layout_constraintStart_toStartOf="@+id/tab_clock_stopwatch"
+        app:layout_constraintTop_toBottomOf="@+id/tab_clock_stopwatch"
         app:layout_constraintVertical_bias="0.30" />
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -47,9 +47,9 @@
         android:src="@drawable/ic_start_normal"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tab_clock_timer"
-        app:layout_constraintStart_toStartOf="@+id/tab_clock_timer"
-        app:layout_constraintTop_toBottomOf="@+id/tab_clock_btn_turn"
+        app:layout_constraintEnd_toEndOf="@+id/tab_clock_stopwatch"
+        app:layout_constraintStart_toStartOf="@+id/tab_clock_stopwatch"
+        app:layout_constraintTop_toBottomOf="@+id/tab_clock_btn_reset"
         app:layout_constraintVertical_bias="0.10" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

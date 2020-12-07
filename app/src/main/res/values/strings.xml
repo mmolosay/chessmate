@@ -3,5 +3,5 @@
     <string name="app_name">Chess, Mate</string>
 
     <!--~~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~-->
-    <string name="tab_clock_timer_init">00:00.00</string>
+
 </resources>

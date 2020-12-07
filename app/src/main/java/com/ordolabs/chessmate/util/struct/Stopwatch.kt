@@ -1,7 +1,7 @@
 package com.ordolabs.chessmate.util.struct
 
 /**
- * Stopwatch
+ * Stopwatch.
  */
 class Stopwatch {
 

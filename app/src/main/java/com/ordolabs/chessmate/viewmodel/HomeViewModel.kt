@@ -40,8 +40,10 @@ class HomeViewModel : BaseViewModel() {
     }
 
     fun resetStopwatch() {
-        stopwatch.restart()
-        _stopwatchTime.value = "00:00.00"
+        if (stopwatch.running) {
+            stopwatch.restart()
+        }
+        _stopwatchTime.value = STOPWATCH_PATTERN
     }
 
     private fun parseStopwatchTime(elapsed: Long): String {

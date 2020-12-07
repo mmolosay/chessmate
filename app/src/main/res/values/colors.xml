@@ -8,7 +8,7 @@
     <color name="status_bar_light">@color/window_background</color>
     <color name="navigation_bar">@color/content_bg</color>
 
-    <color name="accent_sky">#29B6F6</color>
+    <color name="accent_sky">#42A5F5</color>
 
     <!--~~~~~~~~~~~~~~~~~~~~~ TEXT ~~~~~~~~~~~~~~~~~~~~~-->
     <color name="text_title">#000000</color>

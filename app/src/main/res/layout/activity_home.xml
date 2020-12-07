@@ -2,17 +2,41 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.HomeActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/home_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/home_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicator="@drawable/tab_indicator"
+        app:tabIndicatorColor="@color/accent_sky"
+        app:tabIndicatorFullWidth="false">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/home_tab_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/home_tab_height"
+            android:icon="@drawable/ic_clock_normal" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/home_tab_game"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/home_tab_height"
+            android:icon="@drawable/ic_game_normal" />
+
+    </com.google.android.material.tabs.TabLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

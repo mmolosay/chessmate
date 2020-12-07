@@ -14,7 +14,8 @@ class HomeGameTabFragment private constructor() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.view_container, container, false)
+        val layout = R.layout.fragment_home_tab_game
+        return inflater.inflate(layout, container, false)
     }
 
     companion object {

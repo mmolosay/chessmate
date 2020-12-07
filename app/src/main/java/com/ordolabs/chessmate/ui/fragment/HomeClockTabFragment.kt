@@ -14,7 +14,8 @@ class HomeClockTabFragment private constructor() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.view_container, container, false)
+        val layout = R.layout.fragment_home_tab_clock
+        return inflater.inflate(layout, container, false)
     }
 
     companion object {

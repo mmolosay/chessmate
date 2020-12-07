@@ -15,14 +15,14 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="TextTitle" parent="TextGeneric">
-        <item name="android:textSize">@dimen/text_title</item>
+    <style name="TextTitle.Light" parent="TextGeneric">
+        <item name="android:textSize">@dimen/text_size_20</item>
         <item name="android:fontFamily">@font/raleway_regular</item>
         <item name="android:letterSpacing">@dimen/text_spacing_medium</item>
     </style>
 
-    <style name="TextBody" parent="TextGeneric">
-        <item name="android:textSize">@dimen/text_body</item>
+    <style name="TextBody.Light" parent="TextGeneric">
+        <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
         <item name="android:letterSpacing">@dimen/text_spacing_small</item>
     </style>

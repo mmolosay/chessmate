@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ordolabs.chessmate.util.struct.Stopwatch
 import com.ordolabs.chessmate.viewmodel.base.BaseViewModel
-import kotlin.math.min
 
 class HomeViewModel : BaseViewModel() {
 
@@ -60,5 +59,7 @@ class HomeViewModel : BaseViewModel() {
     companion object {
         private const val STOPWATCH_UPDATE_FREQ = 50L
         private const val STOPWATCH_UPDATE_DELTA_TIME = 1000 / STOPWATCH_UPDATE_FREQ
+
+        const val STOPWATCH_PATTERN = "00:00.00"
     }
 }

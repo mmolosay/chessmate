@@ -31,13 +31,8 @@ class HomeClockTabFragment private constructor() : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setStopwatch()
         setResetStopwatchButton()
         setStartStopButton()
-    }
-
-    private fun setStopwatch() {
-
     }
 
     private fun setResetStopwatchButton() {
@@ -51,7 +46,8 @@ class HomeClockTabFragment private constructor() : Fragment() {
             val running = homeVM.isStopwatchRunning()
             if (running) {
                 homeVM.stopStopwatch()
-            } else{
+                tab_clock_stopwatch.text = HomeViewModel.STOPWATCH_PATTERN
+            } else {
                 homeVM.startStopwatch()
             }
             alterStartStopButtonIcon(running)

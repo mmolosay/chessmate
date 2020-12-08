@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ordolabs.chessmate.R
+import com.ordolabs.chessmate.ui.dialog.StopwatchSettingsDialog
 import com.ordolabs.chessmate.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home_tab_clock.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,6 +34,8 @@ class HomeClockTabFragment private constructor() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setResetStopwatchButton()
         setStartStopButton()
+        setSettingsButton()
+        setCheckpointsButton()
     }
 
     private fun setResetStopwatchButton() {
@@ -52,6 +55,18 @@ class HomeClockTabFragment private constructor() : Fragment() {
             }
             alterStartStopButtonIcon(running)
         }
+    }
+
+    private fun setSettingsButton() {
+        tab_clock_btn_settings.setOnClickListener {
+            StopwatchSettingsDialog
+                .new(requireContext())
+                .show(parentFragmentManager, "stopwatch_settings_dialog")
+        }
+    }
+
+    private fun setCheckpointsButton() {
+
     }
 
     private fun alterStartStopButtonIcon(setStart: Boolean) {

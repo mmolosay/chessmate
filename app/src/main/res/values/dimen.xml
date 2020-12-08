@@ -27,4 +27,7 @@
     <!--~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~~-->
     <dimen name="home_tab_height">?attr/tabIndicatorHeight</dimen>
 
+    <!--~~~~~~~~~~~~~~~~~~~ DIALOGS ~~~~~~~~~~~~~~~~~~~~-->
+    <dimen name="d_bg_rounded_radius">8dp</dimen>
+
 </resources>

@@ -9,6 +9,7 @@
     <color name="navigation_bar">@color/content_bg</color>
 
     <color name="accent_sky">#42A5F5</color>
+    <color name="ash">#ECECEC</color>
 
     <!--~~~~~~~~~~~~~~~~~~~~~ TEXT ~~~~~~~~~~~~~~~~~~~~~-->
     <color name="text_title">#000000</color>

@@ -4,4 +4,7 @@
 
     <!--~~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~-->
 
+    <!--~~~~~~~~~~~~~~~~~~~~ DIALOGS ~~~~~~~~~~~~~~~~~~~-->
+    <string name="d_stopwatch_settings_time_limit">Time limit</string>
+
 </resources>

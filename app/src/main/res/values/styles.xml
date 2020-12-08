@@ -16,12 +16,14 @@
     </style>
 
     <style name="TextTitle.Light" parent="TextGeneric">
+        <item name="android:textColor">@color/text_title</item>
         <item name="android:textSize">@dimen/text_size_20</item>
         <item name="android:fontFamily">@font/raleway_regular</item>
         <item name="android:letterSpacing">@dimen/text_spacing_medium</item>
     </style>
 
     <style name="TextBody.Light" parent="TextGeneric">
+        <item name="android:textColor">@color/text_body</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
         <item name="android:letterSpacing">@dimen/text_spacing_small</item>
@@ -36,6 +38,12 @@
     <style name="ToolbarTitleTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/text_title</item>
         <item name="android:letterSpacing">@dimen/text_spacing_medium</item>
+    </style>
+
+    <!--~~~~~~~~~~~~~~~~~~~~ DIALOGS ~~~~~~~~~~~~~~~~~~~-->
+    <style name="DialogThemeWide" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">80%</item>
     </style>
 
 </resources>

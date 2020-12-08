@@ -60,7 +60,7 @@ class HomeClockTabFragment private constructor() : Fragment() {
     private fun setSettingsButton() {
         tab_clock_btn_settings.setOnClickListener {
             StopwatchSettingsDialog
-                .new(requireContext())
+                .new()
                 .show(parentFragmentManager, "stopwatch_settings_dialog")
         }
     }

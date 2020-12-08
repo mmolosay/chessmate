@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="anim_duration_50">50</integer>
+    <integer name="anim_duration_75">75</integer>
+    <integer name="anim_duration_100">100</integer>
+    <integer name="anim_duration_200">200</integer>
+    <integer name="anim_duration_300">300</integer>
+    <integer name="anim_duration_400">400</integer>
+    <integer name="anim_duration_500">500</integer>
+
+</resources>

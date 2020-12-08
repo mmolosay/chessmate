@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Use with colored oval buttons -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="#59FFFFFF">
+    android:color="#33FFFFFF">
     <item
         android:id="@android:id/mask"
         android:gravity="center">

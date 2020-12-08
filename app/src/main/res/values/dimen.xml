@@ -35,11 +35,14 @@
     <dimen name="elevation_normal">4dp</dimen>
     <dimen name="elevation_big">8dp</dimen>
 
+    <dimen name="alpha_btn_large_normal" type="dimen" format="float">1.0</dimen>
+    <dimen name="alpha_btn_large_diminished" type="dimen" format="float">0.6</dimen>
+
     <dimen name="scale_btn_small_normal" type="dimen" format="float">1.0</dimen>
     <dimen name="scale_btn_small_diminished" type="dimen" format="float">0.85</dimen>
 
-    <dimen name="scale_btn_big_normal" type="dimen" format="float">1.0</dimen>
-    <dimen name="scale_btn_big_diminished" type="dimen" format="float">0.92</dimen>
+    <dimen name="scale_btn_large_normal" type="dimen" format="float">1.0</dimen>
+    <dimen name="scale_btn_large_diminished" type="dimen" format="float">0.92</dimen>
 
     <!--~~~~~~~~~~~~~~~~~~~~ STUFF ~~~~~~~~~~~~~~~~~~~~~-->
 

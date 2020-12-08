@@ -47,7 +47,7 @@
 
     <style name="Button.Small.RoundSky">
         <item name="android:background">@drawable/btn_round_sky_normal</item>
-        <item name="android:elevation">@dimen/elevation_normal</item>
+        <item name="android:translationZ">@dimen/elevation_normal</item>
         <item name="android:stateListAnimator">@animator/animator_btn_round_small</item>
     </style>
 
@@ -64,8 +64,8 @@
 
     <style name="Button.Large.RoundSky">
         <item name="android:background">@drawable/btn_round_sky_normal</item>
-        <item name="android:elevation">@dimen/elevation_big</item>
-        <item name="android:stateListAnimator">@animator/animator_btn_round_big</item>
+        <item name="android:translationZ">@dimen/elevation_big</item>
+        <item name="android:stateListAnimator">@animator/animator_btn_round_large</item>
     </style>
 
     <!--~~~~~~~~~~~~~~~~~~~~ TOOLBAR ~~~~~~~~~~~~~~~~~~~-->

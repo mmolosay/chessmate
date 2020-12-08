@@ -32,13 +32,14 @@ class HomeClockTabFragment private constructor() : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setResetStopwatchButton()
+        setResetButton()
         setStartStopButton()
         setSettingsButton()
         setCheckpointsButton()
     }
 
-    private fun setResetStopwatchButton() {
+    private fun setResetButton() {
+        tab_clock_btn_reset.isEnabled = false
         tab_clock_btn_reset.setOnClickListener {
             homeVM.resetStopwatch()
         }
@@ -53,6 +54,7 @@ class HomeClockTabFragment private constructor() : Fragment() {
             } else {
                 homeVM.startStopwatch()
             }
+            tab_clock_btn_reset.isEnabled = !running
             alterStartStopButtonIcon(running)
         }
     }

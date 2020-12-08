@@ -1,5 +1,6 @@
 package com.ordolabs.chessmate.ui.activity
 
+import android.os.Build
 import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -21,14 +22,21 @@ class HomeActivity : BaseActivity(R.layout.activity_home) {
     }
 
     private fun setTabLayout() {
-        TabLayoutMediator(home_tabs, home_pager) { tab, pos ->
-            val iconId: Int = when (pos) {
-                0 -> R.drawable.ic_clock
-                1 -> R.drawable.ic_game
-                else -> throw IllegalArgumentException("pos $pos is unresolved")
-            }
-            val icon = ContextCompat.getDrawable(this, iconId)
-            tab.icon = icon
-        }.attach()
+        TabLayoutMediator(home_tabs, home_pager, ::configureTab).attach()
+    }
+
+    private fun configureTab(tab: TabLayout.Tab, pos: Int) {
+        val iconId: Int = when (pos) {
+            0 -> R.drawable.ic_clock
+            1 -> R.drawable.ic_game
+            else -> throw IllegalArgumentException("pos $pos is unresolved")
+        }
+        val icon = ContextCompat.getDrawable(this, iconId)
+        tab.icon = icon
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            val tabRipple = ContextCompat.getDrawable(this, R.drawable.ripple_rounded_gray205)
+            tab.view.background = tabRipple
+        }
     }
 }

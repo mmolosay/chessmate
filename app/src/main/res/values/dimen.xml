@@ -30,4 +30,8 @@
     <!--~~~~~~~~~~~~~~~~~~~ DIALOGS ~~~~~~~~~~~~~~~~~~~~-->
     <dimen name="d_bg_rounded_radius">8dp</dimen>
 
+    <!--~~~~~~~~~~~~~~~~~~~~ STUFF ~~~~~~~~~~~~~~~~~~~~~-->
+    <dimen name="elevation_normal">4dp</dimen>
+    <dimen name="elevation_big">8dp</dimen>
+
 </resources>

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_rounded_white"
-    android:padding="@dimen/size_16">
+    android:padding="@dimen/size_16"
+    tools:layout_margin="@dimen/size_16">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/d_stopwatch_settings_limit_label"
@@ -14,30 +16,49 @@
 
         android:text="@string/d_stopwatch_settings_time_limit"
 
-        app:layout_constraintBottom_toBottomOf="@+id/d_stopwatch_settings_edit_limit"
-        app:layout_constraintEnd_toStartOf="@+id/d_stopwatch_settings_edit_limit"
+        app:layout_constraintBottom_toBottomOf="@+id/d_stopwatch_settings_edit_limit_minutes"
+        app:layout_constraintEnd_toStartOf="@+id/d_stopwatch_settings_edit_limit_minutes"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/d_stopwatch_settings_edit_limit" />
+        app:layout_constraintTop_toTopOf="@+id/d_stopwatch_settings_edit_limit_minutes" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/d_stopwatch_settings_edit_limit"
-        style="@style/TextBody.Day"
+        android:id="@+id/d_stopwatch_settings_edit_limit_minutes"
+        style="@style/EditText"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
 
         android:layout_marginHorizontal="@dimen/size_16"
-        android:background="@drawable/btn_rounded_ash_normal"
-        android:gravity="center"
+        android:layout_marginTop="@dimen/size_4"
+        android:hint="@string/d_stopwatch_setting_time_limit_m_hint"
+        android:imeOptions="actionNext"
         android:inputType="numberDecimal"
-        android:paddingVertical="@dimen/size_8"
-        android:singleLine="true"
+        android:maxLength="2"
 
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/d_stopwatch_settings_edit_limit_seconds"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/d_stopwatch_settings_limit_label"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/d_stopwatch_settings_edit_limit_seconds"
+        style="@style/EditText"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+
+        android:hint="@string/d_stopwatch_setting_time_limit_s_hint"
+        android:imeOptions="actionDone"
+        android:inputType="numberDecimal"
+        android:maxLength="2"
+
+        app:layout_constraintBottom_toBottomOf="@+id/d_stopwatch_settings_edit_limit_minutes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/d_stopwatch_settings_edit_limit_minutes"
+        app:layout_constraintTop_toTopOf="@+id/d_stopwatch_settings_edit_limit_minutes" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/d_stopwatch_settings_btn_ok"
@@ -54,6 +75,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/d_stopwatch_settings_edit_limit" />
+        app:layout_constraintTop_toBottomOf="@+id/d_stopwatch_settings_edit_limit_minutes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

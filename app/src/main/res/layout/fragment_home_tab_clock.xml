@@ -62,12 +62,14 @@
 
         android:layout_marginHorizontal="@dimen/size_32"
         android:background="@drawable/btn_round_ash_normal"
+        android:foreground="@drawable/ripple_oval_default"
         android:padding="@dimen/size_12"
         android:src="@drawable/ic_gear_normal"
 
         app:layout_constraintBottom_toBottomOf="@+id/tab_clock_btn_startstop"
         app:layout_constraintStart_toEndOf="@+id/tab_clock_btn_startstop"
-        app:layout_constraintTop_toTopOf="@+id/tab_clock_btn_startstop" />
+        app:layout_constraintTop_toTopOf="@+id/tab_clock_btn_startstop"
+        tools:ignore="UnusedAttribute" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/tab_clock_btn_checkpoints"
@@ -76,11 +78,13 @@
 
         android:layout_marginHorizontal="@dimen/size_32"
         android:background="@drawable/btn_round_ash_normal"
+        android:foreground="@drawable/ripple_oval_default"
         android:padding="@dimen/size_12"
         android:src="@drawable/ic_list_normal"
 
         app:layout_constraintBottom_toBottomOf="@+id/tab_clock_btn_startstop"
         app:layout_constraintEnd_toStartOf="@+id/tab_clock_btn_startstop"
-        app:layout_constraintTop_toTopOf="@+id/tab_clock_btn_startstop" />
+        app:layout_constraintTop_toTopOf="@+id/tab_clock_btn_startstop"
+        tools:ignore="UnusedAttribute" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

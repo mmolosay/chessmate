@@ -25,15 +25,11 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/tab_clock_btn_reset"
+        style="@style/Button.RoundSkyBig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:background="@drawable/btn_round_sky_normal"
-        android:elevation="@dimen/elevation_big"
-        android:foreground="@drawable/ripple_oval_light"
-        android:padding="@dimen/size_24"
         android:src="@drawable/ic_change_turn_big_normal"
-        android:stateListAnimator="@animator/animator_btn_elevation_big"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tab_clock_stopwatch"
@@ -44,15 +40,11 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/tab_clock_btn_startstop"
+        style="@style/Button.RoundSkySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:background="@drawable/btn_round_sky_normal"
-        android:elevation="@dimen/elevation_normal"
-        android:foreground="@drawable/ripple_oval_light"
-        android:padding="@dimen/size_12"
         android:src="@drawable/ic_start_normal"
-        android:stateListAnimator="@animator/animator_btn_elevation_normal"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tab_clock_stopwatch"
@@ -63,13 +55,11 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/tab_clock_btn_settings"
+        style="@style/Button.RoundAshSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:layout_marginHorizontal="@dimen/size_32"
-        android:background="@drawable/btn_round_ash_normal"
-        android:foreground="@drawable/ripple_oval_gray"
-        android:padding="@dimen/size_12"
         android:src="@drawable/ic_gear_normal"
 
         app:layout_constraintBottom_toBottomOf="@+id/tab_clock_btn_startstop"
@@ -79,13 +69,11 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/tab_clock_btn_checkpoints"
+        style="@style/Button.RoundAshSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:layout_marginHorizontal="@dimen/size_32"
-        android:background="@drawable/btn_round_ash_normal"
-        android:foreground="@drawable/ripple_oval_gray"
-        android:padding="@dimen/size_12"
         android:src="@drawable/ic_list_normal"
 
         app:layout_constraintBottom_toBottomOf="@+id/tab_clock_btn_startstop"

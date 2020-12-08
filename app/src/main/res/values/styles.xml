@@ -29,6 +29,33 @@
         <item name="android:letterSpacing">@dimen/text_spacing_small</item>
     </style>
 
+    <!--~~~~~~~~~~~~~~~~~~~~ BUTTONS ~~~~~~~~~~~~~~~~~~~-->
+    <style name="Button" parent="TextAppearance.AppCompat.Widget.Button">
+
+    </style>
+
+    <style name="Button.RoundSkyBig">
+        <item name="android:background">@drawable/btn_round_sky_normal</item>
+        <item name="android:elevation">@dimen/elevation_big</item>
+        <item name="android:foreground">@drawable/ripple_oval_light</item>
+        <item name="android:padding">@dimen/size_24</item>
+        <item name="android:stateListAnimator">@animator/animator_btn_round_big</item>
+    </style>
+
+    <style name="Button.RoundSkySmall">
+        <item name="android:background">@drawable/btn_round_sky_normal</item>
+        <item name="android:elevation">@dimen/elevation_normal</item>
+        <item name="android:foreground">@drawable/ripple_oval_light</item>
+        <item name="android:padding">@dimen/size_12</item>
+        <item name="android:stateListAnimator">@animator/animator_btn_round_small</item>
+    </style>
+
+    <style name="Button.RoundAshSmall">
+        <item name="android:background">@drawable/btn_round_ash_normal</item>
+        <item name="android:foreground">@drawable/ripple_oval_gray</item>
+        <item name="android:padding">@dimen/size_12</item>
+    </style>
+
     <!--~~~~~~~~~~~~~~~~~~~~ TOOLBAR ~~~~~~~~~~~~~~~~~~~-->
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:background">@android:color/transparent</item>

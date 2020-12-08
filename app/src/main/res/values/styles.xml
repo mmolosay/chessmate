@@ -1,7 +1,7 @@
 <resources>
 
     <!--~~~~~~~~~~~~~~~~~~~~ COMMON ~~~~~~~~~~~~~~~~~~~~-->
-    <style name="Theme.Chessmate.Light" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Chessmate.Day" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/window_background</item>
         <item name="android:statusBarColor">@color/status_bar_base</item>
         <item name="android:navigationBarColor">@color/navigation_bar</item>
@@ -15,14 +15,14 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="TextTitle.Light" parent="TextGeneric">
+    <style name="TextTitle.Day" parent="TextGeneric">
         <item name="android:textColor">@color/text_title</item>
         <item name="android:textSize">@dimen/text_size_20</item>
         <item name="android:fontFamily">@font/raleway_regular</item>
         <item name="android:letterSpacing">@dimen/text_spacing_medium</item>
     </style>
 
-    <style name="TextBody.Light" parent="TextGeneric">
+    <style name="TextBody.Day" parent="TextGeneric">
         <item name="android:textColor">@color/text_body</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
@@ -31,29 +31,41 @@
 
     <!--~~~~~~~~~~~~~~~~~~~~ BUTTONS ~~~~~~~~~~~~~~~~~~~-->
     <style name="Button" parent="TextAppearance.AppCompat.Widget.Button">
-
+        <item name="android:foreground">@drawable/ripple_round_light</item>
     </style>
 
-    <style name="Button.RoundSkyBig">
-        <item name="android:background">@drawable/btn_round_sky_normal</item>
-        <item name="android:elevation">@dimen/elevation_big</item>
-        <item name="android:foreground">@drawable/ripple_oval_light</item>
-        <item name="android:padding">@dimen/size_24</item>
-        <item name="android:stateListAnimator">@animator/animator_btn_round_big</item>
+
+    <style name="Button.Small">
+        <item name="android:textAppearanceButton">@style/TextBody.Day</item>
+        <item name="android:padding">@dimen/size_12</item>
     </style>
 
-    <style name="Button.RoundSkySmall">
+    <style name="Button.Small.RoundAsh">
+        <item name="android:background">@drawable/btn_round_ash_normal</item>
+        <item name="android:foreground">@drawable/ripple_round_gray</item>
+    </style>
+
+    <style name="Button.Small.RoundSky">
         <item name="android:background">@drawable/btn_round_sky_normal</item>
         <item name="android:elevation">@dimen/elevation_normal</item>
-        <item name="android:foreground">@drawable/ripple_oval_light</item>
-        <item name="android:padding">@dimen/size_12</item>
         <item name="android:stateListAnimator">@animator/animator_btn_round_small</item>
     </style>
 
-    <style name="Button.RoundAshSmall">
-        <item name="android:background">@drawable/btn_round_ash_normal</item>
-        <item name="android:foreground">@drawable/ripple_oval_gray</item>
-        <item name="android:padding">@dimen/size_12</item>
+    <style name="Button.Small.RoundedSky">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:foreground">@drawable/ripple_rounded_light</item>
+    </style>
+
+
+    <style name="Button.Large">
+        <item name="android:textAppearanceButton">@style/TextTitle.Day</item>
+        <item name="android:padding">@dimen/size_24</item>
+    </style>
+
+    <style name="Button.Large.RoundSky">
+        <item name="android:background">@drawable/btn_round_sky_normal</item>
+        <item name="android:elevation">@dimen/elevation_big</item>
+        <item name="android:stateListAnimator">@animator/animator_btn_round_big</item>
     </style>
 
     <!--~~~~~~~~~~~~~~~~~~~~ TOOLBAR ~~~~~~~~~~~~~~~~~~~-->

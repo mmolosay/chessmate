@@ -8,7 +8,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/d_stopwatch_settings_limit_label"
-        style="@style/TextBody.Light"
+        style="@style/TextBody.Day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -23,7 +23,7 @@
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/d_stopwatch_settings_edit_limit"
-        style="@style/TextBody.Light"
+        style="@style/TextBody.Day"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
 
@@ -41,7 +41,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/d_stopwatch_settings_btn_ok"
-        style="@style/TextBody.Light"
+        style="@style/Button.Small.RoundedSky"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 

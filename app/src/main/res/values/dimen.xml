@@ -38,6 +38,9 @@
     <dimen name="alpha_btn_large_normal" type="dimen" format="float">1.0</dimen>
     <dimen name="alpha_btn_large_diminished" type="dimen" format="float">0.6</dimen>
 
+    <dimen name="alpha_btn_minor_normal" type="dimen" format="float">1.0</dimen>
+    <dimen name="alpha_btn_minor_diminished" type="dimen" format="float">0.6</dimen>
+
     <dimen name="scale_btn_small_normal" type="dimen" format="float">1.0</dimen>
     <dimen name="scale_btn_small_diminished" type="dimen" format="float">0.85</dimen>
 

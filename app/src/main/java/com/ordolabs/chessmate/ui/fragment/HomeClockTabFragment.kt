@@ -55,6 +55,7 @@ class HomeClockTabFragment private constructor() : Fragment() {
                 stopwatchVM.startStopwatch()
             }
             tab_clock_btn_reset.isEnabled = !running
+            tab_clock_btn_settings.isEnabled = running
             alterStartStopButtonIcon(running)
         }
     }

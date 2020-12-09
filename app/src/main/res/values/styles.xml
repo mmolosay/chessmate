@@ -40,11 +40,6 @@
         <item name="android:padding">@dimen/size_12</item>
     </style>
 
-    <style name="Button.Small.RoundAsh">
-        <item name="android:background">@drawable/btn_round_ash_normal</item>
-        <item name="android:foreground">@drawable/ripple_round_white35</item>
-    </style>
-
     <style name="Button.Small.RoundSky">
         <item name="android:background">@drawable/btn_round_sky_normal</item>
         <item name="android:translationZ">@dimen/elevation_normal</item>
@@ -60,6 +55,18 @@
     <style name="Button.Small.RoundedSky">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:foreground">@drawable/ripple_rounded_white20</item>
+    </style>
+
+
+    <style name="Button.Minor">
+        <item name="android:stateListAnimator">@animator/animator_btn_round_minor</item>
+        <item name="android:textAppearanceButton">@style/TextBody.Day</item>
+        <item name="android:padding">@dimen/size_12</item>
+    </style>
+
+    <style name="Button.Minor.RoundAsh">
+        <item name="android:background">@drawable/btn_round_ash_normal</item>
+        <item name="android:foreground">@drawable/ripple_round_white35</item>
     </style>
 
 

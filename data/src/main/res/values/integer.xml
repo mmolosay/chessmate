@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="data_ds_stopwatch_settings_limit_minutes_default">1</integer>
+    <integer name="data_ds_stopwatch_settings_limit_seconds_default">0</integer>
+
+</resources>

@@ -35,6 +35,8 @@ class StopwatchSettingsDialog(
         stopwatchSettingsVM.getStopwatchSettings().observe(this) { settings ->
             editLimitMinutes.setText(settings.limitMinutes.toString())
             editLimitSeconds.setText(settings.limitSeconds.toString())
+            editPlayer1.setText(settings.player1)
+            editPlayer2.setText(settings.player2)
         }
     }
 
@@ -58,7 +60,9 @@ class StopwatchSettingsDialog(
     private fun collectSettings(): StopwatchSettingsPresentation {
         val minutes = editLimitMinutes.text.toString().toInt()
         val seconds = editLimitSeconds.text.toString().toInt()
-        return StopwatchSettingsPresentation(minutes, seconds)
+        val player1 = editPlayer1.text.toString()
+        val player2 = editPlayer2.text.toString()
+        return StopwatchSettingsPresentation(minutes, seconds, player1, player2)
     }
 
     companion object {

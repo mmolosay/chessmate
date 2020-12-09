@@ -2,10 +2,7 @@ package com.ordolabs.chessmate
 
 import android.app.Application
 import android.content.Context
-import com.ordolabs.chessmate.di.DBSourceModule
-import com.ordolabs.chessmate.di.singletonsModule
-import com.ordolabs.chessmate.di.useCaseModule
-import com.ordolabs.chessmate.di.viewModelModule
+import com.ordolabs.chessmate.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -22,7 +19,8 @@ class ChessMateApp : Application() {
         startKoin {
             androidContext(this@ChessMateApp)
             modules(
-                DBSourceModule,
+                RoomModule,
+                DataStoreModule,
                 useCaseModule,
                 viewModelModule,
                 singletonsModule

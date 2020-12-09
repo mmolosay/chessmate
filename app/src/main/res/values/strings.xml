@@ -10,4 +10,7 @@
     <string name="d_stopwatch_setting_time_limit_s_hint">s</string>
     <string name="d_stopwatch_setting_time_limit_separator"> : </string>
 
+    <!--~~~~~~~~~~~~~~~~~~~~~ STUFF ~~~~~~~~~~~~~~~~~~~~-->
+    <string name="error_unknown">An error occurred :(</string>
+
 </resources>

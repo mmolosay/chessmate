@@ -9,13 +9,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.ui.dialog.StopwatchSettingsDialog
-import com.ordolabs.chessmate.viewmodel.HomeViewModel
+import com.ordolabs.chessmate.viewmodel.StopwatchViewModel
 import kotlinx.android.synthetic.main.fragment_home_tab_clock.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeClockTabFragment private constructor() : Fragment() {
 
-    private val homeVM: HomeViewModel by viewModel()
+    private val stopwatchVM: StopwatchViewModel by viewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -41,18 +41,18 @@ class HomeClockTabFragment private constructor() : Fragment() {
     private fun setResetButton() {
         tab_clock_btn_reset.isEnabled = false
         tab_clock_btn_reset.setOnClickListener {
-            homeVM.resetStopwatch()
+            stopwatchVM.resetStopwatch()
         }
     }
 
     private fun setStartStopButton() {
         tab_clock_btn_startstop.setOnClickListener {
-            val running = homeVM.isStopwatchRunning()
+            val running = stopwatchVM.isStopwatchRunning()
             if (running) {
-                homeVM.stopStopwatch()
-                tab_clock_stopwatch.text = HomeViewModel.STOPWATCH_PATTERN
+                stopwatchVM.stopStopwatch()
+                tab_clock_stopwatch.text = StopwatchViewModel.STOPWATCH_PATTERN
             } else {
-                homeVM.startStopwatch()
+                stopwatchVM.startStopwatch()
             }
             tab_clock_btn_reset.isEnabled = !running
             alterStartStopButtonIcon(running)
@@ -62,7 +62,9 @@ class HomeClockTabFragment private constructor() : Fragment() {
     private fun setSettingsButton() {
         tab_clock_btn_settings.setOnClickListener {
             StopwatchSettingsDialog
-                .new()
+                .new { newSettings ->
+                    // TODO: update settings in datastore
+                }
                 .show(parentFragmentManager, "stopwatch_settings_dialog")
         }
     }
@@ -81,7 +83,7 @@ class HomeClockTabFragment private constructor() : Fragment() {
     }
 
     private fun observeStopwatchTime() {
-        homeVM.stopwatchTime.observe(this) { time ->
+        stopwatchVM.stopwatchTime.observe(this) { time ->
             tab_clock_stopwatch.text = time
         }
     }

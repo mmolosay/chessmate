@@ -1,7 +1,7 @@
 <resources>
 
     <!--~~~~~~~~~~~~~~~~~~~~ COMMON ~~~~~~~~~~~~~~~~~~~~-->
-    <style name="Theme.Chessmate.Light" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Chessmate.Day" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/window_background</item>
         <item name="android:statusBarColor">@color/status_bar_base</item>
         <item name="android:navigationBarColor">@color/navigation_bar</item>
@@ -15,16 +15,85 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="TextTitle.Light" parent="TextGeneric">
+    <style name="TextTitle.Day" parent="TextGeneric">
+        <item name="android:textColor">@color/text_title</item>
         <item name="android:textSize">@dimen/text_size_20</item>
         <item name="android:fontFamily">@font/raleway_regular</item>
         <item name="android:letterSpacing">@dimen/text_spacing_medium</item>
     </style>
 
-    <style name="TextBody.Light" parent="TextGeneric">
+    <style name="TextBody.Day" parent="TextGeneric">
+        <item name="android:textColor">@color/text_body</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
         <item name="android:letterSpacing">@dimen/text_spacing_small</item>
+    </style>
+
+    <!--~~~~~~~~~~~~~~~~~~~~ BUTTONS ~~~~~~~~~~~~~~~~~~~-->
+    <style name="Button" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:foreground">@drawable/ripple_round_white20</item>
+    </style>
+
+
+    <style name="Button.Small">
+        <item name="android:textAppearanceButton">@style/TextBody.Day</item>
+        <item name="android:padding">@dimen/size_12</item>
+    </style>
+
+    <style name="Button.Small.RoundSky">
+        <item name="android:background">@drawable/btn_round_sky_normal</item>
+        <item name="android:translationZ">@dimen/elevation_normal</item>
+        <item name="android:stateListAnimator">@animator/animator_btn_round_small</item>
+    </style>
+
+    <style name="Button.Small.RoundPlain">
+        <item name="android:background">@null</item>
+        <item name="android:foreground">@drawable/ripple_rounded_gray205</item>
+        <item name="android:padding">@dimen/size_8</item>
+    </style>
+
+    <style name="Button.Small.RoundedSky">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:foreground">@drawable/ripple_rounded_white20</item>
+    </style>
+
+
+    <style name="Button.Minor">
+        <item name="android:stateListAnimator">@animator/animator_btn_round_minor</item>
+        <item name="android:textAppearanceButton">@style/TextBody.Day</item>
+        <item name="android:padding">@dimen/size_12</item>
+    </style>
+
+    <style name="Button.Minor.RoundAsh">
+        <item name="android:background">@drawable/btn_round_ash_normal</item>
+        <item name="android:foreground">@drawable/ripple_round_white35</item>
+    </style>
+
+
+    <style name="Button.Large">
+        <item name="android:textAppearanceButton">@style/TextTitle.Day</item>
+        <item name="android:padding">@dimen/size_24</item>
+    </style>
+
+    <style name="Button.Large.RoundSky">
+        <item name="android:background">@drawable/btn_round_sky_normal</item>
+        <item name="android:translationZ">@dimen/elevation_big</item>
+        <item name="android:stateListAnimator">@animator/animator_btn_round_large</item>
+    </style>
+
+    <!--~~~~~~~~~~~~~~~~~~~~ EDITTEXT ~~~~~~~~~~~~~~~~~~-->
+    <style name="EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/text_body</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:letterSpacing">@dimen/text_spacing_small</item>
+        <item name="android:includeFontPadding">false</item>
+
+        <item name="android:background">@drawable/btn_rounded_ash_normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/size_8</item>
+        <item name="android:paddingBottom">@dimen/size_8</item>
+        <item name="android:singleLine">true</item>
     </style>
 
     <!--~~~~~~~~~~~~~~~~~~~~ TOOLBAR ~~~~~~~~~~~~~~~~~~~-->
@@ -36,6 +105,14 @@
     <style name="ToolbarTitleTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/text_title</item>
         <item name="android:letterSpacing">@dimen/text_spacing_medium</item>
+    </style>
+
+    <!--~~~~~~~~~~~~~~~~~~~~ DIALOGS ~~~~~~~~~~~~~~~~~~~-->
+    <style name="DialogThemeWide" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">80%</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
 </resources>

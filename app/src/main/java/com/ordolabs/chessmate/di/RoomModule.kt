@@ -1,14 +1,14 @@
 package com.ordolabs.chessmate.di
 
 import androidx.room.Room
-import com.ordolabs.data.ChessMateDB
-import com.ordolabs.data.dao.MovesDao
-import com.ordolabs.data.repository.MovesRepository
-import com.ordolabs.domain.repository.IDBMovesRepository
+import com.ordolabs.data.room.ChessMateDB
+import com.ordolabs.data.room.dao.MovesDao
+import com.ordolabs.data.room.repository.MovesRepository
+import com.ordolabs.domain.repository.IRoomMovesRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val DBSourceModule = module {
+val RoomModule = module {
 
     single {
         Room
@@ -23,7 +23,7 @@ val DBSourceModule = module {
     }
 
     // Repositories
-    single<IDBMovesRepository> {
+    single<IRoomMovesRepository> {
         val dao: MovesDao = get()
         MovesRepository(dao)
     }

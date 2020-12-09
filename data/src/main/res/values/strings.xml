@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="data_ds_stopwatch_settings_player1_default">You</string>
+    <string name="data_ds_stopwatch_settings_player2_default">Opponent</string>
+
+</resources>

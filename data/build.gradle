@@ -44,6 +44,7 @@ dependencies {
     api dataDependencies.roomRuntime
     kapt dataDependencies.roomCompiler
     implementation dataDependencies.roomKtx
+    implementation dataDependencies.preferencesDataStore
 
     // Tests
     testImplementation testDependencies.roomTest

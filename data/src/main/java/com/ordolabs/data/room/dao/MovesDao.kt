@@ -1,4 +1,4 @@
-package com.ordolabs.data.dao
+package com.ordolabs.data.room.dao
 
 import androidx.room.Dao
 

@@ -27,4 +27,26 @@
     <!--~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~~-->
     <dimen name="home_tab_height">?attr/tabIndicatorHeight</dimen>
 
+    <!--~~~~~~~~~~~~~~~~~~~ DIALOGS ~~~~~~~~~~~~~~~~~~~~-->
+    <dimen name="d_bg_rounded_radius">8dp</dimen>
+
+    <!--~~~~~~~~~~~~~~~~~~ ANIMATIONS ~~~~~~~~~~~~~~~~~~-->
+    <dimen name="elevation_none">0dp</dimen>
+    <dimen name="elevation_normal">4dp</dimen>
+    <dimen name="elevation_big">8dp</dimen>
+
+    <dimen name="alpha_btn_large_normal" type="dimen" format="float">1.0</dimen>
+    <dimen name="alpha_btn_large_diminished" type="dimen" format="float">0.6</dimen>
+
+    <dimen name="alpha_btn_minor_normal" type="dimen" format="float">1.0</dimen>
+    <dimen name="alpha_btn_minor_diminished" type="dimen" format="float">0.55</dimen>
+
+    <dimen name="scale_btn_small_normal" type="dimen" format="float">1.0</dimen>
+    <dimen name="scale_btn_small_diminished" type="dimen" format="float">0.85</dimen>
+
+    <dimen name="scale_btn_large_normal" type="dimen" format="float">1.0</dimen>
+    <dimen name="scale_btn_large_diminished" type="dimen" format="float">0.92</dimen>
+
+    <!--~~~~~~~~~~~~~~~~~~~~ STUFF ~~~~~~~~~~~~~~~~~~~~~-->
+
 </resources>

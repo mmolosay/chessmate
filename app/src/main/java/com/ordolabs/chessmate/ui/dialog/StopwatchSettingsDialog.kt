@@ -16,6 +16,9 @@ class StopwatchSettingsDialog(
 
     private val editLimitMinutes by lazy { d_stopwatch_settings_edit_limit_minutes }
     private val editLimitSeconds by lazy { d_stopwatch_settings_edit_limit_seconds }
+    private val editPlayer1 by lazy { d_stopwatch_settings_edit_player1 }
+    private val editPlayer2 by lazy { d_stopwatch_settings_edit_player2 }
+    private val btnSwapPlayers by lazy { d_stopwatch_settings_players_btn_swap }
     private val btnOk by lazy { d_stopwatch_settings_btn_ok }
 
     override fun getDialogLayoutRes(): Int {
@@ -24,6 +27,7 @@ class StopwatchSettingsDialog(
 
     override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
         observeSavedSettings()
+        setSwapPlayersButton()
         setOkButton()
     }
 
@@ -31,6 +35,14 @@ class StopwatchSettingsDialog(
         stopwatchSettingsVM.getStopwatchSettings().observe(this) { settings ->
             editLimitMinutes.setText(settings.limitMinutes.toString())
             editLimitSeconds.setText(settings.limitSeconds.toString())
+        }
+    }
+
+    private fun setSwapPlayersButton() {
+        btnSwapPlayers.setOnClickListener {
+            val player1 = editPlayer1.text
+            editPlayer1.text = editPlayer2.text
+            editPlayer2.text = player1
         }
     }
 

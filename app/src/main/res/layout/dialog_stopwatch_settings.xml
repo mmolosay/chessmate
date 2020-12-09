@@ -126,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginHorizontal="@dimen/size_8"
+        android:layout_marginHorizontal="@dimen/size_4"
         android:src="@drawable/ic_swap_normal"
 
         app:layout_constraintBottom_toBottomOf="@+id/d_stopwatch_settings_edit_player2"

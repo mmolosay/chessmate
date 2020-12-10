@@ -18,11 +18,11 @@ class HomeActivity : BaseActivity(R.layout.activity_home) {
 
     private fun setTabsPager() {
         val adapter = HomeTabsPagerAdapter(supportFragmentManager, lifecycle)
-        home_pager.adapter = adapter
+        pager.adapter = adapter
     }
 
     private fun setTabLayout() {
-        TabLayoutMediator(home_tabs, home_pager, ::configureTab).attach()
+        TabLayoutMediator(tabs, pager, ::configureTab).attach()
     }
 
     private fun configureTab(tab: TabLayout.Tab, pos: Int) {

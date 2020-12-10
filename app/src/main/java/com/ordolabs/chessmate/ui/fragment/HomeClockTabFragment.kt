@@ -39,29 +39,29 @@ class HomeClockTabFragment private constructor() : Fragment() {
     }
 
     private fun setResetButton() {
-        tab_clock_btn_reset.isEnabled = false
-        tab_clock_btn_reset.setOnClickListener {
+        btn_reset_timer.isEnabled = false
+        btn_reset_timer.setOnClickListener {
             timerVM.resetTimer()
         }
     }
 
     private fun setStartStopButton() {
-        tab_clock_btn_startstop.setOnClickListener {
+        btn_startstop.setOnClickListener {
             val running = timerVM.isTimerRunning()
             if (running) {
                 timerVM.stopTimer()
-                tab_clock_timer.text = TimerViewModel.TIMER_UI_PATTERN
+                timer.text = TimerViewModel.TIMER_UI_PATTERN
             } else {
                 timerVM.startTimer()
             }
-            tab_clock_btn_reset.isEnabled = !running
-            tab_clock_btn_settings.isEnabled = running
+            btn_reset_timer.isEnabled = !running
+            btn_settings.isEnabled = running
             alterStartStopButtonIcon(running)
         }
     }
 
     private fun setSettingsButton() {
-        tab_clock_btn_settings.setOnClickListener {
+        btn_settings.setOnClickListener {
             TimerSettingsDialog
                 .new { newSettings ->
                     // TODO: update settings in datastore
@@ -80,12 +80,12 @@ class HomeClockTabFragment private constructor() : Fragment() {
         else
             R.drawable.ic_stop_normal
         val icon = ContextCompat.getDrawable(requireContext(), iconRes)
-        tab_clock_btn_startstop.setImageDrawable(icon)
+        btn_startstop.setImageDrawable(icon)
     }
 
     private fun observeTimerTime() {
         timerVM.timerTime.observe(this) { time ->
-            tab_clock_timer.text = time
+            timer.text = time
         }
     }
 

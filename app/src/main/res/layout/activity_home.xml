@@ -8,14 +8,14 @@
     tools:context=".ui.activity.HomeActivity">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/home_pager"
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/home_tabs"
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -30,13 +30,13 @@
         app:tabPaddingStart="@dimen/size_24">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/home_tab_clock"
+            android:id="@+id/tab_clock"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/home_tab_height"
             android:icon="@drawable/ic_clock_normal" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/home_tab_game"
+            android:id="@+id/tab_game"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/home_tab_height"
             android:icon="@drawable/ic_game_normal" />

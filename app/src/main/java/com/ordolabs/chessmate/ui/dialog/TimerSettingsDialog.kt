@@ -14,12 +14,12 @@ class TimerSettingsDialog(
 
     private val timerSettingsVM: TimerSettingsViewModel by viewModel()
 
-    private val editLimitMinutes by lazy { d_timer_settings_edit_limit_minutes }
+    private val editLimitMinutes by lazy { edit_timer_limit_minutes }
     private val editLimitSeconds by lazy { d_timer_settings_edit_limit_seconds }
-    private val editPlayer1 by lazy { d_timer_settings_edit_player1 }
-    private val editPlayer2 by lazy { d_timer_settings_edit_player2 }
-    private val btnSwapPlayers by lazy { d_timer_settings_players_btn_swap }
-    private val btnOk by lazy { d_timer_settings_btn_ok }
+    private val editPlayer1 by lazy { edit_player1 }
+    private val editPlayer2 by lazy { edit_player2 }
+    private val btnSwapPlayers by lazy { btn_swap_players }
+    private val btnOk by lazy { btn_ok }
 
     override fun getDialogLayoutRes(): Int {
         return R.layout.dialog_timer_settings

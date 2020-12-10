@@ -1,4 +1,4 @@
-package com.cyclingplanner.ui.common
+package com.ordolabs.chessmate.util.wrapper
 
 import android.R.integer.config_shortAnimTime
 import android.animation.ValueAnimator

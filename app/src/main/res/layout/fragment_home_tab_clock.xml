@@ -7,7 +7,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tab_clock_stopwatch"
-        style="@style/TextTitle.Day"
+        style="@style/TextTitle"
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"

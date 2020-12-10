@@ -22,7 +22,15 @@
 
     <item name="text_spacing_small" type="dimen" format="float">0.015</item>
     <item name="text_spacing_medium" type="dimen" format="float">0.025</item>
-    <item name="text_spacing_big" type="dimen" format="float">0.035</item>
+    <item name="text_spacing_big" type="dimen" format="float">0.04</item>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~ LISTS ~~~~~~~~~~~~~~~~~~~~-->
+    <dimen name="list_subtitle_spacing_top">@dimen/size_16</dimen>
+    <dimen name="list_subtitle_spacing_bottom">@dimen/size_8</dimen>
+    <dimen name="list_items_vert_spacing">@dimen/size_8</dimen>
+    <dimen name="list_groups_vert_spacing">@dimen/size_16</dimen>
+    <dimen name="list_divider_vert_spacing">@dimen/size_16</dimen>
+    <dimen name="list_divider_height">1dp</dimen>
 
     <!--~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~~-->
     <dimen name="home_tab_height">?attr/tabIndicatorHeight</dimen>

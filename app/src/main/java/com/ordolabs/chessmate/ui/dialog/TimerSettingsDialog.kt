@@ -1,15 +1,23 @@
 package com.ordolabs.chessmate.ui.dialog
 
+import android.animation.AnimatorSet
 import android.os.Bundle
 import android.view.View
+import androidx.core.animation.doOnEnd
 import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
+import com.ordolabs.chessmate.util.wrapper.ValueAnimatorBuilder
 import kotlinx.android.synthetic.main.dialog_timer_settings.*
 
 class TimerSettingsDialog(
     private val settings: TimerSettingsPresentation,
     private val onDialogApplied: (TimerSettingsPresentation) -> Unit
 ) : BaseDialogFragment() {
+
+    private var arePlayersSwapped = false
+    private val playerViewsDistance by lazy {
+        edit_player2.y - edit_player1.y
+    }
 
     override fun getDialogLayoutRes(): Int {
         return R.layout.dialog_timer_settings
@@ -30,9 +38,15 @@ class TimerSettingsDialog(
 
     private fun setSwapPlayersButton() {
         btn_swap_players.setOnClickListener {
-            val player1 = edit_player1.text
-            edit_player1.text = edit_player2.text
-            edit_player2.text = player1
+            AnimatorSet().apply {
+                playTogether(
+                    animPlayerNameSwap(edit_player1, false),
+                    animPlayerNameSwap(edit_player2, true)
+                )
+                doOnEnd {
+                    arePlayersSwapped = !arePlayersSwapped
+                }
+            }.start()
         }
     }
 
@@ -47,10 +61,25 @@ class TimerSettingsDialog(
     private fun collectSettings(): TimerSettingsPresentation {
         val minutes = edit_timer_limit_minutes.text.toString().toInt()
         val seconds = edit_timer_limit_seconds.text.toString().toInt()
-        val player1 = edit_player1.text.toString()
-        val player2 = edit_player2.text.toString()
+        val player1 = if (!arePlayersSwapped) edit_player1.text.toString()
+        else edit_player2.text.toString()
+        val player2 = if (!arePlayersSwapped) edit_player2.text.toString()
+        else edit_player1.text.toString()
         return TimerSettingsPresentation(minutes, seconds, player1, player2)
     }
+
+    private fun animPlayerNameSwap(playerNameView: View, goesUp: Boolean) =
+        ValueAnimatorBuilder.of<Float>(!arePlayersSwapped) {
+            values {
+                arrayOf(0f, playerViewsDistance * if (goesUp) -1 else 1)
+            }
+            duration {
+                400L
+            }
+            updateListener {
+                playerNameView.translationY = animatedValue as Float
+            }
+        }
 
     companion object {
         fun new(

@@ -1,8 +1,8 @@
 package com.ordolabs.chessmate.di
 
 import com.ordolabs.chessmate.viewmodel.HomeViewModel
-import com.ordolabs.chessmate.viewmodel.StopwatchSettingsViewModel
-import com.ordolabs.chessmate.viewmodel.StopwatchViewModel
+import com.ordolabs.chessmate.viewmodel.TimerSettingsViewModel
+import com.ordolabs.chessmate.viewmodel.TimerViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -14,13 +14,13 @@ val viewModelModule = module {
     }
 
     viewModel {
-        StopwatchViewModel()
+        TimerViewModel()
     }
 
     viewModel {
-        StopwatchSettingsViewModel(
-            getStopwatchSettingsUseCase = get(named(UseCase.DS_GET_STOPWATCH_SETTINGS)),
-            setStopwatchSettingsUseCase = get(named(UseCase.DS_SET_STOPWATCH_SETTINGS))
+        TimerSettingsViewModel(
+            getTimerSettingsUseCase = get(named(UseCase.GET_TIMER_SETTINGS)),
+            setTimerSettingsUseCase = get(named(UseCase.SET_TIMER_SETTINGS))
         )
     }
 }

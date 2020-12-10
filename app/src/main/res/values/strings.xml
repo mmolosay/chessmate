@@ -5,13 +5,15 @@
     <!--~~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~-->
 
     <!--~~~~~~~~~~~~~~~~~~~~ DIALOGS ~~~~~~~~~~~~~~~~~~~-->
-    <string name="d_stopwatch_settings_time_limit">Time limit</string>
+    <string name="d_stopwatch_settings_time_limit">Timer</string>
     <string name="d_stopwatch_settings_time_limit_m_hint">m</string>
     <string name="d_stopwatch_settings_time_limit_s_hint">s</string>
     <string name="d_stopwatch_settings_time_limit_separator"> : </string>
     <string name="d_stopwatch_settings_players">Players</string>
     <string name="d_stopwatch_settings_player1_hint">Player#1</string>
     <string name="d_stopwatch_settings_player2_hint">Player#2</string>
+
+    <string name="d_btn_apply">Apply</string>
 
     <!--~~~~~~~~~~~~~~~~~~~~~ STUFF ~~~~~~~~~~~~~~~~~~~~-->
     <string name="error_unknown">An error occurred :(</string>

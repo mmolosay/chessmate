@@ -1,6 +1,6 @@
-package com.ordolabs.chessmate.model
+package com.ordolabs.chessmate.model.presentation
 
-data class StopwatchSettingsPresentation(
+data class TimerSettingsPresentation(
     val limitMinutes: Int,
     val limitSeconds: Int,
     val player1: String,

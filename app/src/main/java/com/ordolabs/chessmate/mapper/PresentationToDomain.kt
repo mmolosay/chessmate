@@ -1,8 +1,8 @@
 package com.ordolabs.chessmate.mapper
 
-import com.ordolabs.chessmate.model.StopwatchSettingsPresentation
-import com.ordolabs.domain.model.DSStopwatchSettingsModel
+import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
+import com.ordolabs.domain.model.TimerSettingsModel
 
-internal fun StopwatchSettingsPresentation.toDomain(): DSStopwatchSettingsModel {
-    return DSStopwatchSettingsModel(limitMinutes, limitSeconds, player1, player2)
+internal fun TimerSettingsPresentation.toDomain(): TimerSettingsModel {
+    return TimerSettingsModel(limitMinutes, limitSeconds, player1, player2)
 }

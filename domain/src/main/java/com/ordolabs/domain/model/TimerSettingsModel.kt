@@ -1,6 +1,6 @@
 package com.ordolabs.domain.model
 
-data class DSStopwatchSettingsModel(
+data class TimerSettingsModel(
     val limitMinutes: Int,
     val limitSeconds: Int,
     val player1: String,

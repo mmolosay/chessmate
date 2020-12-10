@@ -6,20 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.ordolabs.chessmate.R
-import com.ordolabs.chessmate.ui.dialog.StopwatchSettingsDialog
-import com.ordolabs.chessmate.viewmodel.StopwatchViewModel
+import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
+import com.ordolabs.chessmate.ui.dialog.TimerSettingsDialog
+import com.ordolabs.chessmate.viewmodel.TimerSettingsViewModel
+import com.ordolabs.chessmate.viewmodel.TimerViewModel
 import kotlinx.android.synthetic.main.fragment_home_tab_clock.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeClockTabFragment private constructor() : Fragment() {
 
-    private val stopwatchVM: StopwatchViewModel by viewModel()
+    private val timerVM: TimerViewModel by viewModel()
+    private val timerSettingsVM: TimerSettingsViewModel by viewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        observeStopwatchTime()
+        observeTimerTime()
+        observeTimerSettings()
     }
 
     override fun onCreateView(
@@ -32,40 +37,44 @@ class HomeClockTabFragment private constructor() : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setTimer()
         setResetButton()
         setStartStopButton()
         setSettingsButton()
         setCheckpointsButton()
     }
 
+    private fun setTimer() {
+        timer.isEnabled = false
+    }
+
     private fun setResetButton() {
-        tab_clock_btn_reset.isEnabled = false
-        tab_clock_btn_reset.setOnClickListener {
-            stopwatchVM.resetStopwatch()
+        btn_reset_timer.isEnabled = false
+        btn_reset_timer.setOnClickListener {
+            timerVM.resetTimer()
         }
     }
 
     private fun setStartStopButton() {
-        tab_clock_btn_startstop.setOnClickListener {
-            val running = stopwatchVM.isStopwatchRunning()
+        btn_startstop.setOnClickListener {
+            val running = timerVM.isTimerRunning()
             if (running) {
-                stopwatchVM.stopStopwatch()
-                tab_clock_stopwatch.text = StopwatchViewModel.STOPWATCH_PATTERN
+                timerVM.stopTimer()
+                resetTimerView()
             } else {
-                stopwatchVM.startStopwatch()
+                timerVM.startTimer()
             }
-            tab_clock_btn_reset.isEnabled = !running
-            tab_clock_btn_settings.isEnabled = running
+            btn_reset_timer.isEnabled = !running
+            btn_settings.isEnabled = running
             alterStartStopButtonIcon(running)
         }
     }
 
     private fun setSettingsButton() {
-        tab_clock_btn_settings.setOnClickListener {
-            StopwatchSettingsDialog
-                .new { newSettings ->
-                    // TODO: update settings in datastore
-                }
+        btn_settings.setOnClickListener {
+            val settings = timerSettingsVM.settings.value ?: return@setOnClickListener
+            TimerSettingsDialog
+                .new(settings, ::onTimerSettingsDialogApplied)
                 .show(parentFragmentManager, "stopwatch_settings_dialog")
         }
     }
@@ -80,12 +89,34 @@ class HomeClockTabFragment private constructor() : Fragment() {
         else
             R.drawable.ic_stop_normal
         val icon = ContextCompat.getDrawable(requireContext(), iconRes)
-        tab_clock_btn_startstop.setImageDrawable(icon)
+        btn_startstop.setImageDrawable(icon)
     }
 
-    private fun observeStopwatchTime() {
-        stopwatchVM.stopwatchTime.observe(this) { time ->
-            tab_clock_stopwatch.text = time
+    private fun resetTimerView() {
+        val limit = timerVM.getTimerLimit()
+        timerVM.updateTimerTime(limit)
+    }
+
+    private fun onTimerSettingsDialogApplied(newSettings: TimerSettingsPresentation) {
+        timerSettingsVM.setTimerSettings(newSettings)
+
+        val newLimit = timerSettingsVM.parseTimerSettingsLimit(newSettings)
+        timerVM.setTimerLimit(newLimit)
+    }
+
+    private fun observeTimerTime() {
+        timerVM.timerTime.observe(this) {
+            timer.text = it.time
+            timer_minus.isVisible = it.hasMinus
+        }
+    }
+
+    private fun observeTimerSettings() {
+        timerSettingsVM.getTimerSettings().observe(this) {
+            val limit = timerSettingsVM.parseTimerSettingsLimit(it)
+            timerVM.setTimerLimit(limit)
+            timerVM.updateTimerTime(limit)
+            timer.isEnabled = true
         }
     }
 

@@ -6,16 +6,37 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tab_clock_stopwatch"
-        style="@style/TextTitle.Day"
+        android:id="@+id/timer_minus"
+        style="@style/TextTitle"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
+
+        android:layout_marginHorizontal="@dimen/size_8"
         android:fontFamily="sans-serif-light"
+        android:stateListAnimator="@animator/animator_timer"
+        android:text="-"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_60"
+        android:visibility="gone"
+
+        app:layout_constraintBottom_toBottomOf="@+id/timer"
+        app:layout_constraintEnd_toStartOf="@+id/timer"
+        app:layout_constraintTop_toTopOf="@+id/timer"
+        tools:visibility="visible"
+        tools:ignore="HardcodedText" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/timer"
+        style="@style/TextTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:fontFamily="sans-serif-light"
+        android:stateListAnimator="@animator/animator_timer"
         android:text="00:00.00"
         android:textColor="@android:color/black"
-
         android:textSize="@dimen/text_size_60"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +45,7 @@
         tools:ignore="HardcodedText" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/tab_clock_btn_reset"
+        android:id="@+id/btn_reset_timer"
         style="@style/Button.Large.RoundSky"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,14 +53,14 @@
         android:src="@drawable/ic_change_turn_big_normal"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tab_clock_stopwatch"
-        app:layout_constraintStart_toStartOf="@+id/tab_clock_stopwatch"
-        app:layout_constraintTop_toBottomOf="@+id/tab_clock_stopwatch"
+        app:layout_constraintEnd_toEndOf="@+id/timer"
+        app:layout_constraintStart_toStartOf="@+id/timer"
+        app:layout_constraintTop_toBottomOf="@+id/timer"
         app:layout_constraintVertical_bias="0.30"
         tools:ignore="UnusedAttribute" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/tab_clock_btn_startstop"
+        android:id="@+id/btn_startstop"
         style="@style/Button.Small.RoundSky"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,14 +68,14 @@
         android:src="@drawable/ic_start_normal"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tab_clock_stopwatch"
-        app:layout_constraintStart_toStartOf="@+id/tab_clock_stopwatch"
-        app:layout_constraintTop_toBottomOf="@+id/tab_clock_btn_reset"
+        app:layout_constraintEnd_toEndOf="@+id/timer"
+        app:layout_constraintStart_toStartOf="@+id/timer"
+        app:layout_constraintTop_toBottomOf="@+id/btn_reset_timer"
         app:layout_constraintVertical_bias="0.10"
         tools:ignore="UnusedAttribute" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/tab_clock_btn_settings"
+        android:id="@+id/btn_settings"
         style="@style/Button.Minor.RoundAsh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,13 +83,13 @@
         android:layout_marginHorizontal="@dimen/size_32"
         android:src="@drawable/ic_gear_normal"
 
-        app:layout_constraintBottom_toBottomOf="@+id/tab_clock_btn_startstop"
-        app:layout_constraintStart_toEndOf="@+id/tab_clock_btn_startstop"
-        app:layout_constraintTop_toTopOf="@+id/tab_clock_btn_startstop"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_startstop"
+        app:layout_constraintStart_toEndOf="@+id/btn_startstop"
+        app:layout_constraintTop_toTopOf="@+id/btn_startstop"
         tools:ignore="UnusedAttribute" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/tab_clock_btn_checkpoints"
+        android:id="@+id/btn_checkpoints"
         style="@style/Button.Minor.RoundAsh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,9 +97,9 @@
         android:layout_marginHorizontal="@dimen/size_32"
         android:src="@drawable/ic_list_normal"
 
-        app:layout_constraintBottom_toBottomOf="@+id/tab_clock_btn_startstop"
-        app:layout_constraintEnd_toStartOf="@+id/tab_clock_btn_startstop"
-        app:layout_constraintTop_toTopOf="@+id/tab_clock_btn_startstop"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_startstop"
+        app:layout_constraintEnd_toStartOf="@+id/btn_startstop"
+        app:layout_constraintTop_toTopOf="@+id/btn_startstop"
         tools:ignore="UnusedAttribute" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

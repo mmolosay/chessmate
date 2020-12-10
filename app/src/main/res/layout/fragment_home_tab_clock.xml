@@ -6,17 +6,37 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/timer_minus"
+        style="@style/TextTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginHorizontal="@dimen/size_8"
+        android:fontFamily="sans-serif-light"
+        android:stateListAnimator="@animator/animator_timer"
+        android:text="-"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_60"
+        android:visibility="gone"
+
+        app:layout_constraintBottom_toBottomOf="@+id/timer"
+        app:layout_constraintEnd_toStartOf="@+id/timer"
+        app:layout_constraintTop_toTopOf="@+id/timer"
+        tools:visibility="visible"
+        tools:ignore="HardcodedText" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/timer"
         style="@style/TextTitle"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
+
         android:fontFamily="sans-serif-light"
         android:stateListAnimator="@animator/animator_timer"
         android:text="00:00.00"
         android:textColor="@android:color/black"
-
         android:textSize="@dimen/text_size_60"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

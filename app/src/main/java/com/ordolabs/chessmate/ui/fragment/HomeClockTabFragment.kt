@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ordolabs.chessmate.R
+import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
 import com.ordolabs.chessmate.ui.dialog.TimerSettingsDialog
+import com.ordolabs.chessmate.viewmodel.TimerSettingsViewModel
 import com.ordolabs.chessmate.viewmodel.TimerViewModel
 import kotlinx.android.synthetic.main.fragment_home_tab_clock.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,10 +18,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeClockTabFragment private constructor() : Fragment() {
 
     private val timerVM: TimerViewModel by viewModel()
+    private val timerSettingsVM: TimerSettingsViewModel by viewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         observeTimerTime()
+        observeTimerSettings()
     }
 
     override fun onCreateView(
@@ -62,11 +66,7 @@ class HomeClockTabFragment private constructor() : Fragment() {
 
     private fun setSettingsButton() {
         btn_settings.setOnClickListener {
-            TimerSettingsDialog
-                .new { newSettings ->
-                    // TODO: update settings in datastore
-                }
-                .show(parentFragmentManager, "stopwatch_settings_dialog")
+            showTimerSettingsDialog()
         }
     }
 
@@ -83,9 +83,29 @@ class HomeClockTabFragment private constructor() : Fragment() {
         btn_startstop.setImageDrawable(icon)
     }
 
+    private fun showTimerSettingsDialog() {
+        val settings = timerSettingsVM.settings.value ?: return
+        TimerSettingsDialog.new(settings, ::onTimerSettingsDialogApplied)
+            .show(parentFragmentManager, "stopwatch_settings_dialog")
+    }
+
+    private fun onTimerSettingsDialogApplied(newSettings: TimerSettingsPresentation) {
+        timerSettingsVM.setTimerSettings(newSettings)
+
+        val newLimit = timerSettingsVM.parseTimerSettingsLimit(newSettings)
+        timerVM.setTimerLimit(newLimit)
+    }
+
     private fun observeTimerTime() {
-        timerVM.timerTime.observe(this) { time ->
-            timer.text = time
+        timerVM.timerTime.observe(this) {
+            timer.text = it.time
+        }
+    }
+
+    private fun observeTimerSettings() {
+        timerSettingsVM.getTimerSettings().observe(this) {
+            val limit = timerSettingsVM.parseTimerSettingsLimit(it)
+            timerVM.setTimerLimit(limit)
         }
     }
 

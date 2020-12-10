@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ordolabs.chessmate.mapper.toDomain
 import com.ordolabs.chessmate.mapper.toPresentation
-import com.ordolabs.chessmate.model.TimerSettingsPresentation
+import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
 import com.ordolabs.chessmate.viewmodel.base.BaseViewModel
 import com.ordolabs.domain.usecase.datastore.GetTimerSettingsUseCase
 import com.ordolabs.domain.usecase.datastore.SetTimerSettingsUseCase
@@ -17,19 +17,29 @@ class TimerSettingsViewModel(
     private val setTimerSettingsUseCase: SetTimerSettingsUseCase
 ) : BaseViewModel() {
 
+    val settings: LiveData<TimerSettingsPresentation>
+        get() = _settings
+
+    private var _settings = MutableLiveData<TimerSettingsPresentation>()
+
     fun getTimerSettings(): LiveData<TimerSettingsPresentation> {
-        val livedata = MutableLiveData<TimerSettingsPresentation>()
         viewModelScope.launch {
             getTimerSettingsUseCase.invoke(Unit).collect {
-                livedata.value = it.toPresentation()
+                _settings.value = it.toPresentation()
             }
         }
-        return livedata
+        return _settings
     }
 
     fun setTimerSettings(settings: TimerSettingsPresentation) {
         viewModelScope.launch {
             setTimerSettingsUseCase.invoke(settings.toDomain())
         }
+    }
+
+    fun parseTimerSettingsLimit(settings: TimerSettingsPresentation): Long {
+        val minutes = settings.limitMinutes * 60 * 1000L
+        val seconds = settings.limitSeconds * 1000L
+        return minutes + seconds
     }
 }

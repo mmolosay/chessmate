@@ -13,6 +13,8 @@
     <string name="d_stopwatch_settings_player1_hint">Player#1</string>
     <string name="d_stopwatch_settings_player2_hint">Player#2</string>
 
+    <string name="d_btn_apply">Apply</string>
+
     <!--~~~~~~~~~~~~~~~~~~~~~ STUFF ~~~~~~~~~~~~~~~~~~~~-->
     <string name="error_unknown">An error occurred :(</string>
 

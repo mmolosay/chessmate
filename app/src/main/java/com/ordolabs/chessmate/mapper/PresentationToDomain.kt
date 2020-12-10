@@ -1,6 +1,6 @@
 package com.ordolabs.chessmate.mapper
 
-import com.ordolabs.chessmate.model.TimerSettingsPresentation
+import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
 import com.ordolabs.domain.model.TimerSettingsModel
 
 internal fun TimerSettingsPresentation.toDomain(): TimerSettingsModel {

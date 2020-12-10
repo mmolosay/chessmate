@@ -48,13 +48,13 @@
         android:textStyle="bold"
 
         app:layout_constraintBottom_toBottomOf="@+id/edit_timer_limit_minutes"
-        app:layout_constraintEnd_toStartOf="@+id/d_timer_settings_edit_limit_seconds"
+        app:layout_constraintEnd_toStartOf="@+id/edit_timer_limit_seconds"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/edit_timer_limit_minutes"
         app:layout_constraintTop_toTopOf="@+id/edit_timer_limit_minutes" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/d_timer_settings_edit_limit_seconds"
+        android:id="@+id/edit_timer_limit_seconds"
         style="@style/EditText"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
         tools:ignore="UnusedAttribute" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_ok"
+        android:id="@+id/btn_apply"
         style="@style/Button.Small.RoundedSky"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
         android:layout_marginTop="@dimen/size_24"
         android:layout_marginBottom="@dimen/size_8"
         android:background="@drawable/btn_rounded_sky_normal"
-        android:text="@android:string/ok"
+        android:text="@string/d_btn_apply"
         android:textColor="@android:color/white"
 
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,4 +1,4 @@
-package com.ordolabs.chessmate.model
+package com.ordolabs.chessmate.model.presentation
 
 data class TimerSettingsPresentation(
     val limitMinutes: Int,

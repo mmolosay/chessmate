@@ -1,11 +1,11 @@
 package com.cyclingplanner.ui.common
 
+import android.R.integer.config_shortAnimTime
 import android.animation.ValueAnimator
 import android.view.animation.Interpolator
 import androidx.core.animation.doOnEnd
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import com.cyclingplanner.CyclingPlannerApplication
-import com.cyclingplanner.R
+import com.ordolabs.chessmate.ChessMateApp
 
 class ValueAnimatorBuilder<T : Number> private constructor(
     private val isForward: Boolean,
@@ -27,8 +27,8 @@ class ValueAnimatorBuilder<T : Number> private constructor(
     private var defaultInterpolator: Interpolator
 
     init {
-        val resources = CyclingPlannerApplication.context.resources
-        this.defaultDuration = resources.getInteger(R.integer.anim_dur_multiselect_toggle).toLong()
+        val resources = ChessMateApp.context.resources
+        this.defaultDuration = resources.getInteger(config_shortAnimTime).toLong()
         this.defaultInterpolator = FastOutSlowInInterpolator()
         initializer.invoke(this)
     }

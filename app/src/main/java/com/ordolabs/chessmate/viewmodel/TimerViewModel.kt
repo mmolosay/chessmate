@@ -23,8 +23,8 @@ class TimerViewModel : BaseViewModel() {
     private val timerHandler = Handler(Looper.getMainLooper())
     private val timerTick = object : Runnable {
         override fun run() {
-            val elapsed = timer.getRemainingTime()
-            updateTimerTime(elapsed)
+            val remaining = timer.getRemainingTime()
+            updateTimerTime(remaining)
             timerHandler.postDelayed(this, TIMER_UI_UPDATE_DELTA_TIME)
         }
     }
@@ -35,6 +35,10 @@ class TimerViewModel : BaseViewModel() {
 
     fun setTimerLimit(limit: Long) {
         timer.limit = limit
+    }
+
+    fun getTimerLimit(): Long {
+        return timer.limit
     }
 
     fun startTimer() {
@@ -55,12 +59,12 @@ class TimerViewModel : BaseViewModel() {
         _timerTime.value?.hasMinus = false
     }
 
-    private fun updateTimerTime(elapsed: Long) {
-        val e = elapsed.absoluteValue
+    fun updateTimerTime(remaining: Long) {
+        val r = remaining.absoluteValue
 
-        val minutes = e / 1000 / 60
-        val seconds = (e - (minutes * 1000 * 60)) / 1000
-        val millis = (e - (minutes * 1000 * 60 + seconds * 1000)) / 10
+        val minutes = r / 1000 / 60
+        val seconds = (r - (minutes * 1000 * 60)) / 1000
+        val millis = (r - (minutes * 1000 * 60 + seconds * 1000)) / 10
 
         val min = if (minutes / 10 == 0L) "0$minutes" else minutes.toString()
         val sec = if (seconds / 10 == 0L) "0$seconds" else seconds.toString()
@@ -68,7 +72,7 @@ class TimerViewModel : BaseViewModel() {
 
         _timerTime.value?.apply {
             time = "$min:$sec.$mil"
-            hasMinus = (elapsed.sign == -1)
+            hasMinus = (remaining.sign == -1)
         }
         _timerTime.value = _timerTime.value // will fire observers
     }

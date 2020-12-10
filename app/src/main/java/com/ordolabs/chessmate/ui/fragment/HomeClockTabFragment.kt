@@ -36,10 +36,15 @@ class HomeClockTabFragment private constructor() : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setTimer()
         setResetButton()
         setStartStopButton()
         setSettingsButton()
         setCheckpointsButton()
+    }
+
+    private fun setTimer() {
+        timer.isEnabled = false
     }
 
     private fun setResetButton() {
@@ -54,7 +59,7 @@ class HomeClockTabFragment private constructor() : Fragment() {
             val running = timerVM.isTimerRunning()
             if (running) {
                 timerVM.stopTimer()
-                timer.text = TimerViewModel.TIMER_UI_PATTERN
+                resetTimerView()
             } else {
                 timerVM.startTimer()
             }
@@ -66,7 +71,10 @@ class HomeClockTabFragment private constructor() : Fragment() {
 
     private fun setSettingsButton() {
         btn_settings.setOnClickListener {
-            showTimerSettingsDialog()
+            val settings = timerSettingsVM.settings.value ?: return@setOnClickListener
+            TimerSettingsDialog
+                .new(settings, ::onTimerSettingsDialogApplied)
+                .show(parentFragmentManager, "stopwatch_settings_dialog")
         }
     }
 
@@ -83,10 +91,9 @@ class HomeClockTabFragment private constructor() : Fragment() {
         btn_startstop.setImageDrawable(icon)
     }
 
-    private fun showTimerSettingsDialog() {
-        val settings = timerSettingsVM.settings.value ?: return
-        TimerSettingsDialog.new(settings, ::onTimerSettingsDialogApplied)
-            .show(parentFragmentManager, "stopwatch_settings_dialog")
+    private fun resetTimerView() {
+        val limit = timerVM.getTimerLimit()
+        timerVM.updateTimerTime(limit)
     }
 
     private fun onTimerSettingsDialogApplied(newSettings: TimerSettingsPresentation) {
@@ -106,6 +113,8 @@ class HomeClockTabFragment private constructor() : Fragment() {
         timerSettingsVM.getTimerSettings().observe(this) {
             val limit = timerSettingsVM.parseTimerSettingsLimit(it)
             timerVM.setTimerLimit(limit)
+            timerVM.updateTimerTime(limit)
+            timer.isEnabled = true
         }
     }
 

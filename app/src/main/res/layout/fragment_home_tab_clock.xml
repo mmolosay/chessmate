@@ -12,6 +12,7 @@
 
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
+        android:stateListAnimator="@animator/animator_timer"
         android:text="00:00.00"
         android:textColor="@android:color/black"
 

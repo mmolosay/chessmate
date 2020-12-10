@@ -4,7 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.ordolabs.chessmate.model.ui.TimerTime
+import com.ordolabs.chessmate.model.TimerTime
 import com.ordolabs.chessmate.util.struct.Timer
 import com.ordolabs.chessmate.viewmodel.base.BaseViewModel
 import kotlin.math.absoluteValue

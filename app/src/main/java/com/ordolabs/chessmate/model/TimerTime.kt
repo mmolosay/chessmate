@@ -1,4 +1,4 @@
-package com.ordolabs.chessmate.model.ui
+package com.ordolabs.chessmate.model
 
 data class TimerTime(
     var time: String,

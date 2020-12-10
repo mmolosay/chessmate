@@ -4,7 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.ordolabs.chessmate.util.struct.Stopwatch
+import com.ordolabs.chessmate.util.struct.Timer
 import com.ordolabs.chessmate.viewmodel.base.BaseViewModel
 
 class TimerViewModel : BaseViewModel() {
@@ -14,7 +14,7 @@ class TimerViewModel : BaseViewModel() {
 
     private val _timerTime = MutableLiveData<String>()
 
-    private val timer = Stopwatch()
+    private val timer = Timer()
     private val timerHandler = Handler(Looper.getMainLooper())
     private val timerTick = object : Runnable {
         override fun run() {

@@ -8,18 +8,18 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ordolabs.chessmate.R
-import com.ordolabs.chessmate.ui.dialog.StopwatchSettingsDialog
-import com.ordolabs.chessmate.viewmodel.StopwatchViewModel
+import com.ordolabs.chessmate.ui.dialog.TimerSettingsDialog
+import com.ordolabs.chessmate.viewmodel.TimerViewModel
 import kotlinx.android.synthetic.main.fragment_home_tab_clock.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeClockTabFragment private constructor() : Fragment() {
 
-    private val stopwatchVM: StopwatchViewModel by viewModel()
+    private val timerVM: TimerViewModel by viewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        observeStopwatchTime()
+        observeTimerTime()
     }
 
     override fun onCreateView(
@@ -41,18 +41,18 @@ class HomeClockTabFragment private constructor() : Fragment() {
     private fun setResetButton() {
         tab_clock_btn_reset.isEnabled = false
         tab_clock_btn_reset.setOnClickListener {
-            stopwatchVM.resetStopwatch()
+            timerVM.resetTimer()
         }
     }
 
     private fun setStartStopButton() {
         tab_clock_btn_startstop.setOnClickListener {
-            val running = stopwatchVM.isStopwatchRunning()
+            val running = timerVM.isTimerRunning()
             if (running) {
-                stopwatchVM.stopStopwatch()
-                tab_clock_stopwatch.text = StopwatchViewModel.STOPWATCH_PATTERN
+                timerVM.stopTimer()
+                tab_clock_timer.text = TimerViewModel.TIMER_UI_PATTERN
             } else {
-                stopwatchVM.startStopwatch()
+                timerVM.startTimer()
             }
             tab_clock_btn_reset.isEnabled = !running
             tab_clock_btn_settings.isEnabled = running
@@ -62,7 +62,7 @@ class HomeClockTabFragment private constructor() : Fragment() {
 
     private fun setSettingsButton() {
         tab_clock_btn_settings.setOnClickListener {
-            StopwatchSettingsDialog
+            TimerSettingsDialog
                 .new { newSettings ->
                     // TODO: update settings in datastore
                 }
@@ -83,9 +83,9 @@ class HomeClockTabFragment private constructor() : Fragment() {
         tab_clock_btn_startstop.setImageDrawable(icon)
     }
 
-    private fun observeStopwatchTime() {
-        stopwatchVM.stopwatchTime.observe(this) { time ->
-            tab_clock_stopwatch.text = time
+    private fun observeTimerTime() {
+        timerVM.timerTime.observe(this) { time ->
+            tab_clock_timer.text = time
         }
     }
 

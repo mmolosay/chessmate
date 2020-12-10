@@ -8,7 +8,7 @@
     android:padding="@dimen/size_16">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/d_stopwatch_settings_limit_label"
+        android:id="@+id/d_timer_settings_limit_label"
         style="@style/TextBody.Subtitle.Major"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,25 +20,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/d_stopwatch_settings_edit_limit_minutes"
+        android:id="@+id/d_timer_settings_edit_limit_minutes"
         style="@style/EditText"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="@dimen/list_subtitle_spacing_top"
+        android:layout_marginTop="@dimen/list_subtitle_spacing_bottom"
         android:hint="@string/d_stopwatch_settings_time_limit_m_hint"
         android:imeOptions="actionNext"
         android:inputType="numberDecimal"
         android:maxLength="2"
         android:selectAllOnFocus="true"
 
-        app:layout_constraintEnd_toStartOf="@+id/d_stopwatch_settings_limit_separator"
+        app:layout_constraintEnd_toStartOf="@+id/d_timer_settings_limit_separator"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/d_stopwatch_settings_edit_player1"
-        app:layout_constraintTop_toBottomOf="@+id/d_stopwatch_settings_limit_label" />
+        app:layout_constraintStart_toStartOf="@+id/d_timer_settings_edit_player1"
+        app:layout_constraintTop_toBottomOf="@+id/d_timer_settings_limit_label" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/d_stopwatch_settings_limit_separator"
+        android:id="@+id/d_timer_settings_limit_separator"
         style="@style/TextBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,14 +47,14 @@
         android:text="@string/d_stopwatch_settings_time_limit_separator"
         android:textStyle="bold"
 
-        app:layout_constraintBottom_toBottomOf="@+id/d_stopwatch_settings_edit_limit_minutes"
-        app:layout_constraintEnd_toStartOf="@+id/d_stopwatch_settings_edit_limit_seconds"
+        app:layout_constraintBottom_toBottomOf="@+id/d_timer_settings_edit_limit_minutes"
+        app:layout_constraintEnd_toStartOf="@+id/d_timer_settings_edit_limit_seconds"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/d_stopwatch_settings_edit_limit_minutes"
-        app:layout_constraintTop_toTopOf="@+id/d_stopwatch_settings_edit_limit_minutes" />
+        app:layout_constraintStart_toEndOf="@+id/d_timer_settings_edit_limit_minutes"
+        app:layout_constraintTop_toTopOf="@+id/d_timer_settings_edit_limit_minutes" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/d_stopwatch_settings_edit_limit_seconds"
+        android:id="@+id/d_timer_settings_edit_limit_seconds"
         style="@style/EditText"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
@@ -65,36 +65,36 @@
         android:maxLength="2"
         android:selectAllOnFocus="true"
 
-        app:layout_constraintBottom_toBottomOf="@+id/d_stopwatch_settings_edit_limit_minutes"
-        app:layout_constraintEnd_toEndOf="@+id/d_stopwatch_settings_edit_player1"
-        app:layout_constraintStart_toEndOf="@+id/d_stopwatch_settings_limit_separator"
-        app:layout_constraintTop_toTopOf="@+id/d_stopwatch_settings_edit_limit_minutes" />
+        app:layout_constraintBottom_toBottomOf="@+id/d_timer_settings_edit_limit_minutes"
+        app:layout_constraintEnd_toEndOf="@+id/d_timer_settings_edit_player1"
+        app:layout_constraintStart_toEndOf="@+id/d_timer_settings_limit_separator"
+        app:layout_constraintTop_toTopOf="@+id/d_timer_settings_edit_limit_minutes" />
 
     <View
-        android:id="@+id/d_stopwatch_settings_divider"
+        android:id="@+id/d_timer_settings_divider"
         style="@style/ListDivider"
 
         android:layout_width="0dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/d_stopwatch_settings_edit_limit_minutes"
+        app:layout_constraintTop_toBottomOf="@+id/d_timer_settings_edit_limit_minutes"
         app:layout_constraintWidth_percent="0.5" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/d_stopwatch_settings_players_label"
+        android:id="@+id/d_timer_settings_players_label"
         style="@style/TextBody.Subtitle.Major"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:text="@string/d_stopwatch_settings_players"
 
-        app:layout_constraintEnd_toEndOf="@+id/d_stopwatch_settings_limit_label"
-        app:layout_constraintStart_toStartOf="@+id/d_stopwatch_settings_limit_label"
-        app:layout_constraintTop_toBottomOf="@+id/d_stopwatch_settings_divider" />
+        app:layout_constraintEnd_toEndOf="@+id/d_timer_settings_limit_label"
+        app:layout_constraintStart_toStartOf="@+id/d_timer_settings_limit_label"
+        app:layout_constraintTop_toBottomOf="@+id/d_timer_settings_divider" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/d_stopwatch_settings_edit_player1"
+        android:id="@+id/d_timer_settings_edit_player1"
         style="@style/EditText"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
@@ -106,12 +106,12 @@
         android:maxLength="20"
         android:selectAllOnFocus="true"
 
-        app:layout_constraintEnd_toEndOf="@+id/d_stopwatch_settings_players_label"
-        app:layout_constraintStart_toStartOf="@+id/d_stopwatch_settings_players_label"
-        app:layout_constraintTop_toBottomOf="@+id/d_stopwatch_settings_players_label" />
+        app:layout_constraintEnd_toEndOf="@+id/d_timer_settings_players_label"
+        app:layout_constraintStart_toStartOf="@+id/d_timer_settings_players_label"
+        app:layout_constraintTop_toBottomOf="@+id/d_timer_settings_players_label" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/d_stopwatch_settings_edit_player2"
+        android:id="@+id/d_timer_settings_edit_player2"
         style="@style/EditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -123,25 +123,25 @@
         android:maxLength="20"
         android:selectAllOnFocus="true"
 
-        app:layout_constraintEnd_toEndOf="@+id/d_stopwatch_settings_edit_player1"
-        app:layout_constraintStart_toStartOf="@+id/d_stopwatch_settings_edit_player1"
-        app:layout_constraintTop_toBottomOf="@+id/d_stopwatch_settings_edit_player1" />
+        app:layout_constraintEnd_toEndOf="@+id/d_timer_settings_edit_player1"
+        app:layout_constraintStart_toStartOf="@+id/d_timer_settings_edit_player1"
+        app:layout_constraintTop_toBottomOf="@+id/d_timer_settings_edit_player1" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/d_stopwatch_settings_players_btn_swap"
+        android:id="@+id/d_timer_settings_players_btn_swap"
         style="@style/Button.Small.RoundPlain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:src="@drawable/ic_swap_normal"
 
-        app:layout_constraintBottom_toBottomOf="@+id/d_stopwatch_settings_edit_player2"
-        app:layout_constraintStart_toEndOf="@+id/d_stopwatch_settings_edit_player1"
-        app:layout_constraintTop_toTopOf="@+id/d_stopwatch_settings_edit_player1"
+        app:layout_constraintBottom_toBottomOf="@+id/d_timer_settings_edit_player2"
+        app:layout_constraintStart_toEndOf="@+id/d_timer_settings_edit_player1"
+        app:layout_constraintTop_toTopOf="@+id/d_timer_settings_edit_player1"
         tools:ignore="UnusedAttribute" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/d_stopwatch_settings_btn_ok"
+        android:id="@+id/d_timer_settings_btn_ok"
         style="@style/Button.Small.RoundedSky"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -155,6 +155,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/d_stopwatch_settings_edit_player2" />
+        app:layout_constraintTop_toBottomOf="@+id/d_timer_settings_edit_player2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

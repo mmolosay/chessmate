@@ -7,23 +7,23 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.datastore.preferences.createDataStore
 import com.ordolabs.data.R
-import com.ordolabs.domain.model.DSStopwatchSettingsModel
+import com.ordolabs.domain.model.TimerSettingsModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class StopwatchSettingsDS(context: Context) {
+class ChessMateDS(context: Context) {
 
-    fun getStopwatchSettings(): Flow<DSStopwatchSettingsModel> = dataStore.data.map {
-        val minutes = it[keyLimitMinutes] ?: defaultLimitMinutes
-        val seconds = it[keyLimitSeconds] ?: defaultLimitSeconds
+    fun getTimerSettings(): Flow<TimerSettingsModel> = dataStore.data.map {
+        val minutes = it[keyTimerLimitMinutes] ?: defaultLimitMinutes
+        val seconds = it[keyTimerLimitSeconds] ?: defaultLimitSeconds
         val player1 = it[keyPlayer1] ?: defaultPlayer1
         val player2 = it[keyPlayer2] ?: defaultPlayer2
-        DSStopwatchSettingsModel(minutes, seconds, player1, player2)
+        TimerSettingsModel(minutes, seconds, player1, player2)
     }
 
-    suspend fun setStopwatchSettings(settings: DSStopwatchSettingsModel) = dataStore.edit {
-        it[keyLimitMinutes] = settings.limitMinutes
-        it[keyLimitSeconds] = settings.limitSeconds
+    suspend fun setTimerSettings(settings: TimerSettingsModel) = dataStore.edit {
+        it[keyTimerLimitMinutes] = settings.limitMinutes
+        it[keyTimerLimitSeconds] = settings.limitSeconds
         it[keyPlayer1] = settings.player1
         it[keyPlayer2] = settings.player2
     }
@@ -32,8 +32,8 @@ class StopwatchSettingsDS(context: Context) {
         name = DATASTORE_NAME
     )
 
-    private val keyLimitMinutes = preferencesKey<Int>(PK_LIMIT_MINUTES)
-    private val keyLimitSeconds = preferencesKey<Int>(PK_LIMIT_SECONDS)
+    private val keyTimerLimitMinutes = preferencesKey<Int>(PK_TIMER_LIMIT_MINUTES)
+    private val keyTimerLimitSeconds = preferencesKey<Int>(PK_TIMER_LIMIT_SECONDS)
     private val keyPlayer1 = preferencesKey<String>(PK_PLAYER_1)
     private val keyPlayer2 = preferencesKey<String>(PK_PLAYER_2)
 
@@ -51,11 +51,11 @@ class StopwatchSettingsDS(context: Context) {
     )
 
     companion object {
-        private const val DATASTORE_NAME = "stopwatch_settings"
+        private const val DATASTORE_NAME = "chessmate_data_store"
 
-        private const val PK_LIMIT_MINUTES = "limit_minutes"
-        private const val PK_LIMIT_SECONDS = "limit_seconds"
-        private const val PK_PLAYER_1 = "player_1"
-        private const val PK_PLAYER_2 = "player_2"
+        private const val PK_TIMER_LIMIT_MINUTES = "pk_timer_limit_minutes"
+        private const val PK_TIMER_LIMIT_SECONDS = "pk_timer_limit_seconds"
+        private const val PK_PLAYER_1 = "pk_player_1"
+        private const val PK_PLAYER_2 = "pk_player_2"
     }
 }

@@ -20,6 +20,7 @@ class ValueAnimatorBuilder<T : Number> private constructor(
         }
     }
 
+    private var looped: Boolean = true
     private lateinit var values: Array<T>
     private lateinit var animator: ValueAnimator
 
@@ -31,6 +32,10 @@ class ValueAnimatorBuilder<T : Number> private constructor(
         this.defaultDuration = resources.getInteger(config_shortAnimTime).toLong()
         this.defaultInterpolator = FastOutSlowInInterpolator()
         initializer.invoke(this)
+    }
+
+    fun looped(setter: () -> Boolean) {
+        this.looped = setter()
     }
 
     fun values(setter: () -> Array<T>) {
@@ -69,15 +74,23 @@ class ValueAnimatorBuilder<T : Number> private constructor(
         return animator
     }
 
-    private fun buildAnimatorOfInt() = if (isForward) {
-        ValueAnimator.ofInt(values[0] as Int, values[1] as Int)
+    private fun buildAnimatorOfInt() = if (looped) {
+        if (isForward) {
+            ValueAnimator.ofInt(values[0] as Int, values[1] as Int)
+        } else {
+            ValueAnimator.ofInt(values[1] as Int, values[0] as Int)
+        }
     } else {
-        ValueAnimator.ofInt(values[1] as Int, values[0] as Int)
+        ValueAnimator.ofInt(values[0] as Int, values[1] as Int)
     }
 
-    private fun buildAnimatorOfFloat() = if (isForward) {
-        ValueAnimator.ofFloat(values[0] as Float, values[1] as Float)
+    private fun buildAnimatorOfFloat() = if (looped) {
+        if (isForward) {
+            ValueAnimator.ofFloat(values[0] as Float, values[1] as Float)
+        } else {
+            ValueAnimator.ofFloat(values[1] as Float, values[0] as Float)
+        }
     } else {
-        ValueAnimator.ofFloat(values[1] as Float, values[0] as Float)
+        ValueAnimator.ofFloat(values[0] as Float, values[1] as Float)
     }
 }

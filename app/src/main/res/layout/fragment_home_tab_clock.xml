@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginHorizontal="@dimen/size_8"
+        android:alpha="0"
         android:fontFamily="sans-serif-light"
         android:stateListAnimator="@animator/animator_timer"
         android:text="-"
@@ -22,6 +23,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/timer"
         app:layout_constraintEnd_toStartOf="@+id/timer"
         app:layout_constraintTop_toTopOf="@+id/timer"
+        tools:alpha="1"
         tools:ignore="HardcodedText"
         tools:visibility="visible" />
 
@@ -51,10 +53,10 @@
 
         android:visibility="gone"
 
-        app:timer_view="@+id/timer"
-
         app:layout_constraintStart_toStartOf="@+id/timer"
+
         app:layout_constraintTop_toBottomOf="@+id/timer"
+        app:timer_view="@+id/timer"
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatImageButton

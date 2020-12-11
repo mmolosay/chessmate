@@ -1,16 +1,21 @@
 package com.ordolabs.chessmate.ui.fragment
 
+import android.animation.AnimatorSet
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
 import com.ordolabs.chessmate.ui.dialog.TimerSettingsDialog
 import com.ordolabs.chessmate.ui.fragment.base.BaseFragment
+import com.ordolabs.chessmate.util.wrapper.ValueAnimatorBuilder
 import com.ordolabs.chessmate.viewmodel.TimerSettingsViewModel
 import com.ordolabs.chessmate.viewmodel.TimerViewModel
 import kotlinx.android.synthetic.main.fragment_home_tab_clock.*
@@ -101,9 +106,15 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
     }
 
     private fun observeTimerData() {
+        var hadMinus = false
         timerVM.timerData.observe(this) { data ->
             timer.text = data.time
-            timer_minus.isVisible = data.hasMinus
+
+            if (data.hasMinus && !hadMinus)
+                animTimerMinusShow()
+            if (!data.hasMinus && hadMinus)
+                animTimerMinusHide()
+            hadMinus = data.hasMinus
         }
     }
 
@@ -123,6 +134,58 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
             }
         }
     }
+
+    private fun animTimerMinusShow() {
+        val set = AnimatorSet()
+        set.playTogether(
+            animTimerMinusTranslation(true),
+            animTimerMinusAlpha(true)
+        )
+        set.doOnStart {
+            timer_minus.isVisible = true
+        }
+        set.start()
+    }
+
+    private fun animTimerMinusHide() {
+        val set = AnimatorSet()
+        set.playTogether(
+            animTimerMinusTranslation(false),
+            animTimerMinusAlpha(false)
+        )
+        set.doOnEnd {
+            timer_minus.isGone = true
+        }
+        set.start()
+    }
+
+    private fun animTimerMinusTranslation(isForward: Boolean) =
+        ValueAnimatorBuilder.of<Float>(isForward) {
+            looped { false }
+            values {
+                val translation = resources.getDimensionPixelSize(
+                    R.dimen.translationX_timer_minus
+                ).toFloat()
+                if (isForward) {
+                    arrayOf(-translation, 0f)
+                } else {
+                    arrayOf(0f, translation)
+                }
+            }
+            updateListener {
+                timer_minus.translationX = animatedValue as Float
+            }
+        }
+
+    private fun animTimerMinusAlpha(isForward: Boolean) =
+        ValueAnimatorBuilder.of<Float>(isForward) {
+            values {
+                arrayOf(0f, 1f)
+            }
+            updateListener {
+                timer_minus.alpha = animatedValue as Float
+            }
+        }
 
     companion object {
         fun new(): HomeClockTabFragment {

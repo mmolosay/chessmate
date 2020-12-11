@@ -22,8 +22,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/timer"
         app:layout_constraintEnd_toStartOf="@+id/timer"
         app:layout_constraintTop_toTopOf="@+id/timer"
-        tools:visibility="visible"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/timer"
@@ -43,6 +43,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.30"
         tools:ignore="HardcodedText" />
+
+    <com.ordolabs.chessmate.ui.view.TimerWarnView
+        android:id="@+id/timer_warn"
+        android:layout_width="@dimen/height_timer_warn_collapsed"
+        android:layout_height="@dimen/height_timer_warn_collapsed"
+
+        android:visibility="gone"
+
+        app:timer_view="@+id/timer"
+
+        app:layout_constraintStart_toStartOf="@+id/timer"
+        app:layout_constraintTop_toBottomOf="@+id/timer"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_reset_timer"

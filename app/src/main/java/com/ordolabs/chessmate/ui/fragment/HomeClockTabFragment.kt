@@ -7,24 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
 import com.ordolabs.chessmate.ui.dialog.TimerSettingsDialog
+import com.ordolabs.chessmate.ui.fragment.base.BaseFragment
 import com.ordolabs.chessmate.viewmodel.TimerSettingsViewModel
 import com.ordolabs.chessmate.viewmodel.TimerViewModel
 import kotlinx.android.synthetic.main.fragment_home_tab_clock.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeClockTabFragment private constructor() : Fragment() {
+class HomeClockTabFragment private constructor() : BaseFragment() {
 
     private val timerVM: TimerViewModel by viewModel()
     private val timerSettingsVM: TimerSettingsViewModel by viewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        observeTimerTime()
+        observeTimerData()
         observeTimerSettings()
+        observeTimerWarnViewState()
     }
 
     override fun onCreateView(
@@ -37,6 +38,7 @@ class HomeClockTabFragment private constructor() : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setTimer()
         setResetButton()
         setStartStopButton()
@@ -60,7 +62,6 @@ class HomeClockTabFragment private constructor() : Fragment() {
             val running = timerVM.isTimerRunning()
             if (running) {
                 timerVM.stopTimer()
-                resetTimerView()
             } else {
                 timerVM.startTimer()
             }
@@ -92,11 +93,6 @@ class HomeClockTabFragment private constructor() : Fragment() {
         btn_startstop.setImageDrawable(icon)
     }
 
-    private fun resetTimerView() {
-        val limit = timerVM.getTimerLimit()
-        timerVM.updateTimerTime(limit)
-    }
-
     private fun onTimerSettingsDialogApplied(newSettings: TimerSettingsPresentation) {
         timerSettingsVM.setTimerSettings(newSettings)
 
@@ -104,10 +100,10 @@ class HomeClockTabFragment private constructor() : Fragment() {
         timerVM.setTimerLimit(newLimit)
     }
 
-    private fun observeTimerTime() {
-        timerVM.timerTime.observe(this) {
-            timer.text = it.time
-            timer_minus.isVisible = it.hasMinus
+    private fun observeTimerData() {
+        timerVM.timerData.observe(this) { data ->
+            timer.text = data.time
+            timer_minus.isVisible = data.hasMinus
         }
     }
 
@@ -117,6 +113,14 @@ class HomeClockTabFragment private constructor() : Fragment() {
             timerVM.setTimerLimit(limit)
             timerVM.updateTimerTime(limit)
             timer.isEnabled = true
+        }
+    }
+
+    private fun observeTimerWarnViewState() {
+        timerVM.warnState.observe(this) { state ->
+            if (timer_warn.state != state) {
+                timer_warn.setState(state)
+            }
         }
     }
 

@@ -16,6 +16,9 @@
     <color name="text_body">#505050</color>
     <color name="text_light">@android:color/white</color>
 
+    <!--~~~~~~~~~~~~~~~~~~~~ TIMER ~~~~~~~~~~~~~~~~~~~~~-->
+    <color name="timer_warn_color">#F44336</color>
+
     <!--~~~~~~~~~~~~~~~~~~~~ LISTS ~~~~~~~~~~~~~~~~~~~~~-->
     <color name="list_divider">#ECECEC</color>
 

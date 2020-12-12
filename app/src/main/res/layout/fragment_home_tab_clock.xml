@@ -11,9 +11,14 @@
         android:layout_height="@dimen/height_timer_warn_collapsed"
 
         android:visibility="gone"
+        android:translationY="-14dp"
 
+        app:layout_constraintBottom_toBottomOf="@+id/timer"
+        app:layout_constraintEnd_toEndOf="@+id/timer"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/timer"
-        app:layout_constraintTop_toBottomOf="@+id/timer"
+        app:layout_constraintTop_toTopOf="@+id/timer"
+        app:layout_constraintVertical_bias="1.0"
         app:timer_view="@+id/timer"
         tools:visibility="visible" />
 

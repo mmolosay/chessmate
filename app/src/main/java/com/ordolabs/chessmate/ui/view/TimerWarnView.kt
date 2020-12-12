@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.View
+import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.animation.doOnEnd
@@ -36,6 +37,11 @@ class TimerWarnView @JvmOverloads constructor(
         context.obtainStyledAttributes(attrs, R.styleable.TimerWarnView).apply {
             timerViewId = getResourceIdOrThrow(R.styleable.TimerWarnView_timer_view)
         }.recycle()
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        initialWidth; initialHeight
     }
 
     fun setState(state: State) {
@@ -76,11 +82,11 @@ class TimerWarnView @JvmOverloads constructor(
     private fun hideCollapsed() {
         animShowHideCollapsed(show = false).apply {
             doOnStart {
-                constraintTo(ConstraintSet.END)
+                setConstraintBias(LinearLayout.HORIZONTAL, 1f)
             }
             doOnEnd {
                 isVisible = false
-                constraintTo(ConstraintSet.START)
+                setConstraintBias(LinearLayout.HORIZONTAL, 0f)
             }
             start()
         }
@@ -88,11 +94,8 @@ class TimerWarnView @JvmOverloads constructor(
 
     private fun expand() {
         animExpandHide(expand = true).apply {
-            doOnStart {
-                constraintTo(ConstraintSet.BOTTOM)
-            }
             doOnEnd {
-                constraintTo(ConstraintSet.TOP)
+                setConstraintBias(LinearLayout.VERTICAL, 0f)
             }
             start()
         }
@@ -102,34 +105,23 @@ class TimerWarnView @JvmOverloads constructor(
         animExpandHide(expand = false).apply {
             doOnEnd {
                 isVisible = false
-                getConstratins().apply {
-                    clear(id, ConstraintSet.TOP)
-                    connect(id, ConstraintSet.TOP, timerViewId, ConstraintSet.BOTTOM)
-                    applyTo(parent as ConstraintLayout)
-                }
+                setConstraintBias(LinearLayout.VERTICAL, 1f)
             }
             start()
         }
     }
 
-    private fun getConstratins(): ConstraintSet {
-        return ConstraintSet().apply {
-            clone(parent as ConstraintLayout)
-        }
-    }
-
-    private fun constraintTo(anchor: Int) {
-        val prevAnchor = when (anchor) {
-            ConstraintSet.START -> ConstraintSet.END
-            ConstraintSet.END -> ConstraintSet.START
-            ConstraintSet.TOP -> ConstraintSet.BOTTOM
-            ConstraintSet.BOTTOM -> ConstraintSet.TOP
-            else -> throw IllegalArgumentException()
-        }
-        getConstratins().apply {
-            clear(id, prevAnchor)
-            connect(id, anchor, timerViewId, anchor)
-            applyTo(parent as ConstraintLayout)
+    private fun setConstraintBias(axis: Int, bias: Float) {
+        val cl = parent as ConstraintLayout
+        ConstraintSet().apply {
+            clone(cl)
+            if (axis == LinearLayout.HORIZONTAL) {
+                setHorizontalBias(id, bias)
+            }
+            if (axis == LinearLayout.VERTICAL) {
+                setVerticalBias(id, bias)
+            }
+            applyTo(cl)
         }
     }
 
@@ -154,7 +146,6 @@ class TimerWarnView @JvmOverloads constructor(
         looped { false }
         values {
             if (expand) {
-                initialHeight // initialization
                 val timerViewHeight = getTimerView().height
                 arrayOf(height, timerViewHeight)
             } else {

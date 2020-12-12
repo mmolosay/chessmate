@@ -1,5 +1,6 @@
 package com.ordolabs.chessmate.ui.view
 
+import android.animation.AnimatorSet
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
@@ -26,6 +27,7 @@ class TimerWarnView @JvmOverloads constructor(
     private val timerViewId: Int
     private val initialWidth by lazy { layoutParams.width }
     private val initialHeight by lazy { layoutParams.height }
+    private val initialTranslationY by lazy { translationY }
 
     init {
         val bgColor = ResourcesCompat.getColor(
@@ -41,7 +43,7 @@ class TimerWarnView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        initialWidth; initialHeight
+        initialWidth; initialHeight; initialTranslationY
     }
 
     fun setState(state: State) {
@@ -129,34 +131,46 @@ class TimerWarnView @JvmOverloads constructor(
         looped { false }
         values {
             if (show) {
-                val timerViewWidth = getTimerView().width
-                arrayOf(initialWidth, timerViewWidth)
+                arrayOf(initialWidth, getTimerView().width)
             } else {
-                arrayOf(this@TimerWarnView.width, initialWidth)
+                arrayOf(width, initialWidth)
             }
         }
         updateListener {
-            this@TimerWarnView.updateLayoutParams {
+            updateLayoutParams {
                 width = animatedValue as Int
             }
         }
     }
 
-    private fun animExpandHide(expand: Boolean) = ValueAnimatorBuilder.of<Int>(expand) {
-        looped { false }
-        values {
-            if (expand) {
-                val timerViewHeight = getTimerView().height
-                arrayOf(height, timerViewHeight)
-            } else {
-                arrayOf(height, initialHeight)
+    private fun animExpandHide(expand: Boolean) = AnimatorSet().apply {
+        playTogether(
+            ValueAnimatorBuilder.of<Int>(expand) {
+                looped { false }
+                values {
+                    if (expand) {
+                        arrayOf(height, getTimerView().height)
+                    } else {
+                        arrayOf(height, initialHeight)
+                    }
+                }
+                updateListener {
+                    updateLayoutParams {
+                        height = animatedValue as Int
+                    }
+                }
+            },
+            ValueAnimatorBuilder.of<Float>(expand) {
+                values {
+                    arrayOf(initialTranslationY, 0f)
+                }
+                updateListener {
+                    updateLayoutParams {
+                        translationY = animatedValue as Float
+                    }
+                }
             }
-        }
-        updateListener {
-            this@TimerWarnView.updateLayoutParams {
-                height = animatedValue as Int
-            }
-        }
+        )
     }
 
     private fun getTimerView(): View {

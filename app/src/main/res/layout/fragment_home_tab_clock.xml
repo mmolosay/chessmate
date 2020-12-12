@@ -11,7 +11,7 @@
         android:layout_height="@dimen/height_timer_warn_collapsed"
 
         android:visibility="gone"
-        android:translationY="-14dp"
+        android:translationY="@dimen/translationY_timer_warn_collapsed"
 
         app:layout_constraintBottom_toBottomOf="@+id/timer"
         app:layout_constraintEnd_toEndOf="@+id/timer"

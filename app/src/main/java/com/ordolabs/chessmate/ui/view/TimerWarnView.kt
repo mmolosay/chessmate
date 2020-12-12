@@ -24,9 +24,8 @@ class TimerWarnView @JvmOverloads constructor(
         private set
 
     private val timerViewId: Int
-    private val initialSize: Int by lazy {
-        layoutParams.width
-    }
+    private val initialWidth by lazy { layoutParams.width }
+    private val initialHeight by lazy { layoutParams.height }
 
     init {
         val bgColor = ResourcesCompat.getColor(
@@ -71,15 +70,15 @@ class TimerWarnView @JvmOverloads constructor(
             doOnStart {
                 isVisible = true
             }
-            doOnEnd {
-                constraintTo(ConstraintSet.END)
-            }
             start()
         }
     }
 
     private fun hideCollapsed() {
         animShowHideCollapsed(show = false).apply {
+            doOnStart {
+                constraintTo(ConstraintSet.END)
+            }
             doOnEnd {
                 isVisible = false
                 constraintTo(ConstraintSet.START)
@@ -89,36 +88,60 @@ class TimerWarnView @JvmOverloads constructor(
     }
 
     private fun expand() {
-
+        animExpandHide(expand = true).apply {
+            doOnStart {
+                constraintTo(ConstraintSet.BOTTOM)
+            }
+            doOnEnd {
+                constraintTo(ConstraintSet.TOP)
+            }
+            start()
+        }
     }
 
     private fun hideExpanded() {
+        animExpandHide(expand = false).apply {
+            doOnEnd {
+                isVisible = false
+                getConstratins().apply {
+                    clear(id, ConstraintSet.TOP)
+                    connect(id, ConstraintSet.TOP, timerViewId, ConstraintSet.BOTTOM)
+                    applyTo(parent as ConstraintLayout)
+                }
+            }
+            start()
+        }
+    }
 
+    private fun getConstratins(): ConstraintSet {
+        return ConstraintSet().apply {
+            clone(parent as ConstraintLayout)
+        }
     }
 
     private fun constraintTo(anchor: Int) {
-        val cl = parent as ConstraintLayout
-        val constraints = ConstraintSet().apply {
-            clone(cl)
+        val prevAnchor = when (anchor) {
+            ConstraintSet.START -> ConstraintSet.END
+            ConstraintSet.END -> ConstraintSet.START
+            ConstraintSet.TOP -> ConstraintSet.BOTTOM
+            ConstraintSet.BOTTOM -> ConstraintSet.TOP
+            else -> throw IllegalArgumentException()
         }
-        val currentAnchor = if (anchor == ConstraintSet.START) {
-            ConstraintSet.END
-        } else {
-            ConstraintSet.START
+        getConstratins().apply {
+            clear(id, prevAnchor)
+            connect(id, anchor, timerViewId, anchor)
+            applyTo(parent as ConstraintLayout)
         }
-        constraints.clear(id, currentAnchor)
-        constraints.connect(id, anchor, timerViewId, anchor)
-        constraints.applyTo(cl)
     }
 
     private fun animShowHideCollapsed(show: Boolean) = ValueAnimatorBuilder.of<Int>(show) {
         looped { false }
         values {
             if (show) {
-                val timerViewWidth = rootView.findViewById<View>(timerViewId).width
-                arrayOf(initialSize, timerViewWidth)
+                val timerViewWidth = getTimerView().width
+                arrayOf(initialWidth, timerViewWidth)
             } else {
-                arrayOf(this@TimerWarnView.width, initialSize)
+                arrayOf(this@TimerWarnView.width, initialWidth)
             }
         }
         updateListener {
@@ -126,6 +149,28 @@ class TimerWarnView @JvmOverloads constructor(
                 width = animatedValue as Int
             }
         }
+    }
+
+    private fun animExpandHide(expand: Boolean) = ValueAnimatorBuilder.of<Int>(expand) {
+        looped { false }
+        values {
+            if (expand) {
+                initialHeight // initialization
+                val timerViewHeight = getTimerView().height
+                arrayOf(height, timerViewHeight)
+            } else {
+                arrayOf(height, initialHeight)
+            }
+        }
+        updateListener {
+            this@TimerWarnView.updateLayoutParams {
+                height = animatedValue as Int
+            }
+        }
+    }
+
+    private fun getTimerView(): View {
+        return rootView.findViewById(timerViewId)
     }
 
     enum class State {

@@ -7,7 +7,7 @@
 
     <com.ordolabs.chessmate.ui.view.TimerWarnView
         android:id="@+id/timer_warn"
-        android:layout_width="@dimen/height_timer_warn_collapsed"
+        android:layout_width="1px"
         android:layout_height="@dimen/height_timer_warn_collapsed"
 
         android:visibility="gone"

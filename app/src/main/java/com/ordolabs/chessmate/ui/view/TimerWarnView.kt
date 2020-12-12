@@ -14,7 +14,6 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.util.wrapper.ValueAnimatorBuilder
-import kotlinx.android.synthetic.main.fragment_home_tab_clock.view.*
 
 class TimerWarnView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

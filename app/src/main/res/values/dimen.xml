@@ -63,7 +63,7 @@
 
     <dimen name="translationX_timer_minus">20dp</dimen>
 
-    <dimen name="height_timer_warn_collapsed">2dp</dimen>
+    <dimen name="height_timer_warn_collapsed">1dp</dimen>
 
     <!--~~~~~~~~~~~~~~~~~~~~ STUFF ~~~~~~~~~~~~~~~~~~~~~-->
 

@@ -1,15 +1,20 @@
 package com.ordolabs.chessmate.ui.view
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.content.res.getResourceIdOrThrow
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.util.wrapper.ValueAnimatorBuilder
+import kotlinx.android.synthetic.main.fragment_home_tab_clock.view.*
 
 class TimerWarnView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -24,9 +29,10 @@ class TimerWarnView @JvmOverloads constructor(
     }
 
     init {
-        background = ResourcesCompat.getDrawable(
-            resources, R.drawable.bg_timer_warn, context.theme
+        val bgColor = ResourcesCompat.getColor(
+            resources, R.color.timer_warn_color, context.theme
         )
+        background = ColorDrawable(bgColor)
         isVisible = false
 
         context.obtainStyledAttributes(attrs, R.styleable.TimerWarnView).apply {
@@ -61,12 +67,25 @@ class TimerWarnView @JvmOverloads constructor(
     }
 
     private fun showCollapsed() {
-        isVisible = true
-        animAppearingAndCollapsing()
+        animShowHideCollapsed(show = true).apply {
+            doOnStart {
+                isVisible = true
+            }
+            doOnEnd {
+                constraintTo(ConstraintSet.END)
+            }
+            start()
+        }
     }
 
     private fun hideCollapsed() {
-
+        animShowHideCollapsed(show = false).apply {
+            doOnEnd {
+                isVisible = false
+                constraintTo(ConstraintSet.START)
+            }
+            start()
+        }
     }
 
     private fun expand() {
@@ -77,17 +96,37 @@ class TimerWarnView @JvmOverloads constructor(
 
     }
 
-    private fun animAppearingAndCollapsing() = ValueAnimatorBuilder.of<Int>(isForward = true) {
+    private fun constraintTo(anchor: Int) {
+        val cl = parent as ConstraintLayout
+        val constraints = ConstraintSet().apply {
+            clone(cl)
+        }
+        val currentAnchor = if (anchor == ConstraintSet.START) {
+            ConstraintSet.END
+        } else {
+            ConstraintSet.START
+        }
+        constraints.clear(id, currentAnchor)
+        constraints.connect(id, anchor, timerViewId, anchor)
+        constraints.applyTo(cl)
+    }
+
+    private fun animShowHideCollapsed(show: Boolean) = ValueAnimatorBuilder.of<Int>(show) {
+        looped { false }
         values {
-            val timerViewWidth = (parent as ViewGroup).findViewById<View>(timerViewId).width
-            arrayOf(initialSize, timerViewWidth)
+            if (show) {
+                val timerViewWidth = rootView.findViewById<View>(timerViewId).width
+                arrayOf(initialSize, timerViewWidth)
+            } else {
+                arrayOf(this@TimerWarnView.width, initialSize)
+            }
         }
         updateListener {
             this@TimerWarnView.updateLayoutParams {
                 width = animatedValue as Int
             }
         }
-    }.start()
+    }
 
     enum class State {
         HIDDEN, COLLAPSED, EXPANDED

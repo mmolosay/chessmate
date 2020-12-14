@@ -20,48 +20,58 @@
         android:textSize="@dimen/text_size_60"
         android:visibility="gone"
 
-        app:layout_constraintBottom_toBottomOf="@+id/timer"
-        app:layout_constraintEnd_toStartOf="@+id/timer"
-        app:layout_constraintTop_toTopOf="@+id/timer"
+        app:layout_constraintBottom_toBottomOf="@+id/timer_group"
+        app:layout_constraintEnd_toStartOf="@+id/timer_group"
+        app:layout_constraintTop_toTopOf="@+id/timer_group"
         tools:alpha="1"
         tools:ignore="HardcodedText"
         tools:visibility="visible" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/timer"
-        style="@style/TextTitle"
+    <com.ordolabs.chessmate.ui.view.TimerConstraintLayout
+        android:id="@+id/timer_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:fontFamily="sans-serif-light"
-        android:stateListAnimator="@animator/animator_timer"
-        android:text="00:00.00"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_60"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.30"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintVertical_bias="0.30">
 
-    <com.ordolabs.chessmate.ui.view.TimerWarnView
-        android:id="@+id/timer_warn"
-        android:layout_width="1px"
-        android:layout_height="@dimen/height_timer_warn_collapsed"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/timer"
+            style="@style/TextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:visibility="gone"
-        android:translationY="@dimen/translationY_timer_warn_collapsed"
+            android:fontFamily="sans-serif-light"
+            android:stateListAnimator="@animator/animator_timer"
+            android:text="00:00.00"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_60"
 
-        app:layout_constraintBottom_toBottomOf="@+id/timer"
-        app:layout_constraintEnd_toEndOf="@+id/timer"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/timer"
-        app:layout_constraintTop_toTopOf="@+id/timer"
-        app:layout_constraintVertical_bias="1.0"
-        app:timer_view="@+id/timer"
-        tools:visibility="visible" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <com.ordolabs.chessmate.ui.view.TimerWarnView
+            android:id="@+id/timer_warn"
+            android:layout_width="1px"
+            android:layout_height="@dimen/height_timer_warn_collapsed"
+
+            android:translationY="@dimen/translationY_timer_warn_collapsed"
+            android:visibility="gone"
+
+            app:layout_constraintBottom_toBottomOf="@+id/timer"
+            app:layout_constraintEnd_toEndOf="@+id/timer"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/timer"
+            app:layout_constraintTop_toTopOf="@+id/timer"
+            app:layout_constraintVertical_bias="1.0"
+            app:timer_view="@+id/timer"
+            tools:visibility="visible" />
+
+    </com.ordolabs.chessmate.ui.view.TimerConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_reset_timer"
@@ -72,9 +82,9 @@
         android:src="@drawable/ic_change_turn_big_normal"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/timer"
-        app:layout_constraintStart_toStartOf="@+id/timer"
-        app:layout_constraintTop_toBottomOf="@+id/timer"
+        app:layout_constraintEnd_toEndOf="@+id/timer_group"
+        app:layout_constraintStart_toStartOf="@+id/timer_group"
+        app:layout_constraintTop_toBottomOf="@+id/timer_group"
         app:layout_constraintVertical_bias="0.30"
         tools:ignore="UnusedAttribute" />
 
@@ -87,8 +97,8 @@
         android:src="@drawable/ic_start_normal"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/timer"
-        app:layout_constraintStart_toStartOf="@+id/timer"
+        app:layout_constraintEnd_toEndOf="@+id/timer_group"
+        app:layout_constraintStart_toStartOf="@+id/timer_group"
         app:layout_constraintTop_toBottomOf="@+id/btn_reset_timer"
         app:layout_constraintVertical_bias="0.10"
         tools:ignore="UnusedAttribute" />

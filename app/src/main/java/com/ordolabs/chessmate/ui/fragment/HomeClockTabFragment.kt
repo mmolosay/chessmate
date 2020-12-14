@@ -1,30 +1,38 @@
 package com.ordolabs.chessmate.ui.fragment
 
+import android.animation.AnimatorSet
 import android.content.Context
+import android.graphics.*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
 import com.ordolabs.chessmate.ui.dialog.TimerSettingsDialog
+import com.ordolabs.chessmate.ui.fragment.base.BaseFragment
+import com.ordolabs.chessmate.util.Utils
+import com.ordolabs.chessmate.util.wrapper.ValueAnimatorBuilder
 import com.ordolabs.chessmate.viewmodel.TimerSettingsViewModel
 import com.ordolabs.chessmate.viewmodel.TimerViewModel
 import kotlinx.android.synthetic.main.fragment_home_tab_clock.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeClockTabFragment private constructor() : Fragment() {
+class HomeClockTabFragment private constructor() : BaseFragment() {
 
     private val timerVM: TimerViewModel by viewModel()
     private val timerSettingsVM: TimerSettingsViewModel by viewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        observeTimerTime()
+        observeTimerData()
         observeTimerSettings()
+        observeTimerWarnViewState()
     }
 
     override fun onCreateView(
@@ -37,6 +45,7 @@ class HomeClockTabFragment private constructor() : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setTimer()
         setResetButton()
         setStartStopButton()
@@ -52,6 +61,9 @@ class HomeClockTabFragment private constructor() : Fragment() {
         btn_reset_timer.isEnabled = false
         btn_reset_timer.setOnClickListener {
             timerVM.resetTimer()
+            if (timerVM.isTimerExpired()) {
+                Utils.vibrate(context)
+            }
         }
     }
 
@@ -60,7 +72,6 @@ class HomeClockTabFragment private constructor() : Fragment() {
             val running = timerVM.isTimerRunning()
             if (running) {
                 timerVM.stopTimer()
-                resetTimerView()
             } else {
                 timerVM.startTimer()
             }
@@ -92,11 +103,6 @@ class HomeClockTabFragment private constructor() : Fragment() {
         btn_startstop.setImageDrawable(icon)
     }
 
-    private fun resetTimerView() {
-        val limit = timerVM.getTimerLimit()
-        timerVM.updateTimerTime(limit)
-    }
-
     private fun onTimerSettingsDialogApplied(newSettings: TimerSettingsPresentation) {
         timerSettingsVM.setTimerSettings(newSettings)
 
@@ -104,10 +110,16 @@ class HomeClockTabFragment private constructor() : Fragment() {
         timerVM.setTimerLimit(newLimit)
     }
 
-    private fun observeTimerTime() {
-        timerVM.timerTime.observe(this) {
-            timer.text = it.time
-            timer_minus.isVisible = it.hasMinus
+    private fun observeTimerData() {
+        var hadMinus = false
+        timerVM.timerData.observe(this) { data ->
+            timer.text = data.time
+
+            if (data.hasMinus && !hadMinus)
+                animTimerMinusShow()
+            if (!data.hasMinus && hadMinus)
+                animTimerMinusHide()
+            hadMinus = data.hasMinus
         }
     }
 
@@ -119,6 +131,66 @@ class HomeClockTabFragment private constructor() : Fragment() {
             timer.isEnabled = true
         }
     }
+
+    private fun observeTimerWarnViewState() {
+        timerVM.warnState.observe(this) { state ->
+            if (timer_warn.state != state) {
+                timer_warn.setState(state)
+            }
+        }
+    }
+
+    private fun animTimerMinusShow() {
+        val set = AnimatorSet()
+        set.playTogether(
+            animTimerMinusTranslation(true),
+            animTimerMinusAlpha(true)
+        )
+        set.doOnStart {
+            timer_minus.isVisible = true
+        }
+        set.start()
+    }
+
+    private fun animTimerMinusHide() {
+        val set = AnimatorSet()
+        set.playTogether(
+            animTimerMinusTranslation(false),
+            animTimerMinusAlpha(false)
+        )
+        set.doOnEnd {
+            timer_minus.isGone = true
+        }
+        set.start()
+    }
+
+    private fun animTimerMinusTranslation(isForward: Boolean) =
+        ValueAnimatorBuilder.of<Float>(isForward) {
+            looped { false }
+            values {
+                val translation = resources.getDimensionPixelSize(
+                    R.dimen.translationX_timer_minus
+                ).toFloat()
+                if (isForward) {
+                    arrayOf(-translation, 0f)
+                } else {
+                    arrayOf(0f, translation)
+                }
+            }
+            updateListener {
+                timer_minus.translationX = animatedValue as Float
+            }
+        }
+
+    private fun animTimerMinusAlpha(isForward: Boolean) =
+        ValueAnimatorBuilder.of<Float>(isForward) {
+            values {
+                arrayOf(0f, 1f)
+            }
+            updateListener {
+                timer_minus.alpha = animatedValue as Float
+            }
+        }
 
     companion object {
         fun new(): HomeClockTabFragment {

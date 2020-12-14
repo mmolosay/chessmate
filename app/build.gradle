@@ -11,7 +11,7 @@ android {
     buildToolsVersion buildTools
 
     defaultConfig {
-        applicationId "com.ordolabs.collect"
+        applicationId "com.ordolabs.chessmate"
         minSdkVersion minSdk
         targetSdkVersion targetSdk
 

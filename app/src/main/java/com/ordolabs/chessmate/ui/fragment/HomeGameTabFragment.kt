@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.ordolabs.chessmate.R
+import com.ordolabs.chessmate.ui.fragment.base.BaseFragment
 
-class HomeGameTabFragment private constructor() : Fragment() {
+class HomeGameTabFragment private constructor() : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -4,7 +4,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.ordolabs.chessmate.model.TimerTime
+import com.ordolabs.chessmate.model.TimerData
+import com.ordolabs.chessmate.ui.view.TimerWarnView
 import com.ordolabs.chessmate.util.struct.Timer
 import com.ordolabs.chessmate.viewmodel.base.BaseViewModel
 import kotlin.math.absoluteValue
@@ -12,11 +13,17 @@ import kotlin.math.sign
 
 class TimerViewModel : BaseViewModel() {
 
-    val timerTime: LiveData<TimerTime>
-        get() = _timerTime
+    val timerData: LiveData<TimerData>
+        get() = _timerData
 
-    private val _timerTime = MutableLiveData(
-        TimerTime(TIMER_UI_PATTERN, false)
+    val warnState: LiveData<TimerWarnView.State>
+        get() = _warnState
+
+    private val _timerData = MutableLiveData(
+        TimerData(TIMER_UI_PATTERN, 0, false)
+    )
+    private val _warnState = MutableLiveData(
+        TimerWarnView.State.HIDDEN
     )
 
     private val timer = Timer()
@@ -25,6 +32,7 @@ class TimerViewModel : BaseViewModel() {
         override fun run() {
             val remaining = timer.getRemainingTime()
             updateTimerTime(remaining)
+            updateWarnState(remaining)
             timerHandler.postDelayed(this, TIMER_UI_UPDATE_DELTA_TIME)
         }
     }
@@ -33,12 +41,13 @@ class TimerViewModel : BaseViewModel() {
         return timer.running
     }
 
-    fun setTimerLimit(limit: Long) {
-        timer.limit = limit
+    fun isTimerExpired(): Boolean {
+        val remaining = _timerData.value?.rawTime!!
+        return (remaining < 0)
     }
 
-    fun getTimerLimit(): Long {
-        return timer.limit
+    fun setTimerLimit(limit: Long) {
+        timer.limit = limit
     }
 
     fun startTimer() {
@@ -49,14 +58,18 @@ class TimerViewModel : BaseViewModel() {
     fun stopTimer() {
         timer.stop()
         timerHandler.removeCallbacks(timerTick)
+
+        val remaining = timer.limit
+        updateTimerTime(remaining)
+        updateWarnState(remaining)
     }
 
     fun resetTimer() {
         if (timer.running) {
             timer.restart()
         }
-        _timerTime.value?.time = TIMER_UI_PATTERN
-        _timerTime.value?.hasMinus = false
+        _timerData.value?.time = TIMER_UI_PATTERN
+        _timerData.value?.hasMinus = false
     }
 
     fun updateTimerTime(remaining: Long) {
@@ -70,11 +83,25 @@ class TimerViewModel : BaseViewModel() {
         val sec = if (seconds / 10 == 0L) "0$seconds" else seconds.toString()
         val mil = if (millis / 10 == 0L) "0$millis" else millis.toString()
 
-        _timerTime.value?.apply {
+        _timerData.value?.apply {
             time = "$min:$sec.$mil"
+            rawTime = remaining
             hasMinus = (remaining.sign == -1)
         }
-        _timerTime.value = _timerTime.value // will fire observers
+        _timerData.value = _timerData.value // will fire observers
+    }
+
+    private fun updateWarnState(remaining: Long) {
+        _warnState.value = when {
+            remaining < 0 ->
+                TimerWarnView.State.EXPANDED
+
+            remaining < TimerWarnView.WARN_APPEAR_PREEMPTION ->
+                TimerWarnView.State.COLLAPSED
+
+            else ->
+                TimerWarnView.State.HIDDEN
+        }
     }
 
     companion object {

@@ -61,6 +61,11 @@
     <dimen name="translationY_timer_normal">0dp</dimen>
     <dimen name="translationY_timer_disabled">-15dp</dimen>
 
+    <dimen name="translationX_timer_minus">20dp</dimen>
+
+    <dimen name="height_timer_warn_collapsed">5dp</dimen>
+    <dimen name="translationY_timer_warn_collapsed">-12dp</dimen>
+
     <!--~~~~~~~~~~~~~~~~~~~~ STUFF ~~~~~~~~~~~~~~~~~~~~~-->
 
 </resources>

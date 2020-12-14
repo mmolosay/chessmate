@@ -2,6 +2,7 @@ package com.ordolabs.chessmate.ui.fragment
 
 import android.animation.AnimatorSet
 import android.content.Context
+import android.graphics.*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

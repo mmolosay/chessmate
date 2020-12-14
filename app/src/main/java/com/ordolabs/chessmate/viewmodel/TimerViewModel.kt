@@ -41,6 +41,11 @@ class TimerViewModel : BaseViewModel() {
         return timer.running
     }
 
+    fun isTimerExpired(): Boolean {
+        val remaining = _timerData.value?.rawTime!!
+        return (remaining < 0)
+    }
+
     fun setTimerLimit(limit: Long) {
         timer.limit = limit
     }
@@ -90,8 +95,10 @@ class TimerViewModel : BaseViewModel() {
         _warnState.value = when {
             remaining < 0 ->
                 TimerWarnView.State.EXPANDED
+
             remaining < TimerWarnView.WARN_APPEAR_PREEMPTION ->
                 TimerWarnView.State.COLLAPSED
+
             else ->
                 TimerWarnView.State.HIDDEN
         }

@@ -16,6 +16,7 @@ import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
 import com.ordolabs.chessmate.ui.dialog.TimerSettingsDialog
 import com.ordolabs.chessmate.ui.fragment.base.BaseFragment
+import com.ordolabs.chessmate.util.Utils
 import com.ordolabs.chessmate.util.wrapper.ValueAnimatorBuilder
 import com.ordolabs.chessmate.viewmodel.TimerSettingsViewModel
 import com.ordolabs.chessmate.viewmodel.TimerViewModel
@@ -60,6 +61,9 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
         btn_reset_timer.isEnabled = false
         btn_reset_timer.setOnClickListener {
             timerVM.resetTimer()
+            if (timerVM.isTimerExpired()) {
+                Utils.vibrate(context)
+            }
         }
     }
 

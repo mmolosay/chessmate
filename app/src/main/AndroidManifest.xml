@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ordolabs.chessmate">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
         android:name=".ChessMateApp"
         android:allowBackup="true"

@@ -2,7 +2,9 @@ package com.ordolabs.chessmate.ui.view
 
 import android.animation.AnimatorSet
 import android.content.Context
-import android.graphics.*
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.View
@@ -16,9 +18,7 @@ import androidx.core.content.res.getResourceIdOrThrow
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import com.ordolabs.chessmate.R
-import com.ordolabs.chessmate.util.createBitmap
 import com.ordolabs.chessmate.util.wrapper.ValueAnimatorBuilder
-import kotlinx.android.synthetic.main.fragment_home_tab_clock.view.*
 
 class TimerWarnView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -43,10 +43,10 @@ class TimerWarnView @JvmOverloads constructor(
             timerViewId = getResourceIdOrThrow(R.styleable.TimerWarnView_timer_view)
         }.recycle()
 
-//        val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-//            xfermode = PorterDuffXfermode(PorterDuff.Mode.XOR)
-//        }
-//        setLayerType(LAYER_TYPE_HARDWARE, paint)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            xfermode = PorterDuffXfermode(PorterDuff.Mode.XOR)
+        }
+        setLayerType(LAYER_TYPE_SOFTWARE, paint)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -84,24 +84,6 @@ class TimerWarnView @JvmOverloads constructor(
         animShowHideCollapsed(show = true).apply {
             doOnStart {
                 isVisible = true
-            }
-            doOnEnd {
-                val timerView = getTimerView()
-
-                val timerBitmap = timerView.createBitmap()
-                val warnBitmap = this@TimerWarnView.createBitmap()
-                val resultBitmap = Bitmap.createBitmap(timerBitmap)
-
-                val canvas = Canvas(resultBitmap)
-                val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-
-                val deltaX = this@TimerWarnView.x - timerView.x
-                val deltaY = this@TimerWarnView.y - timerView.y
-
-                canvas.drawBitmap(timerBitmap, 0f, 0f, paint)
-                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.XOR)
-                canvas.drawBitmap(warnBitmap, deltaX, deltaY, paint)
-                println() // TODO: remove
             }
             start()
         }

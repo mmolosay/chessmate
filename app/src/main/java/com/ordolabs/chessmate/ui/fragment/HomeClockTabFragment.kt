@@ -14,6 +14,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
+import com.ordolabs.chessmate.ui.dialog.TimerCheckpointsDialog
 import com.ordolabs.chessmate.ui.dialog.TimerSettingsDialog
 import com.ordolabs.chessmate.ui.fragment.base.BaseFragment
 import com.ordolabs.chessmate.util.Utils
@@ -60,6 +61,7 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
     private fun setResetButton() {
         btn_reset_timer.isEnabled = false
         btn_reset_timer.setOnClickListener {
+            timerVM.addTimerCheckpoint()
             timerVM.resetTimer()
             if (timerVM.isTimerExpired()) {
                 Utils.vibrate(context)
@@ -71,8 +73,10 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
         btn_startstop.setOnClickListener {
             val running = timerVM.isTimerRunning()
             if (running) {
+                timerVM.addTimerCheckpoint()
                 timerVM.stopTimer()
             } else {
+                timerVM.clearTimerCheckpoints()
                 timerVM.startTimer()
             }
             btn_reset_timer.isEnabled = !running
@@ -86,12 +90,17 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
             val settings = timerSettingsVM.settings.value ?: return@setOnClickListener
             TimerSettingsDialog
                 .new(settings, ::onTimerSettingsDialogApplied)
-                .show(parentFragmentManager, "stopwatch_settings_dialog")
+                .show(parentFragmentManager, "timer_settings_dialog")
         }
     }
 
     private fun setCheckpointsButton() {
-
+        btn_checkpoints.setOnClickListener {
+            val checkpoints = timerVM.timerCheckpoints.value!!
+            TimerCheckpointsDialog
+                .new(checkpoints)
+                .show(parentFragmentManager, "timer_checkpoints_dialog")
+        }
     }
 
     private fun alterStartStopButtonIcon(setStart: Boolean) {
@@ -105,9 +114,6 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
 
     private fun onTimerSettingsDialogApplied(newSettings: TimerSettingsPresentation) {
         timerSettingsVM.setTimerSettings(newSettings)
-
-        val newLimit = timerSettingsVM.parseTimerSettingsLimit(newSettings)
-        timerVM.setTimerLimit(newLimit)
     }
 
     private fun observeTimerData() {
@@ -126,7 +132,9 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
     private fun observeTimerSettings() {
         timerSettingsVM.getTimerSettings().observe(this) {
             val limit = timerSettingsVM.parseTimerSettingsLimit(it)
+            val names = it.player1 to it.player2
             timerVM.setTimerLimit(limit)
+            timerVM.setPlayerNames(names)
             timerVM.updateTimerTime(limit)
             timer.isEnabled = true
         }

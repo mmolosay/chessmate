@@ -34,7 +34,7 @@ class TimerWarnView @JvmOverloads constructor(
 
     init {
         val bgColor = ResourcesCompat.getColor(
-            resources, R.color.timer_warn_color, context.theme
+            resources, R.color.timer_warn, context.theme
         )
         background = ColorDrawable(bgColor)
         isVisible = false

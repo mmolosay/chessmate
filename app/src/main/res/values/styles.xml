@@ -11,21 +11,21 @@
     <style name="TextGeneric" parent="TextAppearance.AppCompat">
         <!-- override me -->
         <item name="android:textColor">@color/super_red</item>
-        <item name="android:fontFamily">@font/raleway_regular</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="TextTitle" parent="TextGeneric">
         <item name="android:textColor">@color/text_title</item>
         <item name="android:textSize">@dimen/text_size_20</item>
-        <item name="android:fontFamily">@font/raleway_regular</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
         <item name="android:letterSpacing">@dimen/text_spacing_medium</item>
     </style>
 
     <style name="TextBody" parent="TextGeneric">
         <item name="android:textColor">@color/text_body</item>
         <item name="android:textSize">@dimen/text_size_16</item>
-        <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
         <item name="android:letterSpacing">@dimen/text_spacing_small</item>
     </style>
 
@@ -116,6 +116,11 @@
         <item name="android:layout_marginTop">@dimen/list_divider_vert_spacing</item>
         <item name="android:layout_marginBottom">@dimen/list_divider_vert_spacing</item>
         <item name="android:clickable">false</item>
+    </style>
+
+    <style name="DialogContainer">
+        <item name="android:background">@drawable/bg_rounded_white</item>
+        <item name="android:padding">@dimen/size_16</item>
     </style>
 
     <!--~~~~~~~~~~~~~~~~~~~~ TOOLBAR ~~~~~~~~~~~~~~~~~~~-->

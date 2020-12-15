@@ -85,8 +85,7 @@
         app:layout_constraintEnd_toEndOf="@+id/timer_group"
         app:layout_constraintStart_toStartOf="@+id/timer_group"
         app:layout_constraintTop_toBottomOf="@+id/timer_group"
-        app:layout_constraintVertical_bias="0.30"
-        tools:ignore="UnusedAttribute" />
+        app:layout_constraintVertical_bias="0.30" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_startstop"
@@ -100,8 +99,7 @@
         app:layout_constraintEnd_toEndOf="@+id/timer_group"
         app:layout_constraintStart_toStartOf="@+id/timer_group"
         app:layout_constraintTop_toBottomOf="@+id/btn_reset_timer"
-        app:layout_constraintVertical_bias="0.10"
-        tools:ignore="UnusedAttribute" />
+        app:layout_constraintVertical_bias="0.10" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_settings"
@@ -114,8 +112,7 @@
 
         app:layout_constraintBottom_toBottomOf="@+id/btn_startstop"
         app:layout_constraintStart_toEndOf="@+id/btn_startstop"
-        app:layout_constraintTop_toTopOf="@+id/btn_startstop"
-        tools:ignore="UnusedAttribute" />
+        app:layout_constraintTop_toTopOf="@+id/btn_startstop" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_checkpoints"
@@ -128,7 +125,6 @@
 
         app:layout_constraintBottom_toBottomOf="@+id/btn_startstop"
         app:layout_constraintEnd_toStartOf="@+id/btn_startstop"
-        app:layout_constraintTop_toTopOf="@+id/btn_startstop"
-        tools:ignore="UnusedAttribute" />
+        app:layout_constraintTop_toTopOf="@+id/btn_startstop" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

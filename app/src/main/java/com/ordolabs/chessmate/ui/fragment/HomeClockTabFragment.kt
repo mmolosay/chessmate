@@ -19,7 +19,6 @@ import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
 import com.ordolabs.chessmate.ui.dialog.TimerSettingsDialog
 import com.ordolabs.chessmate.ui.fragment.base.BaseFragment
 import com.ordolabs.chessmate.util.Utils
-import com.ordolabs.chessmate.util.struct.Timer
 import com.ordolabs.chessmate.util.wrapper.ValueAnimatorBuilder
 import com.ordolabs.chessmate.viewmodel.TimerSettingsViewModel
 import com.ordolabs.chessmate.viewmodel.TimerViewModel
@@ -78,6 +77,7 @@ class HomeClockTabFragment : BaseFragment() {
             timerVM.restartTimer()
 
             animRestartButtonClick()
+            alterPauseResumeButtonIcon(true)
             if (timerVM.isTimerExpired()) {
                 Utils.vibrate(context)
             }
@@ -96,10 +96,12 @@ class HomeClockTabFragment : BaseFragment() {
                 timerVM.startTimer()
             }
 
-            alterResetButtonEnabled(stopped)
             btn_settings.isEnabled = !stopped
             animTimerControlsTranslation(stopped)
+
+            alterResetButtonEnabled(stopped)
             alterStartStopButtonIcon(!stopped)
+            alterPauseResumeButtonIcon(stopped)
         }
     }
 
@@ -161,25 +163,10 @@ class HomeClockTabFragment : BaseFragment() {
         }
     }
 
+    @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
     private fun observeTimerState() {
-        var previous = timerVM.timerState.value!!
-        timerVM.timerState.observe(this) { state ->
-            when (previous) {
-                Timer.State.STOPPED -> when (state) {
-                    Timer.State.RUNNING -> Unit
-                    Timer.State.PAUSED -> Unit
-                }
-                Timer.State.PAUSED -> when (state) {
-                    Timer.State.RUNNING -> Unit
-                    Timer.State.STOPPED -> Unit
-                }
-                Timer.State.RUNNING -> when (state) {
-                    Timer.State.PAUSED -> Unit
-                    Timer.State.STOPPED -> Unit
-                }
-            }
+        timerVM.timerState.observe(this) {
 
-            previous = state
         }
     }
 
@@ -321,15 +308,10 @@ class HomeClockTabFragment : BaseFragment() {
             }
         }.apply {
             doOnStart {
-                if (isForward) {
-                    btn_pauseresume.isVisible = true
-                }
+                if (isForward) btn_pauseresume.isVisible = true
             }
             doOnEnd {
-                if (!isForward) {
-                    btn_pauseresume.isVisible = false
-                    alterPauseResumeButtonIcon(!timerVM.isTimerPaused)
-                }
+                if (!isForward) btn_pauseresume.isVisible = false
             }
         }
 }

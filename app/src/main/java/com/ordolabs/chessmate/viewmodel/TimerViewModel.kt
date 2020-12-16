@@ -133,6 +133,8 @@ class TimerViewModel : BaseViewModel() {
         if (!timer.isStopped) {
             timer.restart()
         }
+
+        updateTimerState()
         _timerData.value?.time = TIMER_UI_PATTERN
         _timerData.value?.hasMinus = false
     }

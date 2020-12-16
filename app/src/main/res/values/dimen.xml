@@ -27,10 +27,14 @@
     <!--~~~~~~~~~~~~~~~~~~~~~ LISTS ~~~~~~~~~~~~~~~~~~~~-->
     <dimen name="list_subtitle_spacing_top">@dimen/size_16</dimen>
     <dimen name="list_subtitle_spacing_bottom">@dimen/size_8</dimen>
+
     <dimen name="list_items_vert_spacing">@dimen/size_8</dimen>
+
     <dimen name="list_groups_vert_spacing">@dimen/size_16</dimen>
+
     <dimen name="list_divider_vert_spacing">@dimen/size_16</dimen>
     <dimen name="list_divider_height">1dp</dimen>
+    <dimen name="list_divider_width_percents" type="dimen" format="float">0.5</dimen>
 
     <!--~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~~-->
     <dimen name="home_tab_height">?attr/tabIndicatorHeight</dimen>

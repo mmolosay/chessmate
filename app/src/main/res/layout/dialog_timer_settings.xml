@@ -72,13 +72,12 @@
     <View
         android:id="@+id/divider"
         style="@style/ListDivider"
-
         android:layout_width="0dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_timer_limit_minutes"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintWidth_percent="@dimen/list_divider_width_percents" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/players_label"

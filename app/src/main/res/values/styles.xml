@@ -111,6 +111,7 @@
 
     <!--~~~~~~~~~~~~~~~~~~~~~ VIEWS ~~~~~~~~~~~~~~~~~~~~-->
     <style name="ListDivider">
+        <!-- APPLY app:layout_constraintWidth_percent="@dimen/list_divider_width_percents" -->
         <item name="android:layout_height">@dimen/list_divider_height</item>
         <item name="android:background">@drawable/bg_divider</item>
         <item name="android:layout_marginTop">@dimen/list_divider_vert_spacing</item>

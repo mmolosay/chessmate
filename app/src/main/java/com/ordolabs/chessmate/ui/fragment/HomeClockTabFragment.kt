@@ -98,6 +98,7 @@ class HomeClockTabFragment : BaseFragment() {
 
             btn_settings.isEnabled = !stopped
             animTimerControlsTranslation(stopped)
+            animCheckpointsDividerScaleX(stopped)
 
             alterResetButtonEnabled(stopped)
             alterStartStopButtonIcon(!stopped)
@@ -293,7 +294,6 @@ class HomeClockTabFragment : BaseFragment() {
 
     private fun animPauseResumeButtonTranslation(isForward: Boolean) =
         ValueAnimatorBuilder.of<Float>(isForward) {
-            val resources = requireContext().resources
             values {
                 val normal = resources
                     .getDimension(R.dimen.translationX_btn_timer_pauseresume_normal)
@@ -314,4 +314,14 @@ class HomeClockTabFragment : BaseFragment() {
                 if (!isForward) btn_pauseresume.isVisible = false
             }
         }
+
+    private fun animCheckpointsDividerScaleX(isForward: Boolean) =
+        ValueAnimatorBuilder.of<Float>(isForward) {
+            values {
+                arrayOf(0f, 1f)
+            }
+            updateListener {
+                divider.scaleX = animatedValue as Float
+            }
+        }.start()
 }

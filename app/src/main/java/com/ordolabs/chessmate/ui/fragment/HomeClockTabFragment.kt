@@ -25,7 +25,7 @@ import com.ordolabs.chessmate.viewmodel.TimerViewModel
 import kotlinx.android.synthetic.main.fragment_home_tab_clock.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeClockTabFragment private constructor() : BaseFragment() {
+class HomeClockTabFragment : BaseFragment() {
 
     private val timerVM: TimerViewModel by viewModel()
     private val timerSettingsVM: TimerSettingsViewModel by viewModel()
@@ -305,10 +305,4 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
                 }
             }
         }
-
-    companion object {
-        fun new(): HomeClockTabFragment {
-            return HomeClockTabFragment()
-        }
-    }
 }

@@ -9,6 +9,7 @@
     <integer name="anim_duration_300">300</integer>
     <integer name="anim_duration_400">400</integer>
     <integer name="anim_duration_500">500</integer>
+    <integer name="anim_duration_600">600</integer>
 
     <integer name="vibration_duration_default">200</integer>
 

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
@@ -75,6 +76,8 @@ class HomeClockTabFragment : BaseFragment() {
         btn_restart.setOnClickListener {
             timerVM.addTimerCheckpoint()
             timerVM.restartTimer()
+
+            animRestartButtonClick()
             if (timerVM.isTimerExpired()) {
                 Utils.vibrate(context)
             }
@@ -251,6 +254,30 @@ class HomeClockTabFragment : BaseFragment() {
             }
             updateListener {
                 timer_minus.alpha = animatedValue as Float
+            }
+        }
+
+    private fun animRestartButtonClick() {
+        animRestartButtonRotation().apply {
+            doOnEnd {
+                btn_restart.rotation = 0f
+            }
+        }.start()
+    }
+
+    private fun animRestartButtonRotation() =
+        ValueAnimatorBuilder.of<Float>(true) {
+            values {
+                arrayOf(0f, 180f)
+            }
+            interpolator {
+                OvershootInterpolator()
+            }
+            duration {
+                resources.getInteger(R.integer.anim_duration_500).toLong()
+            }
+            updateListener {
+                btn_restart.rotation = animatedValue as Float
             }
         }
 

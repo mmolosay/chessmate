@@ -156,11 +156,13 @@ class TimerViewModel : BaseViewModel() {
 
     private fun addTimerCheckpoint(remaining: Long) {
         val prevOrdinal = _timerCheckpoints.value?.checkpointOrdinal ?: 0
+        val isExpired = (remaining < 0)
+        val time = ("-".takeIf { isExpired } ?: "") + _timerData.value!!.time
         _timerCheckpoints.value = TimerCheckpoint(
             playerOrdinal = prevOrdinal % 2, // either 0 or 1 – first player or second
-            checkpointTime = _timerData.value!!.time,
+            checkpointTime = time,
             checkpointOrdinal = prevOrdinal + 1,
-            isExpired = (remaining < 0)
+            isExpired = isExpired
         )
     }
 

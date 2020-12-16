@@ -109,7 +109,7 @@ class HomeClockTabFragment : BaseFragment() {
 
             btn_settings.isEnabled = !stopped
             animTimerControlsTranslation(stopped)
-            animCheckpointsDividerScaleX(stopped)
+            animCheckpointsDividerScaleX()
 
             alterResetButtonEnabled(stopped)
             alterStartStopButtonIcon(!stopped)
@@ -195,7 +195,6 @@ class HomeClockTabFragment : BaseFragment() {
     private fun observeTimerSettings() {
         timerSettingsVM.getTimerSettings().observe(this) {
             val limit = timerSettingsVM.parseTimerSettingsLimit(it)
-            val names = it.player1 to it.player2
 
             timerVM.setTimerLimit(limit)
             timerVM.applyTimerLimit(limit)
@@ -345,8 +344,10 @@ class HomeClockTabFragment : BaseFragment() {
             }
         }
 
-    private fun animCheckpointsDividerScaleX(isForward: Boolean) =
-        ValueAnimatorBuilder.of<Float>(isForward) {
+    private fun animCheckpointsDividerScaleX() {
+        // anim divider appearing only at first timer start
+        if (divider.scaleX == 1f) return
+        ValueAnimatorBuilder.of<Float>(true) {
             values {
                 arrayOf(0f, 1f)
             }
@@ -354,4 +355,5 @@ class HomeClockTabFragment : BaseFragment() {
                 divider.scaleX = animatedValue as Float
             }
         }.start()
+    }
 }

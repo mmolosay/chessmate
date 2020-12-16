@@ -25,14 +25,12 @@ class Timer {
      */
     var limit: Long = TIME_UNKNOWN
 
-    private var totalTime: Long = TIME_UNKNOWN
+    private var totalTime: Long = 0
     private var startTime: Long = TIME_UNKNOWN
 
     fun start() {
         if (limit == TIME_UNKNOWN)
             throw IllegalStateException("limit must be set before calling start()")
-        if (isRunning)
-            throw IllegalTimerStateException("start")
 
         reset()
         startTime = System.currentTimeMillis()
@@ -70,7 +68,6 @@ class Timer {
         if (isStopped)
             throw IllegalTimerStateException("restart")
 
-        reset()
         start()
     }
 
@@ -78,10 +75,10 @@ class Timer {
         if (startTime == TIME_UNKNOWN)
             throw IllegalStateException("Timer must be started at least once")
 
-        if (isRunning) {
-            (System.currentTimeMillis() - startTime) + totalTime
-        } else {
-            totalTime
+        when (state) {
+            State.RUNNING -> (System.currentTimeMillis() - startTime) + totalTime
+            State.PAUSED -> totalTime
+            State.STOPPED -> 0
         }
     }
 
@@ -90,7 +87,7 @@ class Timer {
     }
 
     private fun reset() {
-        totalTime = TIME_UNKNOWN
+        totalTime = 0
         startTime = TIME_UNKNOWN
     }
 

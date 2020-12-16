@@ -74,7 +74,7 @@
     </com.ordolabs.chessmate.ui.view.TimerConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_reset_timer"
+        android:id="@+id/btn_restart"
         style="@style/Button.Large.RoundSky"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -94,14 +94,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginVertical="@dimen/size_16"
+        android:layout_marginVertical="@dimen/size_24"
         android:elevation="-1px"
         android:src="@drawable/ic_pause_normal"
         android:visibility="gone"
 
-        app:layout_constraintEnd_toEndOf="@+id/btn_reset_timer"
-        app:layout_constraintStart_toStartOf="@+id/btn_reset_timer"
-        app:layout_constraintTop_toBottomOf="@+id/btn_reset_timer"
+        app:layout_constraintEnd_toEndOf="@+id/btn_restart"
+        app:layout_constraintStart_toStartOf="@+id/btn_restart"
+        app:layout_constraintTop_toBottomOf="@+id/btn_restart"
         tools:translationX="@dimen/translationX_btn_timer_pauseresume_moved"
         tools:visibility="visible" />
 
@@ -111,13 +111,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginVertical="@dimen/size_16"
+        android:layout_marginVertical="@dimen/size_24"
         android:elevation="0px"
         android:src="@drawable/ic_start_normal"
 
-        app:layout_constraintEnd_toEndOf="@+id/btn_reset_timer"
-        app:layout_constraintStart_toStartOf="@+id/btn_reset_timer"
-        app:layout_constraintTop_toBottomOf="@+id/btn_reset_timer"
+        app:layout_constraintEnd_toEndOf="@+id/btn_restart"
+        app:layout_constraintStart_toStartOf="@+id/btn_restart"
+        app:layout_constraintTop_toBottomOf="@+id/btn_restart"
         tools:src="@drawable/ic_stop_normal"
         tools:translationX="@dimen/translationX_btn_timer_startstop_moved" />
 
@@ -131,8 +131,8 @@
         android:src="@drawable/ic_gear_normal"
         android:stateListAnimator="@animator/animator_btn_timer_settings"
 
-        app:layout_constraintBottom_toTopOf="@+id/btn_reset_timer"
-        app:layout_constraintEnd_toEndOf="@+id/btn_reset_timer"
-        app:layout_constraintStart_toStartOf="@+id/btn_reset_timer" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_restart"
+        app:layout_constraintEnd_toEndOf="@+id/btn_restart"
+        app:layout_constraintStart_toStartOf="@+id/btn_restart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

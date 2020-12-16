@@ -51,7 +51,7 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setTimer()
         setSettingsButton()
-        setResetButton()
+        setRestartButton()
         setStartStopButton()
         setPauseResumeButton()
     }
@@ -70,11 +70,11 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
         }
     }
 
-    private fun setResetButton() {
+    private fun setRestartButton() {
         alterResetButtonEnabled(false)
-        btn_reset_timer.setOnClickListener {
+        btn_restart.setOnClickListener {
             timerVM.addTimerCheckpoint()
-            timerVM.resetTimer()
+            timerVM.restartTimer()
             if (timerVM.isTimerExpired()) {
                 Utils.vibrate(context)
             }
@@ -133,9 +133,9 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
     }
 
     private fun alterResetButtonEnabled(enabled: Boolean) {
-        if (btn_reset_timer.isEnabled == enabled) return
-        btn_reset_timer.isEnabled = enabled
-        (btn_reset_timer.background as TransitionDrawable).apply {
+        if (btn_restart.isEnabled == enabled) return
+        btn_restart.isEnabled = enabled
+        (btn_restart.background as TransitionDrawable).apply {
             if (!enabled) startTransition(200)
             else reverseTransition(200)
         }
@@ -294,10 +294,15 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
             }
         }.apply {
             doOnStart {
-                if (isForward) btn_pauseresume.isVisible = true
+                if (isForward) {
+                    btn_pauseresume.isVisible = true
+                }
             }
             doOnEnd {
-                if (!isForward) btn_pauseresume.isVisible = false
+                if (!isForward) {
+                    btn_pauseresume.isVisible = false
+                    alterPauseResumeButtonIcon(!timerVM.isTimerPaused)
+                }
             }
         }
 

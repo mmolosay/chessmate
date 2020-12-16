@@ -126,7 +126,10 @@ class TimerViewModel : BaseViewModel() {
         updateTimerState()
     }
 
-    fun resetTimer() {
+    fun restartTimer() {
+        if (timer.isPaused) {
+            timerHandler.post(timerTick)
+        }
         if (!timer.isStopped) {
             timer.restart()
         }

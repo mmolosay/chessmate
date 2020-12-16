@@ -79,6 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
+        android:background="@drawable/transition_btn_reset_timer"
         android:src="@drawable/ic_change_turn_big_normal"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -88,17 +89,21 @@
         app:layout_constraintVertical_bias="0.40" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_pause"
+        android:id="@+id/btn_pauseresume"
         style="@style/Button.Small.RoundSky"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginVertical="@dimen/size_24"
+        android:layout_marginVertical="@dimen/size_16"
+        android:elevation="-1px"
         android:src="@drawable/ic_pause_normal"
+        android:visibility="gone"
 
         app:layout_constraintEnd_toEndOf="@+id/btn_reset_timer"
         app:layout_constraintStart_toStartOf="@+id/btn_reset_timer"
-        app:layout_constraintTop_toBottomOf="@+id/btn_reset_timer" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_reset_timer"
+        tools:translationX="@dimen/translationX_btn_timer_pauseresume_moved"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_startstop"
@@ -106,12 +111,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginVertical="@dimen/size_24"
+        android:layout_marginVertical="@dimen/size_16"
+        android:elevation="0px"
         android:src="@drawable/ic_start_normal"
 
         app:layout_constraintEnd_toEndOf="@+id/btn_reset_timer"
         app:layout_constraintStart_toStartOf="@+id/btn_reset_timer"
-        app:layout_constraintTop_toBottomOf="@+id/btn_reset_timer" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_reset_timer"
+        tools:src="@drawable/ic_stop_normal"
+        tools:translationX="@dimen/translationX_btn_timer_startstop_moved" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_settings"
@@ -121,6 +129,7 @@
 
         android:layout_marginVertical="@dimen/size_24"
         android:src="@drawable/ic_gear_normal"
+        android:stateListAnimator="@animator/animator_btn_timer_settings"
 
         app:layout_constraintBottom_toTopOf="@+id/btn_reset_timer"
         app:layout_constraintEnd_toEndOf="@+id/btn_reset_timer"

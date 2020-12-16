@@ -5,8 +5,19 @@ package com.ordolabs.chessmate.util.struct
  */
 class Timer {
 
-    var running: Boolean = false
+    var state: State = State.STOPPED
         private set
+
+    val isStopped: Boolean
+        get() = (state == State.STOPPED)
+    val isPaused: Boolean
+        get() = (state == State.PAUSED)
+    val isRunning: Boolean
+        get() = (state == State.RUNNING)
+
+    enum class State {
+        STOPPED, PAUSED, RUNNING
+    }
 
     /**
      * An amout of time in milliseconds, after passing which
@@ -14,31 +25,50 @@ class Timer {
      */
     var limit: Long = TIME_UNKNOWN
 
+    private var totalTime: Long = TIME_UNKNOWN
     private var startTime: Long = TIME_UNKNOWN
-    private var stopTime: Long = TIME_UNKNOWN
 
     fun start() {
         if (limit == TIME_UNKNOWN)
             throw IllegalStateException("limit must be set before calling start()")
-        if (running)
-            throw IllegalStateException("Timer must be stopped to call start()")
+        if (isRunning)
+            throw IllegalTimerStateException("start")
 
         reset()
         startTime = System.currentTimeMillis()
-        running = true
+        state = State.RUNNING
+    }
+
+    fun pause() {
+        if (!isRunning)
+            throw IllegalTimerStateException("pause")
+
+        totalTime += System.currentTimeMillis() - startTime
+
+        state = State.PAUSED
+    }
+
+    fun resume() {
+        if (!isPaused)
+            throw IllegalTimerStateException("resume")
+
+        startTime = System.currentTimeMillis()
+        state = State.RUNNING
     }
 
     fun stop() {
-        if (!running)
-            throw IllegalStateException("Timer must be running to cal stop()")
+        if (isStopped)
+            throw IllegalTimerStateException("stop")
 
-        stopTime = System.currentTimeMillis()
-        running = false
+        if (!isPaused) {
+            totalTime += System.currentTimeMillis() - startTime
+        }
+        state = State.STOPPED
     }
 
     fun restart() {
-        if (!running)
-            throw IllegalStateException("Timer must be running to call restart()")
+        if (isStopped)
+            throw IllegalTimerStateException("restart")
 
         reset()
         start()
@@ -48,10 +78,10 @@ class Timer {
         if (startTime == TIME_UNKNOWN)
             throw IllegalStateException("Timer must be started at least once")
 
-        if (running) {
-            System.currentTimeMillis() - startTime
+        if (isRunning) {
+            (System.currentTimeMillis() - startTime) + totalTime
         } else {
-            stopTime - startTime
+            totalTime
         }
     }
 
@@ -60,12 +90,16 @@ class Timer {
     }
 
     private fun reset() {
+        totalTime = TIME_UNKNOWN
         startTime = TIME_UNKNOWN
-        stopTime = TIME_UNKNOWN
-        running = false
     }
 
     companion object {
         private const val TIME_UNKNOWN: Long = -1
+    }
+
+    inner class IllegalTimerStateException(methodThrew: String) : IllegalStateException() {
+        override val message: String =
+            "Calling $methodThrew() method is illegal while timer is in ${state.name} state"
     }
 }

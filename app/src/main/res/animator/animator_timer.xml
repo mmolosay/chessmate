@@ -28,7 +28,7 @@
             <objectAnimator
                 android:duration="@integer/anim_duration_200"
                 android:propertyName="translationY"
-                android:valueTo="@dimen/translationY_timer_normal"
+                android:valueTo="@dimen/translationY_timer_enabled"
                 android:valueType="floatType" />
         </set>
     </item>

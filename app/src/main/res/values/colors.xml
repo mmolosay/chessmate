@@ -8,7 +8,8 @@
     <color name="status_bar_light">@color/window_background</color>
     <color name="navigation_bar">@color/content_bg</color>
 
-    <color name="accent_sky">#42A5F5</color>
+    <color name="sky_normal">#42A5F5</color>
+    <color name="sky_disabled">#8EC9F9</color>
     <color name="ash">#ECECEC</color>
 
     <!--~~~~~~~~~~~~~~~~~~~~~ TEXT ~~~~~~~~~~~~~~~~~~~~~-->
@@ -21,6 +22,8 @@
 
     <!--~~~~~~~~~~~~~~~~~~~~ LISTS ~~~~~~~~~~~~~~~~~~~~~-->
     <color name="list_divider">#ECECEC</color>
+
+    <!--~~~~~~~~~~~~~~~~~~ ANIMATION ~~~~~~~~~~~~~~~~~~~~-->
 
     <!--~~~~~~~~~~~~~~~~~~~~ STUFF ~~~~~~~~~~~~~~~~~~~~~-->
     <color name="super_red">#ff0000</color>

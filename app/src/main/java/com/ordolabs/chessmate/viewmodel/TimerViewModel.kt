@@ -17,14 +17,21 @@ class TimerViewModel : BaseViewModel() {
     val timerData: LiveData<TimerData>
         get() = _timerData
 
+    val timerState: LiveData<Timer.State>
+        get() = _timerState
+
     val timerCheckpoints: LiveData<List<CheckpointItem>>
         get() = _timerCheckpoints
 
     val warnState: LiveData<TimerWarnView.State>
         get() = _warnState
 
+
     private val _timerData = MutableLiveData(
         TimerData(TIMER_UI_PATTERN, 0, false)
+    )
+    private val _timerState = MutableLiveData(
+        Timer.State.STOPPED
     )
     private val _timerCheckpoints = MutableLiveData<List<CheckpointItem>>(
         mutableListOf()
@@ -33,21 +40,32 @@ class TimerViewModel : BaseViewModel() {
         TimerWarnView.State.HIDDEN
     )
 
+
+    val isTimerStopped: Boolean
+        get() = (timer.state == Timer.State.STOPPED)
+
+    val isTimerPaused: Boolean
+        get() = (timer.state == Timer.State.PAUSED)
+
+    val isTimerRunning: Boolean
+        get() = (timer.state == Timer.State.RUNNING)
+
+
     private lateinit var players: Pair<String, String>
 
     private val timer = Timer()
     private val timerHandler = Handler(Looper.getMainLooper())
     private val timerTick = object : Runnable {
         override fun run() {
-            val remaining = timer.getRemainingTime()
-            updateTimerTime(remaining)
-            updateWarnState(remaining)
+            onTimerTick()
             timerHandler.postDelayed(this, TIMER_UI_UPDATE_DELTA_TIME)
         }
     }
 
-    fun isTimerRunning(): Boolean {
-        return timer.running
+    private fun onTimerTick() {
+        val remaining = timer.getRemainingTime()
+        updateTimerTime(remaining)
+        updateWarnState(remaining)
     }
 
     fun isTimerExpired(): Boolean {
@@ -57,6 +75,10 @@ class TimerViewModel : BaseViewModel() {
 
     fun setTimerLimit(limit: Long) {
         timer.limit = limit
+    }
+
+    fun applyTimerLimit(limit: Long) {
+        updateTimerTime(limit)
     }
 
     fun setPlayerNames(players: Pair<String, String>) {
@@ -77,26 +99,42 @@ class TimerViewModel : BaseViewModel() {
     fun startTimer() {
         timer.start()
         timerHandler.post(timerTick)
+
+        updateTimerState()
+    }
+
+    fun pauseTimer() {
+        timerHandler.removeCallbacks(timerTick)
+        timer.pause()
+
+        onTimerTick()
+        updateTimerState()
+    }
+
+    fun resumeTimer() {
+        timer.resume()
+        timerHandler.post(timerTick)
+
+        updateTimerState()
     }
 
     fun stopTimer() {
-        timer.stop()
         timerHandler.removeCallbacks(timerTick)
+        timer.stop()
 
-        val remaining = timer.limit
-        updateTimerTime(remaining)
-        updateWarnState(remaining)
+        onTimerTick()
+        updateTimerState()
     }
 
     fun resetTimer() {
-        if (timer.running) {
+        if (!timer.isStopped) {
             timer.restart()
         }
         _timerData.value?.time = TIMER_UI_PATTERN
         _timerData.value?.hasMinus = false
     }
 
-    fun updateTimerTime(remaining: Long) {
+    private fun updateTimerTime(remaining: Long) {
         val r = remaining.absoluteValue
 
         val minutes = r / 1000 / 60
@@ -113,6 +151,10 @@ class TimerViewModel : BaseViewModel() {
             hasMinus = (remaining.sign == -1)
         }
         _timerData.value = _timerData.value // will fire observers
+    }
+
+    private fun updateTimerState() {
+        _timerState.value = timer.state
     }
 
     private fun addTimerCheckpoint(remaining: Long) {

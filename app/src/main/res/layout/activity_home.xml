@@ -24,7 +24,7 @@
 
         app:tabGravity="center"
         app:tabIndicator="@drawable/tab_indicator"
-        app:tabIndicatorColor="@color/accent_sky"
+        app:tabIndicatorColor="@color/sky_normal"
         app:tabIndicatorFullWidth="false"
         app:tabPaddingEnd="@dimen/size_24"
         app:tabPaddingStart="@dimen/size_24">

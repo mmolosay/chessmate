@@ -119,7 +119,7 @@
     </style>
 
     <style name="DialogContainer">
-        <item name="android:background">@drawable/bg_rounded_white</item>
+        <item name="android:background">@drawable/bg_rounded_white_normal</item>
         <item name="android:padding">@dimen/size_16</item>
     </style>
 

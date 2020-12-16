@@ -1,134 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/timer_minus"
-        style="@style/TextTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginHorizontal="@dimen/size_8"
-        android:alpha="0"
-        android:fontFamily="sans-serif-light"
-        android:stateListAnimator="@animator/animator_timer"
-        android:text="-"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_60"
-        android:visibility="gone"
-
-        app:layout_constraintBottom_toBottomOf="@+id/timer_group"
-        app:layout_constraintEnd_toStartOf="@+id/timer_group"
-        app:layout_constraintTop_toTopOf="@+id/timer_group"
-        tools:alpha="1"
-        tools:ignore="HardcodedText"
-        tools:visibility="visible" />
-
-    <com.ordolabs.chessmate.ui.view.TimerConstraintLayout
-        android:id="@+id/timer_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.30" >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/timer"
+            android:id="@+id/timer_minus"
             style="@style/TextTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
+            android:layout_marginHorizontal="@dimen/size_8"
+            android:alpha="0"
             android:fontFamily="sans-serif-light"
             android:stateListAnimator="@animator/animator_timer"
-            android:text="00:00.00"
+            android:text="-"
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_size_60"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="HardcodedText" />
-
-        <com.ordolabs.chessmate.ui.view.TimerWarnView
-            android:id="@+id/timer_warn"
-            android:layout_width="1px"
-            android:layout_height="@dimen/height_timer_warn_collapsed"
-
-            android:translationY="@dimen/translationY_timer_warn_collapsed"
             android:visibility="gone"
 
-            app:layout_constraintBottom_toBottomOf="@+id/timer"
-            app:layout_constraintEnd_toEndOf="@+id/timer"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/timer"
-            app:layout_constraintTop_toTopOf="@+id/timer"
-            app:layout_constraintVertical_bias="1.0"
-            app:timer_view="@+id/timer"
+            app:layout_constraintBottom_toBottomOf="@+id/timer_group"
+            app:layout_constraintEnd_toStartOf="@+id/timer_group"
+            app:layout_constraintTop_toTopOf="@+id/timer_group"
+            tools:alpha="1"
+            tools:ignore="HardcodedText"
             tools:visibility="visible" />
 
-    </com.ordolabs.chessmate.ui.view.TimerConstraintLayout>
+        <com.ordolabs.chessmate.ui.view.TimerConstraintLayout
+            android:id="@+id/timer_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_reset_timer"
-        style="@style/Button.Large.RoundSky"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            android:layout_marginTop="118dp"
 
-        android:src="@drawable/ic_change_turn_big_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/timer_group"
-        app:layout_constraintStart_toStartOf="@+id/timer_group"
-        app:layout_constraintTop_toBottomOf="@+id/timer_group"
-        app:layout_constraintVertical_bias="0.30"
-        tools:ignore="UnusedAttribute" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/timer"
+                style="@style/TextTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_startstop"
-        style="@style/Button.Small.RoundSky"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:stateListAnimator="@animator/animator_timer"
+                android:text="00:00.00"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_60"
 
-        android:src="@drawable/ic_start_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/timer_group"
-        app:layout_constraintStart_toStartOf="@+id/timer_group"
-        app:layout_constraintTop_toBottomOf="@+id/btn_reset_timer"
-        app:layout_constraintVertical_bias="0.10"
-        tools:ignore="UnusedAttribute" />
+            <com.ordolabs.chessmate.ui.view.TimerWarnView
+                android:id="@+id/timer_warn"
+                android:layout_width="1px"
+                android:layout_height="@dimen/height_timer_warn_collapsed"
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_settings"
-        style="@style/Button.Minor.RoundAsh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+                android:translationY="@dimen/translationY_timer_warn_collapsed"
+                android:visibility="gone"
 
-        android:layout_marginHorizontal="@dimen/size_32"
-        android:src="@drawable/ic_gear_normal"
+                app:layout_constraintBottom_toBottomOf="@+id/timer"
+                app:layout_constraintEnd_toEndOf="@+id/timer"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/timer"
+                app:layout_constraintTop_toTopOf="@+id/timer"
+                app:layout_constraintVertical_bias="1.0"
+                app:timer_view="@+id/timer"
+                tools:visibility="visible" />
 
-        app:layout_constraintBottom_toBottomOf="@+id/btn_startstop"
-        app:layout_constraintStart_toEndOf="@+id/btn_startstop"
-        app:layout_constraintTop_toTopOf="@+id/btn_startstop"
-        tools:ignore="UnusedAttribute" />
+        </com.ordolabs.chessmate.ui.view.TimerConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_checkpoints"
-        style="@style/Button.Minor.RoundAsh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_restart"
+            style="@style/Button.Large.RoundSky"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:layout_marginHorizontal="@dimen/size_32"
-        android:src="@drawable/ic_list_normal"
+            android:layout_marginTop="156dp"
+            android:background="@drawable/transition_btn_reset_timer"
+            android:src="@drawable/ic_change_turn_big_normal"
 
-        app:layout_constraintBottom_toBottomOf="@+id/btn_startstop"
-        app:layout_constraintEnd_toStartOf="@+id/btn_startstop"
-        app:layout_constraintTop_toTopOf="@+id/btn_startstop"
-        tools:ignore="UnusedAttribute" />
+            app:layout_constraintEnd_toEndOf="@+id/timer_group"
+            app:layout_constraintStart_toStartOf="@+id/timer_group"
+            app:layout_constraintTop_toBottomOf="@+id/timer_group" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_pauseresume"
+            style="@style/Button.Small.RoundSky"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginVertical="@dimen/size_24"
+            android:elevation="-1px"
+            android:src="@drawable/ic_pause_normal"
+            android:visibility="gone"
+
+            app:layout_constraintEnd_toEndOf="@+id/btn_restart"
+            app:layout_constraintStart_toStartOf="@+id/btn_restart"
+            app:layout_constraintTop_toBottomOf="@+id/btn_restart"
+            tools:translationX="@dimen/translationX_btn_timer_pauseresume_moved"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_startstop"
+            style="@style/Button.Small.RoundSky"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginVertical="@dimen/size_24"
+            android:elevation="0px"
+            android:src="@drawable/ic_start_normal"
+
+            app:layout_constraintEnd_toEndOf="@+id/btn_restart"
+            app:layout_constraintStart_toStartOf="@+id/btn_restart"
+            app:layout_constraintTop_toBottomOf="@+id/btn_restart"
+            tools:src="@drawable/ic_stop_normal"
+            tools:translationX="@dimen/translationX_btn_timer_startstop_moved" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_settings"
+            style="@style/Button.Minor.RoundAsh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginVertical="@dimen/size_24"
+            android:src="@drawable/ic_gear_normal"
+            android:stateListAnimator="@animator/animator_btn_timer_settings"
+
+            app:layout_constraintBottom_toTopOf="@+id/btn_restart"
+            app:layout_constraintEnd_toEndOf="@+id/btn_restart"
+            app:layout_constraintStart_toStartOf="@+id/btn_restart" />
+
+        <View
+            android:id="@+id/divider"
+            style="@style/ListDivider"
+            android:layout_width="0dp"
+
+            android:layout_marginTop="@dimen/size_24"
+            android:scaleX="0.0"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_startstop"
+            app:layout_constraintWidth_percent="@dimen/list_divider_width_percents"
+            tools:scaleX="1.0" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_checkpoints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            tools:listitem="@layout/item_checkpoint" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

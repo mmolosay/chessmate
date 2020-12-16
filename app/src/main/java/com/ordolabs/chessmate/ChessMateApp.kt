@@ -6,6 +6,7 @@ import com.ordolabs.chessmate.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
+// TODO: add landscape layouts
 class ChessMateApp : Application() {
 
     override fun onCreate() {

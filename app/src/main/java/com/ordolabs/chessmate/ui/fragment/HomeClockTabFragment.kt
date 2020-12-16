@@ -1,19 +1,25 @@
 package com.ordolabs.chessmate.ui.fragment
 
-import android.animation.AnimatorSet
+import android.animation.*
 import android.content.Context
 import android.graphics.*
+import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ordolabs.chessmate.R
+import com.ordolabs.chessmate.mapper.toUI
 import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
+import com.ordolabs.chessmate.ui.adapter.CheckpointsAdapter
+import com.ordolabs.chessmate.ui.adapter.base.OnRecyclerItemClicksListener
 import com.ordolabs.chessmate.ui.dialog.TimerSettingsDialog
 import com.ordolabs.chessmate.ui.fragment.base.BaseFragment
 import com.ordolabs.chessmate.util.Utils
@@ -23,15 +29,21 @@ import com.ordolabs.chessmate.viewmodel.TimerViewModel
 import kotlinx.android.synthetic.main.fragment_home_tab_clock.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeClockTabFragment private constructor() : BaseFragment() {
+class HomeClockTabFragment : BaseFragment() {
 
     private val timerVM: TimerViewModel by viewModel()
     private val timerSettingsVM: TimerSettingsViewModel by viewModel()
 
+    private val checkpointsAdapter by lazy {
+        CheckpointsAdapter(object : OnRecyclerItemClicksListener {})
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         observeTimerData()
+        observeTimerState()
         observeTimerSettings()
+        observeTimerCheckpoints()
         observeTimerWarnViewState()
     }
 
@@ -47,20 +59,35 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setTimer()
-        setResetButton()
-        setStartStopButton()
         setSettingsButton()
-        setCheckpointsButton()
+        setRestartButton()
+        setStartStopButton()
+        setPauseResumeButton()
+        setCheckpointsRecycler()
     }
 
     private fun setTimer() {
         timer.isEnabled = false
     }
 
-    private fun setResetButton() {
-        btn_reset_timer.isEnabled = false
-        btn_reset_timer.setOnClickListener {
-            timerVM.resetTimer()
+    private fun setSettingsButton() {
+        btn_settings.isEnabled = false
+        btn_settings.setOnClickListener {
+            val settings = timerSettingsVM.settings.value ?: return@setOnClickListener
+            TimerSettingsDialog
+                .new(settings, ::onTimerSettingsDialogApplied)
+                .show(parentFragmentManager, "timer_settings_dialog")
+        }
+    }
+
+    private fun setRestartButton() {
+        alterResetButtonEnabled(false)
+        btn_restart.setOnClickListener {
+            timerVM.addTimerCheckpoint()
+            timerVM.restartTimer()
+
+            animRestartButtonClick()
+            alterPauseResumeButtonIcon(true)
             if (timerVM.isTimerExpired()) {
                 Utils.vibrate(context)
             }
@@ -69,30 +96,49 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
 
     private fun setStartStopButton() {
         btn_startstop.setOnClickListener {
-            val running = timerVM.isTimerRunning()
-            if (running) {
+            val stopped = timerVM.isTimerStopped
+
+            if (!stopped) {
+                timerVM.addTimerCheckpoint()
                 timerVM.stopTimer()
             } else {
+                checkpointsAdapter.clear()
+                timerVM.clearTimerCheckpoints()
                 timerVM.startTimer()
             }
-            btn_reset_timer.isEnabled = !running
-            btn_settings.isEnabled = running
-            alterStartStopButtonIcon(running)
+
+            btn_settings.isEnabled = !stopped
+            animTimerControlsTranslation(stopped)
+            animCheckpointsDividerScaleX()
+
+            alterResetButtonEnabled(stopped)
+            alterStartStopButtonIcon(!stopped)
+            alterPauseResumeButtonIcon(stopped)
         }
     }
 
-    private fun setSettingsButton() {
-        btn_settings.setOnClickListener {
-            val settings = timerSettingsVM.settings.value ?: return@setOnClickListener
-            TimerSettingsDialog
-                .new(settings, ::onTimerSettingsDialogApplied)
-                .show(parentFragmentManager, "stopwatch_settings_dialog")
+    private fun setPauseResumeButton() {
+        btn_pauseresume.setOnClickListener {
+            val paused = timerVM.isTimerPaused
+
+            if (paused) {
+                timerVM.resumeTimer()
+            } else { // running
+                timerVM.pauseTimer()
+            }
+
+            alterPauseResumeButtonIcon(paused)
         }
     }
 
-    private fun setCheckpointsButton() {
+    private fun setCheckpointsRecycler() {
+        val reverseLayout = true
+        val lm = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, reverseLayout)
 
+        rv_checkpoints.layoutManager = lm
+        rv_checkpoints.adapter = checkpointsAdapter
     }
+
 
     private fun alterStartStopButtonIcon(setStart: Boolean) {
         val iconRes = if (setStart)
@@ -103,12 +149,28 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
         btn_startstop.setImageDrawable(icon)
     }
 
+    private fun alterPauseResumeButtonIcon(setPause: Boolean) {
+        val iconRes = if (setPause)
+            R.drawable.ic_pause_normal
+        else
+            R.drawable.ic_start_normal
+        val icon = ContextCompat.getDrawable(requireContext(), iconRes)
+        btn_pauseresume.setImageDrawable(icon)
+    }
+
+    private fun alterResetButtonEnabled(enabled: Boolean) {
+        if (btn_restart.isEnabled == enabled) return
+        btn_restart.isEnabled = enabled
+        (btn_restart.background as TransitionDrawable).apply {
+            if (!enabled) startTransition(200)
+            else reverseTransition(200)
+        }
+    }
+
     private fun onTimerSettingsDialogApplied(newSettings: TimerSettingsPresentation) {
         timerSettingsVM.setTimerSettings(newSettings)
-
-        val newLimit = timerSettingsVM.parseTimerSettingsLimit(newSettings)
-        timerVM.setTimerLimit(newLimit)
     }
+
 
     private fun observeTimerData() {
         var hadMinus = false
@@ -123,12 +185,31 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
         }
     }
 
+    @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
+    private fun observeTimerState() {
+        timerVM.timerState.observe(this) {
+
+        }
+    }
+
     private fun observeTimerSettings() {
         timerSettingsVM.getTimerSettings().observe(this) {
             val limit = timerSettingsVM.parseTimerSettingsLimit(it)
+
             timerVM.setTimerLimit(limit)
-            timerVM.updateTimerTime(limit)
+            timerVM.applyTimerLimit(limit)
+
             timer.isEnabled = true
+            btn_settings.isEnabled = true
+        }
+    }
+
+    private fun observeTimerCheckpoints() {
+        timerVM.timerCheckpoints.observe(this) { checkpoint ->
+            checkpoint ?: return@observe
+            checkpointsAdapter.add(
+                checkpoint.toUI(requireContext(), timerSettingsVM.settings.value!!)
+            )
         }
     }
 
@@ -139,6 +220,7 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
             }
         }
     }
+
 
     private fun animTimerMinusShow() {
         val set = AnimatorSet()
@@ -192,9 +274,86 @@ class HomeClockTabFragment private constructor() : BaseFragment() {
             }
         }
 
-    companion object {
-        fun new(): HomeClockTabFragment {
-            return HomeClockTabFragment()
+    private fun animRestartButtonClick() {
+        animRestartButtonRotation().apply {
+            doOnEnd {
+                btn_restart.rotation = 0f
+            }
+        }.start()
+    }
+
+    private fun animRestartButtonRotation() =
+        ValueAnimatorBuilder.of<Float>(true) {
+            values {
+                arrayOf(0f, 180f)
+            }
+            interpolator {
+                OvershootInterpolator()
+            }
+            duration {
+                resources.getInteger(R.integer.anim_duration_500).toLong()
+            }
+            updateListener {
+                btn_restart.rotation = animatedValue as Float
+            }
         }
+
+    private fun animTimerControlsTranslation(running: Boolean) {
+        val set = AnimatorSet()
+        set.playTogether(
+            animStartStopButtonTranslation(running),
+            animPauseResumeButtonTranslation(running)
+        )
+        set.start()
+    }
+
+    private fun animStartStopButtonTranslation(isForward: Boolean) =
+        ValueAnimatorBuilder.of<Float>(isForward) {
+            values {
+                val normal = resources
+                    .getDimension(R.dimen.translationX_btn_timer_startstop_normal)
+                val moved = resources
+                    .getDimension(R.dimen.translationX_btn_timer_startstop_moved)
+                arrayOf(normal, moved)
+            }
+            updateListener {
+                btn_startstop.translationX = animatedValue as Float
+            }
+        }
+
+    private fun animPauseResumeButtonTranslation(isForward: Boolean) =
+        ValueAnimatorBuilder.of<Float>(isForward) {
+            values {
+                val normal = resources
+                    .getDimension(R.dimen.translationX_btn_timer_pauseresume_normal)
+                val moved = resources
+                    .getDimension(R.dimen.translationX_btn_timer_pauseresume_moved)
+                arrayOf(normal, moved)
+            }
+            updateListener {
+                btn_pauseresume.translationX = animatedValue as Float
+                btn_pauseresume.alpha =
+                    animatedFraction.takeIf { isForward } ?: 1 - animatedFraction
+            }
+        }.apply {
+            doOnStart {
+                if (isForward) btn_pauseresume.isVisible = true
+            }
+            doOnEnd {
+                if (!isForward) btn_pauseresume.isVisible = false
+            }
+        }
+
+    private fun animCheckpointsDividerScaleX() {
+        // anim divider appearing only at first timer start
+        if (divider.scaleX == 1f) return
+        ValueAnimatorBuilder.of<Float>(true) {
+            values {
+                arrayOf(0f, 1f)
+            }
+            updateListener {
+                divider.scaleX = animatedValue as Float
+            }
+        }.start()
     }
 }

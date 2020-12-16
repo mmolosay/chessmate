@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogContainer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_rounded_white"
-    android:padding="@dimen/size_16">
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/timer_label"
@@ -73,13 +72,12 @@
     <View
         android:id="@+id/divider"
         style="@style/ListDivider"
-
         android:layout_width="0dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_timer_limit_minutes"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintWidth_percent="@dimen/list_divider_width_percents" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/players_label"
@@ -103,7 +101,7 @@
         android:hint="@string/d_stopwatch_settings_player1_hint"
         android:imeOptions="actionNext"
         android:inputType="textAutoCorrect|textAutoComplete|textCapWords"
-        android:maxLength="20"
+        android:maxLength="10"
         android:selectAllOnFocus="true"
 
         app:layout_constraintEnd_toEndOf="@+id/players_label"
@@ -120,7 +118,7 @@
         android:hint="@string/d_stopwatch_settings_player2_hint"
         android:imeOptions="actionDone"
         android:inputType="textAutoCorrect|textAutoComplete|textCapWords"
-        android:maxLength="20"
+        android:maxLength="10"
         android:selectAllOnFocus="true"
 
         app:layout_constraintEnd_toEndOf="@+id/edit_player1"

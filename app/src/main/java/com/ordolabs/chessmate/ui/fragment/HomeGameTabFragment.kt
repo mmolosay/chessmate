@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.ui.fragment.base.BaseFragment
 
-class HomeGameTabFragment private constructor() : BaseFragment() {
+class HomeGameTabFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -16,11 +16,5 @@ class HomeGameTabFragment private constructor() : BaseFragment() {
     ): View? {
         val layout = R.layout.fragment_home_tab_game
         return inflater.inflate(layout, container, false)
-    }
-
-    companion object {
-        fun new(): HomeGameTabFragment {
-            return HomeGameTabFragment()
-        }
     }
 }

@@ -11,21 +11,21 @@
     <style name="TextGeneric" parent="TextAppearance.AppCompat">
         <!-- override me -->
         <item name="android:textColor">@color/super_red</item>
-        <item name="android:fontFamily">@font/raleway_regular</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="TextTitle" parent="TextGeneric">
         <item name="android:textColor">@color/text_title</item>
         <item name="android:textSize">@dimen/text_size_20</item>
-        <item name="android:fontFamily">@font/raleway_regular</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
         <item name="android:letterSpacing">@dimen/text_spacing_medium</item>
     </style>
 
     <style name="TextBody" parent="TextGeneric">
         <item name="android:textColor">@color/text_body</item>
         <item name="android:textSize">@dimen/text_size_16</item>
-        <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
         <item name="android:letterSpacing">@dimen/text_spacing_small</item>
     </style>
 
@@ -110,12 +110,40 @@
     </style>
 
     <!--~~~~~~~~~~~~~~~~~~~~~ VIEWS ~~~~~~~~~~~~~~~~~~~~-->
+    <style name="DialogContainer">
+        <item name="android:background">@drawable/bg_rounded_white_normal</item>
+        <item name="android:padding">@dimen/size_16</item>
+    </style>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~ LISTS ~~~~~~~~~~~~~~~~~~~~-->
     <style name="ListDivider">
+        <!-- APPLY app:layout_constraintWidth_percent="@dimen/list_divider_width_percents" -->
         <item name="android:layout_height">@dimen/list_divider_height</item>
         <item name="android:background">@drawable/bg_divider</item>
         <item name="android:layout_marginTop">@dimen/list_divider_vert_spacing</item>
         <item name="android:layout_marginBottom">@dimen/list_divider_vert_spacing</item>
         <item name="android:clickable">false</item>
+    </style>
+
+    <style name="ListOverlineContainer">
+        <item name="android:layout_height">@dimen/list_item_overline_height</item>
+
+        <item name="android:paddingStart">@dimen/size_16</item>
+        <item name="android:paddingEnd">@dimen/size_16</item>
+    </style>
+
+    <style name="ListOverlineOverlineText" parent="TextBody.Subtitle.Major">
+        <item name="android:layout_margin">0dp</item>
+
+        <item name="android:fontFamily">@font/opensans_bold</item>
+        <item name="android:textSize">@dimen/list_item_overline_overline_text_size</item>
+        <item name="android:textColor">@color/list_item_overline_overline_text</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style name="ListOverlineContentText" parent="TextBody">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textColor">@color/list_item_overline_content_text</item>
     </style>
 
     <!--~~~~~~~~~~~~~~~~~~~~ TOOLBAR ~~~~~~~~~~~~~~~~~~~-->

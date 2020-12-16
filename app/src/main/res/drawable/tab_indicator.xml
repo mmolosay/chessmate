@@ -4,7 +4,7 @@
         <shape
             android:shape="rectangle">
             <corners android:radius="1000dp" />
-            <solid android:color="@color/accent_sky" />
+            <solid android:color="@color/sky_normal" />
             <size android:width="48dp" android:height="3dp"/>
         </shape>
     </item>

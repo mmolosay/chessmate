@@ -36,6 +36,9 @@
     <dimen name="list_divider_height">1dp</dimen>
     <dimen name="list_divider_width_percents" type="dimen" format="float">0.5</dimen>
 
+    <dimen name="list_item_overline_height">64dp</dimen>
+    <dimen name="list_item_overline_overline_text_size">10sp</dimen>
+
     <!--~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~~-->
     <dimen name="home_tab_height">?attr/tabIndicatorHeight</dimen>
 

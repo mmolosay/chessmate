@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.ordolabs.chessmate.R
+import com.ordolabs.chessmate.model.ui.CheckpointItem
 import com.ordolabs.chessmate.ui.adapter.base.BaseAdapter
 import com.ordolabs.chessmate.ui.adapter.base.BaseViewHolder
 import com.ordolabs.chessmate.ui.adapter.base.OnRecyclerItemClicksListener
@@ -26,6 +27,18 @@ class CheckpointsAdapter(
 
     override fun createViewHolder(itemView: View): CheckpointViewHolder {
         return CheckpointViewHolder(itemView)
+    }
+
+    fun add(checkpoint: CheckpointItem) {
+        val position = items.size
+        items.add(checkpoint)
+        notifyItemInserted(position)
+    }
+
+    fun clear() {
+        val itemCount = items.size
+        items.clear()
+        notifyItemRangeRemoved(0, itemCount)
     }
 
     override fun getItemViewLayout(viewType: Int): Int {
@@ -51,10 +64,3 @@ class CheckpointsAdapter(
         }
     }
 }
-
-data class CheckpointItem(
-    val ordinal: Int,
-    val playerName: String,
-    val checkpointTime: String,
-    val isExpired: Boolean
-)

@@ -4,6 +4,9 @@
 
     <!--~~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~-->
 
+    <!--~~~~~~~~~~~~~~~~ RECYCLER ITEMS ~~~~~~~~~~~~~~~~-->
+    <string name="item_checkpoint_ordinal">#%d</string>
+
     <!--~~~~~~~~~~~~~~~~~~~~ DIALOGS ~~~~~~~~~~~~~~~~~~~-->
     <string name="d_stopwatch_settings_time_limit">Timer</string>
     <string name="d_stopwatch_settings_time_limit_m_hint">m</string>

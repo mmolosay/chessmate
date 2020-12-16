@@ -14,8 +14,12 @@ import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ordolabs.chessmate.R
+import com.ordolabs.chessmate.mapper.toUI
 import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
+import com.ordolabs.chessmate.ui.adapter.CheckpointsAdapter
+import com.ordolabs.chessmate.ui.adapter.base.OnRecyclerItemClicksListener
 import com.ordolabs.chessmate.ui.dialog.TimerSettingsDialog
 import com.ordolabs.chessmate.ui.fragment.base.BaseFragment
 import com.ordolabs.chessmate.util.Utils
@@ -30,11 +34,16 @@ class HomeClockTabFragment : BaseFragment() {
     private val timerVM: TimerViewModel by viewModel()
     private val timerSettingsVM: TimerSettingsViewModel by viewModel()
 
+    private val checkpointsAdapter by lazy {
+        CheckpointsAdapter(object : OnRecyclerItemClicksListener {})
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         observeTimerData()
         observeTimerState()
         observeTimerSettings()
+        observeTimerCheckpoints()
         observeTimerWarnViewState()
     }
 
@@ -54,6 +63,7 @@ class HomeClockTabFragment : BaseFragment() {
         setRestartButton()
         setStartStopButton()
         setPauseResumeButton()
+        setCheckpointsRecycler()
     }
 
     private fun setTimer() {
@@ -92,6 +102,7 @@ class HomeClockTabFragment : BaseFragment() {
                 timerVM.addTimerCheckpoint()
                 timerVM.stopTimer()
             } else {
+                checkpointsAdapter.clear()
                 timerVM.clearTimerCheckpoints()
                 timerVM.startTimer()
             }
@@ -119,6 +130,15 @@ class HomeClockTabFragment : BaseFragment() {
             alterPauseResumeButtonIcon(paused)
         }
     }
+
+    private fun setCheckpointsRecycler() {
+        val reverseLayout = true
+        val lm = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, reverseLayout)
+
+        rv_checkpoints.layoutManager = lm
+        rv_checkpoints.adapter = checkpointsAdapter
+    }
+
 
     private fun alterStartStopButtonIcon(setStart: Boolean) {
         val iconRes = if (setStart)
@@ -151,6 +171,7 @@ class HomeClockTabFragment : BaseFragment() {
         timerSettingsVM.setTimerSettings(newSettings)
     }
 
+
     private fun observeTimerData() {
         var hadMinus = false
         timerVM.timerData.observe(this) { data ->
@@ -178,10 +199,18 @@ class HomeClockTabFragment : BaseFragment() {
 
             timerVM.setTimerLimit(limit)
             timerVM.applyTimerLimit(limit)
-            timerVM.setPlayerNames(names)
 
             timer.isEnabled = true
             btn_settings.isEnabled = true
+        }
+    }
+
+    private fun observeTimerCheckpoints() {
+        timerVM.timerCheckpoints.observe(this) { checkpoint ->
+            checkpoint ?: return@observe
+            checkpointsAdapter.add(
+                checkpoint.toUI(requireContext(), timerSettingsVM.settings.value!!)
+            )
         }
     }
 
@@ -192,6 +221,7 @@ class HomeClockTabFragment : BaseFragment() {
             }
         }
     }
+
 
     private fun animTimerMinusShow() {
         val set = AnimatorSet()

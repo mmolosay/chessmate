@@ -149,4 +149,11 @@
         app:layout_constraintWidth_percent="@dimen/list_divider_width_percents"
         tools:scaleX="1.0" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_checkpoints"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,8 +4,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.ordolabs.chessmate.model.TimerData
-import com.ordolabs.chessmate.ui.adapter.CheckpointItem
+import com.ordolabs.chessmate.model.viewmodel.TimerCheckpoint
+import com.ordolabs.chessmate.model.viewmodel.TimerData
 import com.ordolabs.chessmate.ui.view.TimerWarnView
 import com.ordolabs.chessmate.util.struct.Timer
 import com.ordolabs.chessmate.viewmodel.base.BaseViewModel
@@ -20,7 +20,7 @@ class TimerViewModel : BaseViewModel() {
     val timerState: LiveData<Timer.State>
         get() = _timerState
 
-    val timerCheckpoints: LiveData<List<CheckpointItem>>
+    val timerCheckpoints: LiveData<TimerCheckpoint>
         get() = _timerCheckpoints
 
     val warnState: LiveData<TimerWarnView.State>
@@ -33,9 +33,7 @@ class TimerViewModel : BaseViewModel() {
     private val _timerState = MutableLiveData(
         Timer.State.STOPPED
     )
-    private val _timerCheckpoints = MutableLiveData<List<CheckpointItem>>(
-        mutableListOf()
-    )
+    private val _timerCheckpoints = MutableLiveData<TimerCheckpoint>()
     private val _warnState = MutableLiveData(
         TimerWarnView.State.HIDDEN
     )
@@ -50,8 +48,6 @@ class TimerViewModel : BaseViewModel() {
     val isTimerRunning: Boolean
         get() = (timer.state == Timer.State.RUNNING)
 
-
-    private lateinit var players: Pair<String, String>
 
     private val timer = Timer()
     private val timerHandler = Handler(Looper.getMainLooper())
@@ -81,10 +77,6 @@ class TimerViewModel : BaseViewModel() {
         updateTimerTime(limit)
     }
 
-    fun setPlayerNames(players: Pair<String, String>) {
-        this.players = players
-    }
-
     fun addTimerCheckpoint() {
         val remaining = timer.getRemainingTime()
         updateTimerTime(remaining)
@@ -93,7 +85,7 @@ class TimerViewModel : BaseViewModel() {
     }
 
     fun clearTimerCheckpoints() {
-        _timerCheckpoints.value = mutableListOf()
+        _timerCheckpoints.value = null
     }
 
     fun startTimer() {
@@ -163,15 +155,13 @@ class TimerViewModel : BaseViewModel() {
     }
 
     private fun addTimerCheckpoint(remaining: Long) {
-        val list = _timerCheckpoints.value!! as MutableList
-        val size = list.size
-        val checkpoint = CheckpointItem(
-            ordinal = size + 1,
-            playerName = players.first.takeIf { size % 2 == 0 } ?: players.second,
+        val prevOrdinal = _timerCheckpoints.value?.checkpointOrdinal ?: 0
+        _timerCheckpoints.value = TimerCheckpoint(
+            playerOrdinal = prevOrdinal % 2, // either 0 or 1 – first player or second
             checkpointTime = _timerData.value!!.time,
+            checkpointOrdinal = prevOrdinal + 1,
             isExpired = (remaining < 0)
         )
-        list.add(checkpoint)
     }
 
     private fun updateWarnState(remaining: Long) {

@@ -73,7 +73,7 @@ class TimerWarnView @JvmOverloads constructor(
             }
             State.EXPANDED -> when (newState) {
                 State.HIDDEN -> hideExpanded()
-                State.COLLAPSED -> throw IllegalNewStateArgumentException()
+                State.COLLAPSED -> collapse()
                 State.EXPANDED -> throw IllegalStateException("How did you get here?")
             }
         }
@@ -104,15 +104,21 @@ class TimerWarnView @JvmOverloads constructor(
 
     private fun expand() {
         animExpandHide(expand = true).apply {
-            doOnEnd {
-                setConstraintBias(LinearLayout.VERTICAL, 0f)
-            }
+            start()
+        }
+    }
+
+    private fun collapse() {
+        animCollapseFromExpanded().apply {
             start()
         }
     }
 
     private fun hideExpanded() {
         animExpandHide(expand = false).apply {
+            doOnStart {
+                setConstraintBias(LinearLayout.VERTICAL, 0f)
+            }
             doOnEnd {
                 isVisible = false
                 translationY = initialTranslationY
@@ -182,6 +188,29 @@ class TimerWarnView @JvmOverloads constructor(
                     updateLayoutParams {
                         translationY = animatedValue as Float
                     }
+                }
+            }
+        )
+    }
+
+    private fun animCollapseFromExpanded() = AnimatorSet().apply {
+        playTogether(
+            ValueAnimatorBuilder.of<Int>(true) {
+                values {
+                    arrayOf(height, initialHeight)
+                }
+                updateListener {
+                    updateLayoutParams {
+                        height = animatedValue as Int
+                    }
+                }
+            },
+            ValueAnimatorBuilder.of<Float>(true) {
+                values {
+                    arrayOf(translationY, initialTranslationY)
+                }
+                updateListener {
+                    translationY = animatedValue as Float
                 }
             }
         )

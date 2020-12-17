@@ -28,7 +28,7 @@ class TimerSettingsDialog(
     override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
         setSettingsInViews()
         setTimerLimitCoercer(edit_timer_limit_minutes, 0..59)
-        setTimerLimitCoercer(edit_timer_limit_seconds, 1..59)
+        setTimerLimitCoercer(edit_timer_limit_seconds, 5..59)
         setSwapPlayersButton()
         setOkButton()
     }

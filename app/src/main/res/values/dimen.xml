@@ -62,8 +62,8 @@
     <dimen name="scale_btn_small_normal" type="dimen" format="float">1.0</dimen>
     <dimen name="scale_btn_small_diminished" type="dimen" format="float">0.85</dimen>
 
-    <dimen name="scale_btn_large_normal" type="dimen" format="float">1.0</dimen>
-    <dimen name="scale_btn_large_diminished" type="dimen" format="float">0.92</dimen>
+    <dimen name="scale_btn_large_enabled" type="dimen" format="float">1.0</dimen>
+    <dimen name="scale_btn_large_disabled" type="dimen" format="float">0.0</dimen>
 
     <dimen name="translationY_timer_enabled">0dp</dimen>
     <dimen name="translationY_timer_disabled">-15dp</dimen>
@@ -80,10 +80,10 @@
     <dimen name="alpha_btn_timer_settings_disabled" type="dimen" format="float">0.6</dimen>
 
     <dimen name="translationX_btn_timer_startstop_normal">0dp</dimen>
-    <dimen name="translationX_btn_timer_startstop_moved">48dp</dimen>
+    <dimen name="translationX_btn_timer_startstop_moved">88dp</dimen>
 
     <dimen name="translationX_btn_timer_pauseresume_normal">0dp</dimen>
-    <dimen name="translationX_btn_timer_pauseresume_moved">-48dp</dimen>
+    <dimen name="translationX_btn_timer_pauseresume_moved">-88dp</dimen>
 
     <!--~~~~~~~~~~~~~~~~~~~~ STUFF ~~~~~~~~~~~~~~~~~~~~~-->
 

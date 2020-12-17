@@ -7,6 +7,7 @@
                 android:duration="@integer/anim_duration_200"
                 android:interpolator="@android:anim/accelerate_interpolator"
                 android:propertyName="translationY"
+                android:startOffset="@integer/anim_btn_timer_settings_disabling_delay"
                 android:valueTo="@dimen/translationY_btn_timer_settings_disabled"
                 android:valueType="floatType" />
 
@@ -14,6 +15,7 @@
                 android:duration="@integer/anim_duration_200"
                 android:interpolator="@android:interpolator/fast_out_slow_in"
                 android:propertyName="alpha"
+                android:startOffset="@integer/anim_btn_timer_settings_disabling_delay"
                 android:valueTo="@dimen/alpha_btn_timer_settings_disabled"
                 android:valueType="floatType" />
         </set>

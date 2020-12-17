@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="-00.03:27" />
+        tools:text="-00:03.27" />
 
     <View
         android:id="@+id/badge_expired"

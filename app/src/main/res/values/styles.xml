@@ -128,6 +128,7 @@
     <style name="ListOverlineContainer">
         <item name="android:layout_height">@dimen/list_item_overline_height</item>
 
+        <item name="android:background">@drawable/ripple_rect_gray205</item>
         <item name="android:paddingStart">@dimen/size_16</item>
         <item name="android:paddingEnd">@dimen/size_16</item>
     </style>

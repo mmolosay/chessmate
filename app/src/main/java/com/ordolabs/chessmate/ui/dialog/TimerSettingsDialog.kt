@@ -3,9 +3,7 @@ package com.ordolabs.chessmate.ui.dialog
 import android.animation.AnimatorSet
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import androidx.core.animation.doOnEnd
-import androidx.core.widget.doAfterTextChanged
 import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.model.presentation.TimerSettingsPresentation
 import com.ordolabs.chessmate.util.wrapper.ValueAnimatorBuilder
@@ -27,8 +25,6 @@ class TimerSettingsDialog(
 
     override fun onViewCreated(root: View, savedInstanceState: Bundle?) {
         setSettingsInViews()
-        setTimerLimitCoercer(edit_timer_limit_minutes, 0..59)
-        setTimerLimitCoercer(edit_timer_limit_seconds, 1..59)
         setSwapPlayersButton()
         setOkButton()
     }
@@ -63,24 +59,13 @@ class TimerSettingsDialog(
     }
 
     private fun collectSettings(): TimerSettingsPresentation {
-        val minutes = edit_timer_limit_minutes.text.toString().toInt()
-        val seconds = edit_timer_limit_seconds.text.toString().toInt()
+        val minutes = edit_timer_limit_minutes.text.toString().toInt().coerceIn(0, 59)
+        val seconds = edit_timer_limit_seconds.text.toString().toInt().coerceIn(5, 59)
         val player1 = if (!arePlayersSwapped) edit_player1.text.toString()
         else edit_player2.text.toString()
         val player2 = if (!arePlayersSwapped) edit_player2.text.toString()
         else edit_player1.text.toString()
         return TimerSettingsPresentation(minutes, seconds, player1, player2)
-    }
-
-    private fun setTimerLimitCoercer(edit: EditText, range: IntRange) {
-        edit.doAfterTextChanged { text ->
-            if (text.isNullOrBlank()) return@doAfterTextChanged
-            val number = text.toString().toInt()
-            val coerce = number.coerceIn(range)
-            if (number != coerce) {
-                edit.setText(coerce.toString())
-            }
-        }
     }
 
     private fun animPlayerNameSwap(playerNameView: View, goesUp: Boolean) =

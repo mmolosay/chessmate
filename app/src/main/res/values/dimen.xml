@@ -20,7 +20,7 @@
     <dimen name="text_size_54">54sp</dimen>
     <dimen name="text_size_60">60sp</dimen>
 
-    <item name="text_spacing_small" type="dimen" format="float">0.015</item>
+    <item name="text_spacing_small" type="dimen" format="float">0.010</item>
     <item name="text_spacing_medium" type="dimen" format="float">0.025</item>
     <item name="text_spacing_big" type="dimen" format="float">0.04</item>
 
@@ -38,6 +38,9 @@
 
     <dimen name="list_item_overline_height">64dp</dimen>
     <dimen name="list_item_overline_overline_text_size">10sp</dimen>
+
+    <dimen name="list_item_two_line_height">64dp</dimen>
+    <dimen name="list_item_two_line_second_line_text_size">14sp</dimen>
 
     <!--~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~~-->
     <dimen name="home_tab_height">?attr/tabIndicatorHeight</dimen>
@@ -62,8 +65,8 @@
     <dimen name="scale_btn_small_normal" type="dimen" format="float">1.0</dimen>
     <dimen name="scale_btn_small_diminished" type="dimen" format="float">0.85</dimen>
 
-    <dimen name="scale_btn_large_normal" type="dimen" format="float">1.0</dimen>
-    <dimen name="scale_btn_large_diminished" type="dimen" format="float">0.92</dimen>
+    <dimen name="scale_btn_large_enabled" type="dimen" format="float">1.0</dimen>
+    <dimen name="scale_btn_large_disabled" type="dimen" format="float">0.0</dimen>
 
     <dimen name="translationY_timer_enabled">0dp</dimen>
     <dimen name="translationY_timer_disabled">-15dp</dimen>
@@ -80,10 +83,10 @@
     <dimen name="alpha_btn_timer_settings_disabled" type="dimen" format="float">0.6</dimen>
 
     <dimen name="translationX_btn_timer_startstop_normal">0dp</dimen>
-    <dimen name="translationX_btn_timer_startstop_moved">48dp</dimen>
+    <dimen name="translationX_btn_timer_startstop_moved">88dp</dimen>
 
     <dimen name="translationX_btn_timer_pauseresume_normal">0dp</dimen>
-    <dimen name="translationX_btn_timer_pauseresume_moved">-48dp</dimen>
+    <dimen name="translationX_btn_timer_pauseresume_moved">-88dp</dimen>
 
     <!--~~~~~~~~~~~~~~~~~~~~ STUFF ~~~~~~~~~~~~~~~~~~~~~-->
 

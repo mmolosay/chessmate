@@ -78,6 +78,20 @@
         </com.ordolabs.chessmate.ui.view.TimerConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_settings"
+            style="@style/Button.Minor.RoundAsh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginVertical="@dimen/size_24"
+            android:src="@drawable/ic_gear_normal"
+            android:stateListAnimator="@animator/animator_btn_timer_settings"
+
+            app:layout_constraintBottom_toTopOf="@+id/btn_startstop"
+            app:layout_constraintEnd_toEndOf="@+id/btn_restart"
+            app:layout_constraintStart_toStartOf="@+id/btn_restart" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btn_restart"
             style="@style/Button.Large.RoundSky"
             android:layout_width="wrap_content"
@@ -86,10 +100,12 @@
             android:layout_marginTop="156dp"
             android:background="@drawable/transition_btn_reset_timer"
             android:src="@drawable/ic_change_turn_big_normal"
+            android:visibility="invisible"
 
             app:layout_constraintEnd_toEndOf="@+id/timer_group"
             app:layout_constraintStart_toStartOf="@+id/timer_group"
-            app:layout_constraintTop_toBottomOf="@+id/timer_group" />
+            app:layout_constraintTop_toBottomOf="@+id/timer_group"
+            tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btn_pauseresume"
@@ -98,13 +114,15 @@
             android:layout_height="wrap_content"
 
             android:layout_marginVertical="@dimen/size_24"
+            android:layout_marginBottom="48dp"
             android:elevation="-1px"
             android:src="@drawable/ic_pause_normal"
-            android:visibility="gone"
 
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_restart"
             app:layout_constraintEnd_toEndOf="@+id/btn_restart"
             app:layout_constraintStart_toStartOf="@+id/btn_restart"
-            app:layout_constraintTop_toBottomOf="@+id/btn_restart"
+            app:layout_constraintTop_toTopOf="@+id/btn_restart"
             tools:translationX="@dimen/translationX_btn_timer_pauseresume_moved"
             tools:visibility="visible" />
 
@@ -118,25 +136,12 @@
             android:elevation="0px"
             android:src="@drawable/ic_start_normal"
 
+            app:layout_constraintBottom_toBottomOf="@+id/btn_restart"
             app:layout_constraintEnd_toEndOf="@+id/btn_restart"
             app:layout_constraintStart_toStartOf="@+id/btn_restart"
-            app:layout_constraintTop_toBottomOf="@+id/btn_restart"
+            app:layout_constraintTop_toTopOf="@+id/btn_restart"
             tools:src="@drawable/ic_stop_normal"
             tools:translationX="@dimen/translationX_btn_timer_startstop_moved" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_settings"
-            style="@style/Button.Minor.RoundAsh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginVertical="@dimen/size_24"
-            android:src="@drawable/ic_gear_normal"
-            android:stateListAnimator="@animator/animator_btn_timer_settings"
-
-            app:layout_constraintBottom_toTopOf="@+id/btn_restart"
-            app:layout_constraintEnd_toEndOf="@+id/btn_restart"
-            app:layout_constraintStart_toStartOf="@+id/btn_restart" />
 
         <View
             android:id="@+id/divider"
@@ -148,7 +153,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_startstop"
+            app:layout_constraintTop_toBottomOf="@+id/btn_restart"
             app:layout_constraintWidth_percent="@dimen/list_divider_width_percents"
             tools:scaleX="1.0" />
 

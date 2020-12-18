@@ -4,9 +4,14 @@
     <item android:state_enabled="false">
         <set android:interpolator="@android:interpolator/fast_out_slow_in">
             <objectAnimator
-                android:duration="@integer/anim_duration_200"
-                android:propertyName="translationZ"
-                android:valueTo="@dimen/elevation_none"
+                android:duration="@integer/anim_btn_round_large_scale"
+                android:propertyName="scaleX"
+                android:valueTo="@dimen/scale_btn_large_disabled"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="@integer/anim_btn_round_large_scale"
+                android:propertyName="scaleY"
+                android:valueTo="@dimen/scale_btn_large_disabled"
                 android:valueType="floatType" />
         </set>
     </item>
@@ -19,17 +24,6 @@
                 android:duration="@integer/anim_duration_100"
                 android:propertyName="translationZ"
                 android:valueTo="@dimen/elevation_normal"
-                android:valueType="floatType" />
-
-            <objectAnimator
-                android:duration="@integer/anim_duration_75"
-                android:propertyName="scaleX"
-                android:valueTo="@dimen/scale_btn_large_diminished"
-                android:valueType="floatType" />
-            <objectAnimator
-                android:duration="@integer/anim_duration_75"
-                android:propertyName="scaleY"
-                android:valueTo="@dimen/scale_btn_large_diminished"
                 android:valueType="floatType" />
         </set>
     </item>
@@ -45,14 +39,14 @@
                 android:valueType="floatType" />
 
             <objectAnimator
-                android:duration="@integer/anim_duration_75"
+                android:duration="@integer/anim_btn_round_large_scale"
                 android:propertyName="scaleX"
-                android:valueTo="@dimen/scale_btn_large_normal"
+                android:valueTo="@dimen/scale_btn_large_enabled"
                 android:valueType="floatType" />
             <objectAnimator
-                android:duration="@integer/anim_duration_75"
+                android:duration="@integer/anim_btn_round_large_scale"
                 android:propertyName="scaleY"
-                android:valueTo="@dimen/scale_btn_large_normal"
+                android:valueTo="@dimen/scale_btn_large_enabled"
                 android:valueType="floatType" />
         </set>
     </item>

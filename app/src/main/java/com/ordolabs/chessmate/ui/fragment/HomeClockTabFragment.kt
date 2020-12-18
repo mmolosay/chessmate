@@ -13,6 +13,7 @@ import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ordolabs.chessmate.R
@@ -81,7 +82,7 @@ class HomeClockTabFragment : BaseFragment() {
     }
 
     private fun setRestartButton() {
-        alterResetButtonEnabled(false)
+        alterRestartButtonEnabled(false)
         btn_restart.setOnClickListener {
             timerVM.addTimerCheckpoint()
             timerVM.restartTimer()
@@ -107,13 +108,7 @@ class HomeClockTabFragment : BaseFragment() {
                 timerVM.startTimer()
             }
 
-            btn_settings.isEnabled = !stopped
-            animTimerControlsTranslation(stopped)
-            animCheckpointsDividerScaleX()
-
-            alterResetButtonEnabled(stopped)
-            alterStartStopButtonIcon(!stopped)
-            alterPauseResumeButtonIcon(stopped)
+            animTimerViews(stopped)
         }
     }
 
@@ -137,34 +132,6 @@ class HomeClockTabFragment : BaseFragment() {
 
         rv_checkpoints.layoutManager = lm
         rv_checkpoints.adapter = checkpointsAdapter
-    }
-
-
-    private fun alterStartStopButtonIcon(setStart: Boolean) {
-        val iconRes = if (setStart)
-            R.drawable.ic_start_normal
-        else
-            R.drawable.ic_stop_normal
-        val icon = ContextCompat.getDrawable(requireContext(), iconRes)
-        btn_startstop.setImageDrawable(icon)
-    }
-
-    private fun alterPauseResumeButtonIcon(setPause: Boolean) {
-        val iconRes = if (setPause)
-            R.drawable.ic_pause_normal
-        else
-            R.drawable.ic_start_normal
-        val icon = ContextCompat.getDrawable(requireContext(), iconRes)
-        btn_pauseresume.setImageDrawable(icon)
-    }
-
-    private fun alterResetButtonEnabled(enabled: Boolean) {
-        if (btn_restart.isEnabled == enabled) return
-        btn_restart.isEnabled = enabled
-        (btn_restart.background as TransitionDrawable).apply {
-            if (!enabled) startTransition(200)
-            else reverseTransition(200)
-        }
     }
 
     private fun onTimerSettingsDialogApplied(newSettings: TimerSettingsPresentation) {
@@ -222,6 +189,15 @@ class HomeClockTabFragment : BaseFragment() {
     }
 
 
+    private fun animTimerViews(stopped: Boolean) {
+        btn_settings.isEnabled = !stopped
+
+        animTimerControls(stopped)
+        alterStartStopButtonIcon(!stopped)
+
+        animCheckpointsDividerScaleX()
+    }
+
     private fun animTimerMinusShow() {
         val set = AnimatorSet()
         set.playTogether(
@@ -274,6 +250,23 @@ class HomeClockTabFragment : BaseFragment() {
             }
         }
 
+    // will toggle visibility instantly, but animator of btn_restart would last
+    // R.integer.anim_btn_round_large_scale_disabled milliseconds,
+    // so we should return empty animator with that exact duration
+    private fun animRestartButtonEnabled(enabled: Boolean): ValueAnimator {
+        val duration = resources.getInteger(R.integer.anim_btn_round_large_scale)
+        return ValueAnimator.ofInt(0, 1000).apply {
+            this.duration = duration.toLong()
+            doOnStart {
+                alterRestartButtonEnabled(enabled)
+                if (enabled) btn_restart.isInvisible = !enabled
+            }
+            doOnEnd {
+                if (!enabled) btn_restart.isInvisible = !enabled
+            }
+        }
+    }
+
     private fun animRestartButtonClick() {
         animRestartButtonRotation().apply {
             doOnEnd {
@@ -298,13 +291,37 @@ class HomeClockTabFragment : BaseFragment() {
             }
         }
 
-    private fun animTimerControlsTranslation(running: Boolean) {
+    private fun animTimerControls(running: Boolean) {
+        val set = AnimatorSet()
+        // reverse order
+        if (running) set.apply {
+            playSequentially(
+                animTimerControlsTranslation(running),
+                animRestartButtonEnabled(running)
+            )
+            doOnStart {
+                alterPauseResumeButtonIcon(running)
+            }
+        }
+        else set.apply {
+            playSequentially(
+                animRestartButtonEnabled(running),
+                animTimerControlsTranslation(running)
+            )
+            doOnEnd {
+                alterPauseResumeButtonIcon(running)
+            }
+        }
+        set.start()
+    }
+
+    private fun animTimerControlsTranslation(running: Boolean): AnimatorSet {
         val set = AnimatorSet()
         set.playTogether(
             animStartStopButtonTranslation(running),
             animPauseResumeButtonTranslation(running)
         )
-        set.start()
+        return set
     }
 
     private fun animStartStopButtonTranslation(isForward: Boolean) =
@@ -315,6 +332,9 @@ class HomeClockTabFragment : BaseFragment() {
                 val moved = resources
                     .getDimension(R.dimen.translationX_btn_timer_startstop_moved)
                 arrayOf(normal, moved)
+            }
+            duration {
+                resources.getInteger(R.integer.anim_timer_controls).toLong()
             }
             updateListener {
                 btn_startstop.translationX = animatedValue as Float
@@ -329,6 +349,9 @@ class HomeClockTabFragment : BaseFragment() {
                 val moved = resources
                     .getDimension(R.dimen.translationX_btn_timer_pauseresume_moved)
                 arrayOf(normal, moved)
+            }
+            duration {
+                resources.getInteger(R.integer.anim_timer_controls).toLong()
             }
             updateListener {
                 btn_pauseresume.translationX = animatedValue as Float
@@ -355,5 +378,32 @@ class HomeClockTabFragment : BaseFragment() {
                 divider.scaleX = animatedValue as Float
             }
         }.start()
+    }
+
+    private fun alterStartStopButtonIcon(setStart: Boolean) {
+        val iconRes = if (setStart)
+            R.drawable.ic_start_normal
+        else
+            R.drawable.ic_stop_normal
+        val icon = ContextCompat.getDrawable(requireContext(), iconRes)
+        btn_startstop.setImageDrawable(icon)
+    }
+
+    private fun alterPauseResumeButtonIcon(setPause: Boolean) {
+        val iconRes = if (setPause)
+            R.drawable.ic_pause_normal
+        else
+            R.drawable.ic_start_normal
+        val icon = ContextCompat.getDrawable(requireContext(), iconRes)
+        btn_pauseresume.setImageDrawable(icon)
+    }
+
+    private fun alterRestartButtonEnabled(enabled: Boolean) {
+        if (btn_restart.isEnabled == enabled) return
+        btn_restart.isEnabled = enabled
+        (btn_restart.background as TransitionDrawable).apply {
+            if (!enabled) startTransition(200)
+            else reverseTransition(200)
+        }
     }
 }

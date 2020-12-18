@@ -1,5 +1,6 @@
 package com.ordolabs.chessmate.di
 
+import com.ordolabs.chessmate.viewmodel.GamesViewModel
 import com.ordolabs.chessmate.viewmodel.HomeViewModel
 import com.ordolabs.chessmate.viewmodel.TimerSettingsViewModel
 import com.ordolabs.chessmate.viewmodel.TimerViewModel
@@ -22,5 +23,9 @@ val viewModelModule = module {
             getTimerSettingsUseCase = get(named(UseCase.GET_TIMER_SETTINGS)),
             setTimerSettingsUseCase = get(named(UseCase.SET_TIMER_SETTINGS))
         )
+    }
+
+    viewModel {
+        GamesViewModel()
     }
 }

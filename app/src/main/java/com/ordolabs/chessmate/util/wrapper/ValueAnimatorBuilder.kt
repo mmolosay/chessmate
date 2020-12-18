@@ -3,7 +3,6 @@ package com.ordolabs.chessmate.util.wrapper
 import android.R.integer.config_shortAnimTime
 import android.animation.ValueAnimator
 import android.view.animation.Interpolator
-import androidx.core.animation.doOnEnd
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.ordolabs.chessmate.ChessMateApp
 
@@ -55,19 +54,13 @@ class ValueAnimatorBuilder<T : Number> private constructor(
         this.animator.addUpdateListener(listener)
     }
 
-    fun onEnd(action: () -> Unit) {
-        this.animator.doOnEnd { action() }
-    }
-
-    fun start() {
-        this.animator.start()
-    }
-
     private fun build(): ValueAnimator {
         val animator = when (values[0]) {
             is Int -> buildAnimatorOfInt()
             is Float -> buildAnimatorOfFloat()
-            else -> throw IllegalArgumentException("ValueAnimators of specified type are not supported")
+            else -> throw IllegalArgumentException(
+                "ValueAnimators of type ${values[0].javaClass.name} are not supported"
+            )
         }
         animator.duration = this.defaultDuration
         animator.interpolator = this.defaultInterpolator

@@ -14,17 +14,23 @@
 
     <!--~~~~~~~~~~~~~~~~~~~~~ TEXT ~~~~~~~~~~~~~~~~~~~~~-->
     <color name="text_title">#000000</color>
-    <color name="text_body">#505050</color>
+    <color name="text_body">#454545</color>
     <color name="text_light">@android:color/white</color>
 
     <!--~~~~~~~~~~~~~~~~~~~~ TIMER ~~~~~~~~~~~~~~~~~~~~~-->
     <color name="timer_warn">#EF5350</color>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~ GAME ~~~~~~~~~~~~~~~~~~~~~-->
+    <color name="checkboard_black">#3B7DB3</color>
+    <color name="checkboard_white">#DEE1C3</color>
 
     <!--~~~~~~~~~~~~~~~~~~~~ LISTS ~~~~~~~~~~~~~~~~~~~~~-->
     <color name="list_divider">#E1E1E1</color>
 
     <color name="list_item_overline_overline_text">#939393</color>
     <color name="list_item_overline_content_text">@android:color/black</color>
+
+    <color name="list_item_two_line_second_line_text">#939393</color>
 
     <!--~~~~~~~~~~~~~~~~~~ ANIMATION ~~~~~~~~~~~~~~~~~~~~-->
 

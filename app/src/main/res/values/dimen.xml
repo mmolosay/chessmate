@@ -20,7 +20,7 @@
     <dimen name="text_size_54">54sp</dimen>
     <dimen name="text_size_60">60sp</dimen>
 
-    <item name="text_spacing_small" type="dimen" format="float">0.015</item>
+    <item name="text_spacing_small" type="dimen" format="float">0.010</item>
     <item name="text_spacing_medium" type="dimen" format="float">0.025</item>
     <item name="text_spacing_big" type="dimen" format="float">0.04</item>
 
@@ -38,6 +38,9 @@
 
     <dimen name="list_item_overline_height">64dp</dimen>
     <dimen name="list_item_overline_overline_text_size">10sp</dimen>
+
+    <dimen name="list_item_two_line_height">64dp</dimen>
+    <dimen name="list_item_two_line_second_line_text_size">14sp</dimen>
 
     <!--~~~~~~~~~~~~~~~~~ HOME SCREEN ~~~~~~~~~~~~~~~~~~-->
     <dimen name="home_tab_height">?attr/tabIndicatorHeight</dimen>

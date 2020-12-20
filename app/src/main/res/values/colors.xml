@@ -22,7 +22,7 @@
 
     <!--~~~~~~~~~~~~~~~~~~~~~ GAME ~~~~~~~~~~~~~~~~~~~~~-->
     <color name="checkboard_black">#3B7DB3</color>
-    <color name="checkboard_white">#DEE1C3</color>
+    <color name="checkboard_white">#F3F4EB</color>
 
     <!--~~~~~~~~~~~~~~~~~~~~ LISTS ~~~~~~~~~~~~~~~~~~~~~-->
     <color name="list_divider">#E1E1E1</color>

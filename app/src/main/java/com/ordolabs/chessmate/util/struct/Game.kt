@@ -9,6 +9,8 @@ class Game {
     val piecesW: ArrayList<Piece> = setupPieces(Color.WHITE)
     val piecesB: ArrayList<Piece> = setupPieces(Color.BLACK)
 
+    val turn: Color = Color.WHITE
+
     private fun setupPieces(color: Color): ArrayList<Piece> = arrayListOf(
         Piece(Chess.Piece.ROOK, PosX.xA, PosY.y1.takeIf { color.isWhite } ?: PosY.y8),
         Piece(Chess.Piece.ROOK, PosX.xH, PosY.y1.takeIf { color.isWhite } ?: PosY.y8),
@@ -32,12 +34,5 @@ class Game {
         var piece: Chess.Piece,
         var posX: PosX,
         var posY: PosY
-    ) {
-        // because a b c .. starts from top-left corner, as andriod's coords system
-        val drawingPosX: Int
-            get() = (posX.ordinal)
-        // because 1 2 3 .. starts from bottom-left corner, so should be reversed
-        val drawingPosY: Int
-            get() = (7 - posY.ordinal)
-    }
+    )
 }

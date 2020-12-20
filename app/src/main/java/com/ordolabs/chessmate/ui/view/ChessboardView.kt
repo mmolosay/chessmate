@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.scale
@@ -11,6 +12,7 @@ import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.util.drawRect
 import com.ordolabs.chessmate.util.struct.Chess
 import com.ordolabs.chessmate.util.struct.Game
+import com.ordolabs.chessmate.util.struct.GameViewMapper
 
 class ChessboardView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -30,7 +32,6 @@ class ChessboardView @JvmOverloads constructor(
             shader = BitmapShader(tilesTemplate, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)
         }
     }
-
     private val pieces = arrayOf(
         BitmapFactory.decodeResource(resources, R.drawable.king_white),
         BitmapFactory.decodeResource(resources, R.drawable.king_black),
@@ -51,6 +52,8 @@ class ChessboardView @JvmOverloads constructor(
     init {
         whiteColor = ResourcesCompat.getColor(resources, R.color.checkboard_white, context.theme)
         blackColor = ResourcesCompat.getColor(resources, R.color.checkboard_black, context.theme)
+
+        isClickable = true
     }
 
     @SuppressLint("DrawAllocation")
@@ -59,6 +62,22 @@ class ChessboardView @JvmOverloads constructor(
 
         makeCheckerboardTemplate()
         scalePieceBitmaps()
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        val handeled = super.onTouchEvent(event)
+        when (event?.action ?: return handeled) {
+            MotionEvent.ACTION_UP -> {
+                performClick()
+                onClick(event)
+            }
+            else -> return handeled
+        }
+        return true
+    }
+
+    override fun performClick(): Boolean {
+        return super.performClick()
     }
 
     override fun onDraw(c: Canvas?) {
@@ -82,8 +101,8 @@ class ChessboardView @JvmOverloads constructor(
 
     private fun drawPiece(c: Canvas, piece: Game.Piece, color: Chess.Color) {
         val bitmap = getPieceBitmap(piece.piece, color)
-        val left = piece.drawingPosX * tileSize.toFloat()
-        val top = piece.drawingPosY * tileSize.toFloat()
+        val left = GameViewMapper.getDrawPosX(piece) * tileSize.toFloat()
+        val top = GameViewMapper.getDrawPosY(piece) * tileSize.toFloat()
         c.drawBitmap(bitmap, left, top, null)
     }
 
@@ -109,6 +128,10 @@ class ChessboardView @JvmOverloads constructor(
         pieces.forEachIndexed { i, bitmap ->
             pieces[i] = bitmap.scale(tileSize, tileSize)
         }
+    }
+
+    private fun onClick(event: MotionEvent) {
+
     }
 
     private fun getPieceBitmap(piece: Chess.Piece, color: Chess.Color) = when (piece) {

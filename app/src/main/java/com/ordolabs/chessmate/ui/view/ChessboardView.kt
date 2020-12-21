@@ -12,7 +12,7 @@ import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.util.drawRect
 import com.ordolabs.chessmate.util.struct.Chess
 import com.ordolabs.chessmate.util.struct.Game
-import com.ordolabs.chessmate.util.struct.GameViewMapper
+import com.ordolabs.chessmate.util.struct.GameViewIteractor
 
 class ChessboardView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -22,7 +22,7 @@ class ChessboardView @JvmOverloads constructor(
     private val blackColor: Int
 
     private val tileSize: Int by lazy {
-        width / TILE_COUNT
+        width / Chess.TILE_COUNT
     }
     private val tilesTemplate: Bitmap by lazy {
         Bitmap.createBitmap(tileSize * 2, tileSize * 2, Bitmap.Config.ARGB_8888)
@@ -91,18 +91,15 @@ class ChessboardView @JvmOverloads constructor(
     }
 
     private fun drawPieces(c: Canvas) {
-        game.piecesW.forEach {
-            drawPiece(c, it, Chess.Color.WHITE)
-        }
-        game.piecesB.forEach {
-            drawPiece(c, it, Chess.Color.BLACK)
+        game.pieces.forEach {
+            drawPiece(c, it)
         }
     }
 
-    private fun drawPiece(c: Canvas, piece: Game.Piece, color: Chess.Color) {
-        val bitmap = getPieceBitmap(piece.piece, color)
-        val left = GameViewMapper.getDrawPosX(piece) * tileSize.toFloat()
-        val top = GameViewMapper.getDrawPosY(piece) * tileSize.toFloat()
+    private fun drawPiece(c: Canvas, piece: Game.Piece) {
+        val bitmap = getPieceBitmap(piece.type, piece.color)
+        val left = GameViewIteractor.getDrawTileX(piece) * tileSize.toFloat()
+        val top = GameViewIteractor.getDrawTileY(piece) * tileSize.toFloat()
         c.drawBitmap(bitmap, left, top, null)
     }
 
@@ -131,19 +128,18 @@ class ChessboardView @JvmOverloads constructor(
     }
 
     private fun onClick(event: MotionEvent) {
+        val tile = GameViewIteractor.getGameTileOnCoords(event.x, event.y, tileSize)
+        val shouldInvalidate = GameViewIteractor.inputTile(tile, game)
 
+        if (shouldInvalidate) invalidate()
     }
 
-    private fun getPieceBitmap(piece: Chess.Piece, color: Chess.Color) = when (piece) {
-        Chess.Piece.KING -> pieces[0].takeIf { color.isWhite } ?: pieces[1]
-        Chess.Piece.QUEEN -> pieces[2].takeIf { color.isWhite } ?: pieces[3]
-        Chess.Piece.BISHOP -> pieces[4].takeIf { color.isWhite } ?: pieces[5]
-        Chess.Piece.KNIGHT -> pieces[6].takeIf { color.isWhite } ?: pieces[7]
-        Chess.Piece.ROOK -> pieces[8].takeIf { color.isWhite } ?: pieces[9]
-        Chess.Piece.PAWN -> pieces[10].takeIf { color.isWhite } ?: pieces[11]
-    }
-
-    companion object {
-        private const val TILE_COUNT = 8
+    private fun getPieceBitmap(pieceType: Chess.PieceType, color: Chess.Color) = when (pieceType) {
+        Chess.PieceType.KING -> pieces[0].takeIf { color.isWhite } ?: pieces[1]
+        Chess.PieceType.QUEEN -> pieces[2].takeIf { color.isWhite } ?: pieces[3]
+        Chess.PieceType.BISHOP -> pieces[4].takeIf { color.isWhite } ?: pieces[5]
+        Chess.PieceType.KNIGHT -> pieces[6].takeIf { color.isWhite } ?: pieces[7]
+        Chess.PieceType.ROOK -> pieces[8].takeIf { color.isWhite } ?: pieces[9]
+        Chess.PieceType.PAWN -> pieces[10].takeIf { color.isWhite } ?: pieces[11]
     }
 }

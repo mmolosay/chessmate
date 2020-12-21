@@ -1,42 +1,74 @@
 package com.ordolabs.chessmate.util.struct
 
-import com.ordolabs.chessmate.util.struct.Chess.PosX
-import com.ordolabs.chessmate.util.struct.Chess.PosY
+import com.ordolabs.chessmate.util.struct.Chess.File
+import com.ordolabs.chessmate.util.struct.Chess.Rank
 
-object GameViewIteractor {
+object GameProcessor {
 
-    // because a b c .. starts from top-left corner, as andriod's coords system
-    fun getDrawTileX(piece: Game.Piece): Int {
-        return piece.tile.posX.ordinal
+    /**
+     * Returns an ordinal of [piece] tile's X, e.g. for `c` it would be `2`.
+     * Because a b c .. start from left corner and goes right, as andriod's X axis.
+     */
+    fun getDrawFile(piece: Game.Piece): Int {
+        return piece.tile.file.ordinal
     }
 
-    // because 1 2 3 .. starts from bottom-left corner, so should be reversed
-    fun getDrawTileY(piece: Game.Piece): Int {
-        return (7 - piece.tile.posY.ordinal)
+    /**
+     * Returns an ordinal of [piece] tile's Y, e.g. for `3` it would be `4`.
+     * Because 1 2 3 .. start from bottom corner and goes up, it should be reversed.
+     */
+    fun getDrawRank(piece: Game.Piece): Int {
+        return (7 - piece.tile.rank.ordinal)
     }
 
-    fun getGamePosX(tilex: Int): PosX {
-        return PosX.byOrdinal(tilex)
+    /**
+     * Returns [File] of view tile with [tileX] as X value.
+     * It's an opposite to [getDrawTileX].
+     */
+    fun getGameFile(tileX: Int): File {
+        return File.byOrdinal(tileX)
     }
 
-    fun getGamePosY(tiley: Int): PosY {
-        return PosY.byOrdinal(7 - tiley)
+    /**
+     * Returns [Rank] of view tile with [tileY] as X value.
+     * It's an opposite to [getDrawRank].
+     */
+    fun getGameRank(tileY: Int): Rank {
+        return Rank.byOrdinal(7 - tileY)
     }
 
+    /**
+     * Locates [Game.Tile], which corresponds to specified [x] and [y] pixel.
+     *
+     * @param tileSize an integer size of view's tile.
+     */
     fun getGameTileOnCoords(x: Float, y: Float, tileSize: Int): Game.Tile {
-        val posx = getGamePosX(x.toInt() / tileSize)
-        val posy = getGamePosY(y.toInt() / tileSize)
+        val posx = getGameFile(x.toInt() / tileSize)
+        val posy = getGameRank(y.toInt() / tileSize)
         return Game.Tile(posx, posy)
     }
 
+    /**
+     * Seeks for a piece on [tile].
+     *
+     * @return piece on specified tile; `null` otherwise.
+     */
     fun getPieceOnTile(tile: Game.Tile, game: Game): Game.Piece? {
-        return game.pieces.find { isPieceOnGameTile(it, tile) }
+        return game.pieces.find { isPieceOnTile(it, tile) }
     }
 
+    /**
+     * Finds out, if specified [piece] belongs to current turn's side.
+     */
     fun isPieceOfTurn(piece: Game.Piece, game: Game): Boolean {
         return (piece.color == game.turn)
     }
 
+    /**
+     * Processes [tile] of [game].
+     *
+     * @return `true` if pieces' data was changed; `false` otherwise.
+     */
     fun inputTile(tile: Game.Tile, game: Game): Boolean {
         val piece = getPieceOnTile(tile, game)
 
@@ -75,7 +107,13 @@ object GameViewIteractor {
         }
     }
 
-    fun tryMoveSelectedPiece(dest: Game.Tile, game: Game): Boolean {
+    /**
+     * Collects all tiles, available for [game]'s selected piece to move
+     * and moves it to [dest], if that tile is one of the available.
+     *
+     * @return `true` if pieces' data was changed; `false` otherwise.
+     */
+    private fun tryMoveSelectedPiece(dest: Game.Tile, game: Game): Boolean {
         val piece = game.selected ?: return false
         val available = getPieceAvailableTiles(piece, game)
         if (available.contains(dest)) {
@@ -84,7 +122,11 @@ object GameViewIteractor {
         return true
     }
 
-    fun getPieceAvailableTiles(piece: Game.Piece, game: Game) = when (piece.type) {
+    /**
+     * Collects all tiles, avaliable for [piece] to take, no matter
+     * the piece would just move on it or take opponent's piece too.
+     */
+    private fun getPieceAvailableTiles(piece: Game.Piece, game: Game) = when (piece.type) {
         Chess.PieceType.KING -> TODO()
         Chess.PieceType.QUEEN -> TODO()
         Chess.PieceType.BISHOP -> TODO()
@@ -93,7 +135,7 @@ object GameViewIteractor {
         Chess.PieceType.PAWN -> getPawnAvailableTiles(piece, game)
     }
 
-    fun getPawnAvailableTiles(pawn: Game.Piece, game: Game): List<Game.Tile> {
+    private fun getPawnAvailableTiles(pawn: Game.Piece, game: Game): List<Game.Tile> {
         val tiles = mutableListOf<Game.Tile>()
         var nextTile = pawn.tile.modBy(byY = 1.takeIf { pawn.isWhite } ?: -1)
         var nextTilePiece = getPieceOnTile(nextTile, game)
@@ -114,12 +156,19 @@ object GameViewIteractor {
         return tiles
     }
 
+    /**
+     * Returns `true`, if pawn is on its start position —
+     *
+     */
     private fun isPawnOnStartPosition(pawn: Game.Piece): Boolean {
-        return (pawn.tile.posY == PosY.y2 && pawn.isWhite ||
-                pawn.tile.posY == PosY.y7 && pawn.isBlack)
+        return (pawn.tile.rank == Rank.y2 && pawn.isWhite ||
+                pawn.tile.rank == Rank.y7 && pawn.isBlack)
     }
 
-    private fun isPieceOnGameTile(piece: Game.Piece, tile: Game.Tile): Boolean {
+    /**
+     * Finds out, if specified [piece] is on checkerboard's [tile].
+     */
+    private fun isPieceOnTile(piece: Game.Piece, tile: Game.Tile): Boolean {
         return (piece.tile == tile)
     }
 }

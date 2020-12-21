@@ -12,7 +12,7 @@ import com.ordolabs.chessmate.R
 import com.ordolabs.chessmate.util.drawRect
 import com.ordolabs.chessmate.util.struct.Chess
 import com.ordolabs.chessmate.util.struct.Game
-import com.ordolabs.chessmate.util.struct.GameViewIteractor
+import com.ordolabs.chessmate.util.struct.GameProcessor
 
 class ChessboardView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -98,8 +98,8 @@ class ChessboardView @JvmOverloads constructor(
 
     private fun drawPiece(c: Canvas, piece: Game.Piece) {
         val bitmap = getPieceBitmap(piece.type, piece.color)
-        val left = GameViewIteractor.getDrawTileX(piece) * tileSize.toFloat()
-        val top = GameViewIteractor.getDrawTileY(piece) * tileSize.toFloat()
+        val left = GameProcessor.getDrawFile(piece) * tileSize.toFloat()
+        val top = GameProcessor.getDrawRank(piece) * tileSize.toFloat()
         c.drawBitmap(bitmap, left, top, null)
     }
 
@@ -128,8 +128,8 @@ class ChessboardView @JvmOverloads constructor(
     }
 
     private fun onClick(event: MotionEvent) {
-        val tile = GameViewIteractor.getGameTileOnCoords(event.x, event.y, tileSize)
-        val shouldInvalidate = GameViewIteractor.inputTile(tile, game)
+        val tile = GameProcessor.getGameTileOnCoords(event.x, event.y, tileSize)
+        val shouldInvalidate = GameProcessor.inputTile(tile, game)
 
         if (shouldInvalidate) invalidate()
     }
